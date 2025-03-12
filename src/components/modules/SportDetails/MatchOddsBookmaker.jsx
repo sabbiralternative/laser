@@ -200,7 +200,12 @@ const MatchOddsBookmaker = ({ data }) => {
     <>
       {data?.map((game) => {
         return (
-          <div key={game?.id} className="dScreen book_makers">
+          <div
+            key={game?.id}
+            className={`dScreen  ${
+              game.btype === "BOOKMAKER" ? "book_makers" : ""
+            }`}
+          >
             <div className="row mx-0 head_bg">
               <div className="col-md-12 col-8 px-0">
                 <p className="match-odds">
