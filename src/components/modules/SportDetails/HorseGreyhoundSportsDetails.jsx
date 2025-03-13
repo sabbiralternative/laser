@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useExposure } from "../../../hooks/exposure";
 import {
   setPlaceBetValues,
@@ -8,13 +8,15 @@ import {
 } from "../../../redux/features/events/eventSlice";
 import { Status } from "../../../const";
 import BetSlip from "./BetSlip";
-import { Settings } from "../../../api";
-import { handleCashOutPlaceBet } from "../../../utils/handleCashoutPlaceBet";
 
-const MatchOddsBookmaker = ({ data }) => {
+const HorseGreyhoundSportsDetails = ({ data }) => {
+  const [timeDiff, setTimeDiff] = useState({
+    day: 0,
+    hour: 0,
+    minute: 0,
+    second: 0,
+  });
   const { eventId } = useParams();
-  const [teamProfit, setTeamProfit] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { runnerId, stake, predictOdd } = useSelector((state) => state.event);
   const { token } = useSelector((state) => state.auth);
@@ -37,31 +39,25 @@ const MatchOddsBookmaker = ({ data }) => {
         pnlBySelection = Object?.values(obj);
       }
 
-      if (games?.btype == "FANCY") {
-        selectionId = games?.id;
-        runnerId = games?.id;
-        eventTypeId = games?.eventTypeId;
-      } else if (games?.btype && games?.btype !== "FANCY") {
-        selectionId = runner?.id;
-        runnerId = games.runners.map((runner) => runner.id);
-        eventTypeId = games?.eventTypeId;
-        games?.runners?.forEach((rnr) => {
-          const pnl = pnlBySelection?.find((p) => p?.RunnerId === rnr?.id);
-          if (pnl) {
-            updatedPnl.push({
-              exposure: pnl?.pnl,
-              id: pnl?.RunnerId,
-              isBettingOnThisRunner: rnr?.id === runner?.id,
-            });
-          } else {
-            updatedPnl.push({
-              exposure: 0,
-              id: rnr?.id,
-              isBettingOnThisRunner: rnr?.id === runner?.id,
-            });
-          }
-        });
-      }
+      selectionId = runner?.id;
+      runnerId = games.runners.map((runner) => runner.id);
+      eventTypeId = games?.eventTypeId;
+      games?.runners?.forEach((rnr) => {
+        const pnl = pnlBySelection?.find((p) => p?.RunnerId === rnr?.id);
+        if (pnl) {
+          updatedPnl.push({
+            exposure: pnl?.pnl,
+            id: pnl?.RunnerId,
+            isBettingOnThisRunner: rnr?.id === runner?.id,
+          });
+        } else {
+          updatedPnl.push({
+            exposure: 0,
+            id: rnr?.id,
+            isBettingOnThisRunner: rnr?.id === runner?.id,
+          });
+        }
+      });
 
       const betData = {
         price,
@@ -73,8 +69,8 @@ const MatchOddsBookmaker = ({ data }) => {
         marketId: games?.id,
         lay: betType === "lay",
         back: betType === "back",
-        selectedBetName: runner?.name,
-        name: games.runners.map((runner) => runner.name),
+        selectedBetName: runner?.horse_name,
+        name: games.runners.map((runner) => runner.horse_name),
         runnerId,
         isWeak: games?.isWeak,
         maxLiabilityPerMarket: games?.maxLiabilityPerMarket,
@@ -86,169 +82,111 @@ const MatchOddsBookmaker = ({ data }) => {
         totalSize: 0,
       };
 
-      if (games?.btype == "FANCY") {
-        dispatch(setRunnerId(games?.id));
-      } else if (games?.btype && games?.btype !== "FANCY") {
-        dispatch(setRunnerId(runner?.id));
-      } else {
-        dispatch(setRunnerId(runner?.selectionId));
-      }
+      dispatch(setRunnerId(runner?.id));
 
       dispatch(setPlaceBetValues(betData));
-    } else {
-      navigate("/login");
     }
   };
-
-  const computeExposureAndStake = (
-    exposureA,
-    exposureB,
-    runner1,
-    runner2,
-    gameId
-  ) => {
-    let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
-
-    const pnlArr = [exposureA, exposureB];
-    const isOnePositiveExposure = onlyOnePositive(pnlArr);
-
-    if (exposureA > exposureB) {
-      // Team A has a larger exposure.
-      runner = runner1;
-      largerExposure = exposureA;
-      layValue = runner1?.lay?.[0]?.price;
-      oppositeLayValue = runner2?.lay?.[0]?.price;
-      lowerExposure = exposureB;
-    } else {
-      // Team B has a larger exposure.
-      runner = runner2;
-      largerExposure = exposureB;
-      layValue = runner2?.lay?.[0]?.price;
-      oppositeLayValue = runner1?.lay?.[0]?.price;
-      lowerExposure = exposureA;
-    }
-
-    // Compute the absolute value of the lower exposure.
-    let absLowerExposure = Math.abs(lowerExposure);
-
-    // Compute the liability for the team with the initially larger exposure.
-    let liability = absLowerExposure * (layValue - 1);
-
-    // Compute the new exposure of the team with the initially larger exposure.
-    let newExposure = largerExposure - liability;
-
-    // Compute the profit using the new exposure and the lay odds of the opposite team.
-    let profit = newExposure / layValue;
-
-    // Calculate the new stake value for the opposite team by adding profit to the absolute value of its exposure.
-    let newStakeValue = absLowerExposure + profit;
-
-    // Return the results.
-    return {
-      runner,
-      newExposure,
-      profit,
-      newStakeValue,
-      oppositeLayValue,
-      gameId,
-      isOnePositiveExposure,
-    };
-  };
-  function onlyOnePositive(arr) {
-    let positiveCount = arr?.filter((num) => num > 0).length;
-    return positiveCount === 1;
-  }
-  useEffect(() => {
-    let results = [];
-    if (
-      data?.length > 0 &&
-      exposure?.pnlBySelection &&
-      Object.keys(exposure?.pnlBySelection)?.length > 0
-    ) {
-      data.forEach((game) => {
-        const runners = game?.runners || [];
-        if (runners?.length === 2) {
-          const runner1 = runners[0];
-          const runner2 = runners[1];
-          const pnl1 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner1?.id
-          )?.pnl;
-          const pnl2 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner2?.id
-          )?.pnl;
-
-          if (pnl1 && pnl2 && runner1 && runner2) {
-            const result = computeExposureAndStake(
-              pnl1,
-              pnl2,
-              runner1,
-              runner2,
-              game?.id
-            );
-            results.push(result);
-          }
-        }
-      });
-      setTeamProfit(results);
-    } else {
-      setTeamProfit([]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, eventId]);
 
   let pnlBySelection;
   if (exposure?.pnlBySelection) {
     const obj = exposure?.pnlBySelection;
     pnlBySelection = Object?.values(obj);
   }
+
+  useEffect(() => {
+    if (!data?.[0]?.openDate) return;
+
+    const targetDateStr = data[0].openDate;
+    const [date, time] = targetDateStr.split(" ");
+    const [day, month, year] = date.split("/");
+    const [hour, minute, second] = time.split(":");
+
+    const targetDate = new Date(year, month - 1, day, hour, minute, second);
+
+    const initialTimeout = setTimeout(() => {
+      const interval = setInterval(() => {
+        const currentDate = new Date();
+        const diffInMs = targetDate - currentDate;
+
+        if (diffInMs <= 0) {
+          clearInterval(interval);
+          setTimeDiff({ day: 0, hour: 0, minute: 0, second: 0 });
+          return;
+        }
+
+        const day = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+        const hour = Math.floor(
+          (diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minute = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+        const second = Math.floor((diffInMs % (1000 * 60)) / 1000);
+
+        setTimeDiff({ day, hour, minute, second });
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }, 1000);
+
+    return () => clearTimeout(initialTimeout);
+  }, []);
   return (
     <>
+      <div className="horse-banner">
+        <img
+          style={{ width: "100%" }}
+          src="https://g1ver.sprintstaticdata.com/v42/static/front/img/10.png"
+          className="img-fluid"
+        />
+        <div className="horse-banner-detail">
+          <div className="text-success">OPEN</div>
+          {timeDiff?.day ||
+          timeDiff?.hour ||
+          timeDiff?.minute ||
+          timeDiff?.second ? (
+            <div className="horse-timer">
+              <span style={{ display: "flex", gap: "5px" }}>
+                {timeDiff?.day > 0 && (
+                  <span>
+                    {timeDiff?.day} <small>Day</small>
+                  </span>
+                )}
+                {timeDiff?.hour > 0 && (
+                  <span>
+                    {timeDiff?.hour} <small>Hour</small>
+                  </span>
+                )}
+                {timeDiff?.minute > 0 && (
+                  <span>
+                    {timeDiff?.minute} <small>Minutes</small>
+                  </span>
+                )}
+                {timeDiff?.hour === 0 && timeDiff?.minute < 60 && (
+                  <span>
+                    {timeDiff?.second} <small>Seconds</small>
+                  </span>
+                )}
+              </span>
+              <span>Remaining</span>
+            </div>
+          ) : null}
+
+          <div className="time-detail">
+            <p>{data?.[0]?.eventName}</p>
+            <h5>
+              <span>{data?.[0]?.openDate}</span>
+              <span>| {data?.[0]?.raceType}</span>
+            </h5>
+          </div>
+        </div>
+      </div>
       {data?.map((game) => {
-        const teamProfitForGame = teamProfit?.find(
-          (profit) =>
-            profit?.gameId === game?.id && profit?.isOnePositiveExposure
-        );
         return (
-          <div
-            key={game?.id}
-            className={`dScreen  ${
-              game.btype === "BOOKMAKER" ? "book_makers" : ""
-            }`}
-          >
+          <div key={game?.id} className={`dScreen`}>
             <div className="row mx-0 head_bg">
               <div className="col-md-12 col-8 px-0">
                 <p className="match-odds">
                   {game?.name?.toUpperCase()}
-                  {Settings.betFairCashOut &&
-                    game?.runners?.length !== 3 &&
-                    game?.status === "OPEN" && (
-                      <>
-                        {teamProfitForGame?.profit ? (
-                          <button
-                            onClick={() =>
-                              handleCashOutPlaceBet(
-                                game,
-                                "lay",
-                                dispatch,
-                                pnlBySelection,
-                                token,
-                                navigate,
-                                teamProfitForGame
-                              )
-                            }
-                            className="btn-cashout ng-star-inserted"
-                          >
-                            cashout{" "}
-                            {teamProfitForGame?.profit &&
-                              `(${teamProfitForGame.profit.toFixed(2)})`}
-                          </button>
-                        ) : (
-                          <span className="btn-cashout ng-star-inserted">
-                            cashout
-                          </span>
-                        )}
-                      </>
-                    )}
 
                   <a>
                     <i className="mdi mdi-information-outline" />
@@ -288,7 +226,7 @@ const MatchOddsBookmaker = ({ data }) => {
                 </div>
               </div>
             </div>
-            {game?.runners?.map((runner) => {
+            {game?.runners?.map((runner, idx) => {
               const pnl = pnlBySelection?.find(
                 (pnl) => pnl?.RunnerId === runner?.id
               );
@@ -298,36 +236,93 @@ const MatchOddsBookmaker = ({ data }) => {
 
               return (
                 <div key={runner?.id} className="row mx-0 odds_body">
-                  <div className="col-md-5 col-7 px-0">
-                    <p className="team-name">
-                      {runner?.name}
+                  <div
+                    className="col-md-5 col-7 px-0"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <input
+                      className="sm-d-none"
+                      type="checkbox"
+                      name="checkbox-runner-0"
+                      id="checkbox-runner-0"
+                    />
+                    <div
+                      style={{
+                        textAlign: "center",
+                      }}
+                    >
+                      <div className="sm-d-none">
+                        {idx + 1}
+                        <br />({idx + 1})
+                      </div>
+                    </div>
+                    <div>
+                      <img src={runner?.image_id} />
+                    </div>
+                    <div>
+                      <p className="team-name">
+                        {runner?.horse_name}
 
-                      <span>
-                        {pnl && (
-                          <span
-                            className={`${
-                              pnl?.pnl > 0 ? "plus-book" : "minus-book"
-                            }`}
-                          >
-                            <i className="mdi mdi-arrow-right"></i>
-                            {pnl?.pnl}{" "}
+                        <span>
+                          {pnl && (
+                            <span
+                              className={`${
+                                pnl?.pnl > 0 ? "plus-book" : "minus-book"
+                              }`}
+                            >
+                              <i className="mdi mdi-arrow-right"></i>
+                              {pnl?.pnl}{" "}
+                            </span>
+                          )}
+                          {stake && runnerId && predictOddValues && (
+                            <b>
+                              <span
+                                className={`extra-pf ${
+                                  predictOddValues?.exposure > 0
+                                    ? "plus-book"
+                                    : "minus-book"
+                                } `}
+                              >
+                                ({predictOddValues?.exposure})
+                              </span>
+                            </b>
+                          )}
+                        </span>
+                      </p>
+                      <div
+                        className="jockey-detail sm-d-none d-md-flex"
+                        style={{ display: "flex" }}
+                      >
+                        {runner?.jocky && (
+                          <span className="jockey-detail-box">
+                            <b>Jockey:</b>
+                            <span style={{ fontWeight: "normal" }}>
+                              {runner?.jocky}
+                            </span>
                           </span>
                         )}
-                        {stake && runnerId && predictOddValues && (
-                          <b>
-                            <span
-                              className={`extra-pf ${
-                                predictOddValues?.exposure > 0
-                                  ? "plus-book"
-                                  : "minus-book"
-                              } `}
-                            >
-                              ({predictOddValues?.exposure})
+                        {runner?.trainer && (
+                          <span className="jockey-detail-box">
+                            <b>Trainer:</b>
+                            <span style={{ fontWeight: "normal" }}>
+                              {runner?.trainer}
                             </span>
-                          </b>
+                          </span>
                         )}
-                      </span>
-                    </p>
+                        {runner?.age && (
+                          <span className="jockey-detail-box">
+                            <b>Age:</b>
+                            <span style={{ fontWeight: "normal" }}>
+                              {runner?.age}
+                            </span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
                   <div className="col-md-7 col-5 px-0">
                     <div className="btn-group dOddsBox">
@@ -432,4 +427,4 @@ const MatchOddsBookmaker = ({ data }) => {
   );
 };
 
-export default MatchOddsBookmaker;
+export default HorseGreyhoundSportsDetails;

@@ -3,6 +3,9 @@ import App from "../App";
 import Home from "../pages/Home/Home";
 import Sports from "../pages/Sports/Sports";
 import SportDetails from "../pages/SportDetails/SportDetails";
+import UnsettledBets from "../pages/UnsettledBets/UnsettledBets";
+import ChangePassword from "../pages/ChangePassword/ChangePassword";
+import Rules from "../pages/Rules/Rules";
 
 export const router = createBrowserRouter(
   [
@@ -22,6 +25,18 @@ export const router = createBrowserRouter(
           path: "/sports-details/:eventTypeId/:eventId",
           element: <SportDetails />,
         },
+        {
+          path: "/unsettled-bets",
+          element: <UnsettledBets />,
+        },
+        {
+          path: "/change-password",
+          element: <ChangePassword />,
+        },
+        {
+          path: "/rules",
+          element: <Rules />,
+        },
         // {
         //   path: "/casino",
         //   element: <Casino />,
@@ -34,10 +49,7 @@ export const router = createBrowserRouter(
         //   path: "/change-password",
         //   element: <ChangePassword />,
         // },
-        // {
-        //   path: "/unsettled-bets",
-        //   element: <UnSettledBet />,
-        // },
+
         // {
         //   path: "/change-btn-value",
         //   element: <ChangeButtonValues />,

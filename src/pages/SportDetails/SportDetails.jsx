@@ -8,6 +8,7 @@ import { setPredictOdd } from "../../redux/features/events/eventSlice";
 import Fancy from "../../components/modules/SportDetails/Fancy";
 import MatchOddsBookmaker from "../../components/modules/SportDetails/MatchOddsBookmaker";
 import Score from "../../components/modules/SportDetails/Score";
+import HorseGreyhoundSportsDetails from "../../components/modules/SportDetails/HorseGreyhoundSportsDetails";
 
 const SportDetails = () => {
   const { eventTypeId, eventId } = useParams();
@@ -103,24 +104,26 @@ const SportDetails = () => {
             <div>
               <div className="row">
                 <div className="col-xl-8 px-lg-0">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div>
-                        <div className="marquee-box">
-                          <h4>
-                            <i className="mdi mdi-microphone-outline" />
-                            News
-                          </h4>
+                  {eventTypeId != 7 && eventTypeId != 4339 ? (
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div>
+                          <div className="marquee-box">
+                            <h4>
+                              <i className="mdi mdi-microphone-outline" />
+                              News
+                            </h4>
+                          </div>
                         </div>
                       </div>
+                      <div className="col-12 bg-dark">
+                        <h2 className="eventTitle">
+                          {data?.result?.[0]?.eventName}
+                          <span>In Play</span>
+                        </h2>
+                      </div>
                     </div>
-                    <div className="col-12 bg-dark">
-                      <h2 className="eventTitle">
-                        {data?.result?.[0]?.eventName}
-                        <span>In Play</span>
-                      </h2>
-                    </div>
-                  </div>
+                  ) : null}
 
                   <div className="sr-widget-1" />
                   {eventTypeId == 4 &&
@@ -132,9 +135,12 @@ const SportDetails = () => {
                     <MatchOddsBookmaker data={filterMatchOddsBookmaker} />
                   )}
                   {fancyData?.length > 0 && <Fancy data={fancyData} />}
+                  {eventTypeId == 7 || eventTypeId == 4339 ? (
+                    <HorseGreyhoundSportsDetails data={data?.result} />
+                  ) : null}
                 </div>
 
-                <DesktopBetRightSidebar />
+                <DesktopBetRightSidebar hasVideo={data?.score?.hasVideo} />
               </div>
             </div>
           </div>

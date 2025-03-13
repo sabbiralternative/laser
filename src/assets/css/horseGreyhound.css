@@ -1,0 +1,515 @@
+.horce-greyhound *,
+.horce-greyhound ::after,
+.horce-greyhound ::before {
+  box-sizing: border-box;
+}
+.horce-greyhound ul {
+  padding-left: 2rem;
+}
+.horce-greyhound ul {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.horce-greyhound a {
+  color: #0d6efd;
+  text-decoration: underline;
+}
+.horce-greyhound a:hover {
+  color: #0a58ca;
+}
+.horce-greyhound button {
+  border-radius: 0;
+}
+.horce-greyhound button:focus:not(:focus-visible) {
+  outline: 0;
+}
+.horce-greyhound button {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.horce-greyhound button {
+  text-transform: none;
+}
+.horce-greyhound button {
+  -webkit-appearance: button;
+}
+.horce-greyhound button:not(:disabled) {
+  cursor: pointer;
+}
+.horce-greyhound .row {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(var(--bs-gutter-y) * -1);
+  margin-right: calc(var(--bs-gutter-x) * -0.5);
+  margin-left: calc(var(--bs-gutter-x) * -0.5);
+}
+.horce-greyhound .row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-top: var(--bs-gutter-y);
+}
+@media (min-width: 576px) {
+  .horce-greyhound .col-sm-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+@media (min-width: 768px) {
+  .horce-greyhound .col-md-2 {
+    flex: 0 0 auto;
+    width: 16.66666667%;
+  }
+  .horce-greyhound .col-md-10 {
+    flex: 0 0 auto;
+    width: 83.33333333%;
+  }
+  .horce-greyhound .col-md-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .horce-greyhound .col-lg-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+@media (min-width: 1200px) {
+  .horce-greyhound .col-xl-12 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+.horce-greyhound .btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .horce-greyhound .btn {
+    transition: none;
+  }
+}
+.horce-greyhound .btn:hover {
+  color: #212529;
+}
+.horce-greyhound .btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.horce-greyhound .btn:disabled {
+  pointer-events: none;
+  opacity: 0.65;
+}
+.horce-greyhound .fade {
+  transition: opacity 0.15s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .horce-greyhound .fade {
+    transition: none;
+  }
+}
+.horce-greyhound .nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.horce-greyhound .nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #0d6efd;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .horce-greyhound .nav-link {
+    transition: none;
+  }
+}
+.horce-greyhound .nav-link:focus,
+.horce-greyhound .nav-link:hover {
+  color: #0a58ca;
+}
+.horce-greyhound .nav-tabs {
+  border-bottom: 1px solid #dee2e6;
+}
+.horce-greyhound .nav-tabs .nav-link {
+  margin-bottom: -1px;
+  background: 0 0;
+  border: 1px solid transparent;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+.horce-greyhound .nav-tabs .nav-link:focus,
+.horce-greyhound .nav-tabs .nav-link:hover {
+  border-color: #e9ecef #e9ecef #dee2e6;
+  isolation: isolate;
+}
+.horce-greyhound .nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+.horce-greyhound .tab-content > .tab-pane {
+  display: none;
+}
+.horce-greyhound .tab-content > .active {
+  display: block;
+}
+.horce-greyhound .card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+.horce-greyhound .card-header {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+.horce-greyhound .card-header:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+.horce-greyhound .d-flex {
+  display: flex !important;
+}
+.horce-greyhound .justify-content-between {
+  justify-content: space-between !important;
+}
+.horce-greyhound .align-items-center {
+  align-items: center !important;
+}
+.horce-greyhound .m-1 {
+  margin: 0.25rem !important;
+}
+.horce-greyhound .mx-0 {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.horce-greyhound .mt-0 {
+  margin-top: 0 !important;
+}
+.horce-greyhound .p-1 {
+  padding: 0.25rem !important;
+}
+.horce-greyhound .p-2 {
+  padding: 0.5rem !important;
+}
+.horce-greyhound .px-0 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.horce-greyhound .py-1 {
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+.horce-greyhound a {
+  color: #97a0b7;
+}
+.horce-greyhound a:hover {
+  color: #19233c;
+  text-decoration: none;
+}
+.horce-greyhound * {
+  scrollbar-color: #bfbfbf;
+}
+.horce-greyhound body.dark-theme .nav-tabs {
+  border: 0;
+  height: 50px;
+}
+.horce-greyhound body.dark-theme .startTime:hover {
+  background: #3d4f5d !important;
+}
+.horce-greyhound body.dark-theme .race-region:hover {
+  background: #212121;
+}
+.horce-greyhound body.dark-theme .nav-link.active,
+.horce-greyhound body.dark-theme .tab-content {
+  border: 0;
+}
+.horce-greyhound body.dark-theme .card {
+  background-color: #121212 !important;
+}
+.horce-greyhound body.dark-theme .card .trackName {
+  color: #fff !important;
+}
+.horce-greyhound body.dark-theme .card .heading {
+  color: #fff;
+}
+
+.horce-greyhound body.dark-theme .city {
+  color: #fff !important;
+}
+.horce-greyhound body.dark-theme .tab-content .active {
+  background-color: #0b0b0b !important;
+  padding: 5px;
+  margin: 20px;
+}
+.horce-greyhound
+  body.dark-theme
+  .tab-content
+  .active
+  .item-box:not(:first-child) {
+  border-top: 1px solid #000;
+}
+.horce-greyhound body.dark-theme .startTime {
+  background-color: #121212 !important;
+  color: #fff !important;
+  border: 0 !important;
+}
+.horce-greyhound body.dark-theme .nav-link {
+  border: 0;
+  color: #ff8e27;
+  align-items: center;
+}
+.horce-greyhound body.dark-theme .nav-link.active {
+  background-color: #252525 !important;
+  border-color: #000;
+  border-bottom: 0;
+  color: #fff !important;
+  align-items: center;
+}
+.horce-greyhound body.dark-theme ::placeholder {
+  color: #fff;
+}
+.horce-greyhound .flag_logo {
+  background-origin: content-box;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  width: 30px;
+  height: 25px;
+  margin: 0 5px 0 2px;
+}
+.horce-greyhound .AU {
+  background-image: url("/src/assets/img/au.svg");
+}
+.horce-greyhound .FR {
+  background-image: url("/src/assets/img/fr.svg");
+}
+.horce-greyhound .GB {
+  background-image: url("/src/assets/img/gb.svg");
+}
+.horce-greyhound .IE {
+  background-image: url("/src/assets/img/ie.svg");
+}
+.horce-greyhound .NZ {
+  background-image: url("/src/assets/img/nz.svg");
+}
+.horce-greyhound .US {
+  background-image: url("/src/assets/img/us.svg");
+}
+.horce-greyhound .ZA {
+  background-image: url("/src/assets/img/za.svg");
+}
+@media (min-width: 1024px) and (max-width: 1365px) {
+  .horce-greyhound .flag_logo {
+    width: 19px !important;
+    height: 19px !important;
+  }
+}
+@media (min-width: 180px) and (max-width: 768px) {
+  .horce-greyhound body.dark-theme .card .card-header,
+  .horce-greyhound body.dark-theme .card .nav-tabs {
+    background-color: #01173b !important;
+  }
+  .horce-greyhound body.dark-theme .card .nav-tabs {
+    padding-bottom: 2px !important;
+  }
+  .horce-greyhound body.dark-theme .card .nav-link.active {
+    background-color: #020c1b !important;
+    color: #fff !important;
+  }
+  .horce-greyhound .flag_logo {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  .horce-greyhound .city {
+    font-size: 14px !important;
+  }
+  .horce-greyhound .nav-tabs {
+    flex-wrap: unset !important;
+  }
+  .horce-greyhound .navItems {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    width: 100% !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  .horce-greyhound .nav-link {
+    padding: 2px 10px !important;
+  }
+  .horce-greyhound .heading {
+    font-weight: 400 !important;
+    font-size: 13px !important;
+  }
+  .horce-greyhound .today {
+    color: #fff !important;
+    font-weight: 500 !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    line-height: 11px !important;
+    border-radius: 2px !important;
+    border: none !important;
+    background: #3c3f4a !important;
+    box-shadow: 0 1px 4px #00000029 !important;
+  }
+  .horce-greyhound .race-region.nav-link {
+    flex-direction: column !important;
+  }
+  .horce-greyhound body.dark-theme .tab-content .active {
+    background-color: initial !important;
+  }
+}
+.horce-greyhound .dark-theme ::-webkit-scrollbar {
+  width: 4px;
+}
+
+.horce-greyhound .nav-tabs .nav-link {
+  border-radius: 0.25rem !important;
+}
+
+.horce-greyhound .card-header[_ngcontent-wne-c149] {
+  padding: 0;
+}
+
+.horce-greyhound .today[_ngcontent-wne-c149] {
+  box-shadow: none;
+  background-color: #2d9db9;
+  text-transform: capitalize;
+  border-radius: 2px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.horce-greyhound .today[_ngcontent-wne-c149]:hover {
+  box-shadow: 1px 1px 8px #cfd7e9;
+}
+
+.horce-greyhound .item-box[_ngcontent-wne-c149] {
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.horce-greyhound .item-box[_ngcontent-wne-c149]:not(:first-child) {
+  border-top: 1px solid #dfdfdf;
+}
+
+.horce-greyhound .city[_ngcontent-wne-c149] {
+  font-family: var(--font_family_global);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  line-height: normal;
+  color: #000;
+  text-transform: uppercase;
+  display: inline-block !important;
+  margin: auto;
+}
+
+.horce-greyhound .trackName[_ngcontent-wne-c149] {
+  font-family: var(--font_family_global);
+  text-transform: capitalize;
+  font-style: normal;
+  font-size: 15px !important;
+  padding: 8px 2px !important;
+  color: #000 !important;
+}
+
+.horce-greyhound .startTime[_ngcontent-wne-c149] {
+  display: inline-block;
+  font-family: var(--font_family_global);
+  color: #000;
+  text-align: center;
+  padding: 2px 8px !important;
+  font-style: normal;
+  border: 1px solid lightgrey !important;
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: 2px;
+  background-color: #f7f7f7;
+  margin-right: 5px;
+  margin-bottom: 4px;
+}
+
+.horce-greyhound .startTime[_ngcontent-wne-c149]:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  background: #e4e4e4;
+}
+
+.horce-greyhound .race-region[_ngcontent-wne-c149] {
+  display: flex;
+}
+
+.horce-greyhound .match_card_heading[_ngcontent-wne-c149] {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.horce-greyhound .heading[_ngcontent-wne-c149] {
+  font-family: var(--font_family_global);
+  letter-spacing: 0.5px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
+  color: #19233c;
+}
+
+.horce-greyhound .trackName[_ngcontent-wne-c149] {
+  font-family: var(--font_family_global);
+  font-style: normal;
+  padding: 1px 2px;
+  margin-right: 3px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 22px;
+  color: #707d9b;
+  text-transform: capitalize;
+}
+
+.horce-greyhound .row[_ngcontent-wne-c149] > *[_ngcontent-wne-c149] {
+  padding-right: unset !important;
+  padding-left: unset !important;
+}
+
+.horce-greyhound .tab-content[_ngcontent-wne-c149] {
+  padding: 0 10px !important;
+}

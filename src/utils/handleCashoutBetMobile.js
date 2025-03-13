@@ -1,5 +1,4 @@
 import { setPlaceBetValues } from "../redux/features/events/eventSlice";
-import { setShowLoginModal } from "../redux/features/stateSlice";
 
 /* handle place bet */
 export const handleCashoutBetMobile = (
@@ -53,7 +52,5 @@ export const handleCashoutBetMobile = (
         })
       );
     }
-  } else {
-    dispatch(setShowLoginModal(true));
   }
 };
