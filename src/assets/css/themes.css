@@ -1930,6 +1930,7 @@ button.btn-cashout {
 }
 
 .dOddsBox button {
+  height: 40px;
   font-size: 13px;
   text-transform: capitalize;
   border: none;
@@ -3860,6 +3861,7 @@ ul.live_virtual li input[type="checkbox"] {
 
   .odds_header button,
   .odds_body button {
+    height: 40px;
     width: 50%;
     /*    border-radius: 0 !important;*/
   }

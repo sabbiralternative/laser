@@ -6,6 +6,8 @@ import {
   setPlaceBetValues,
   setRunnerId,
 } from "../../../redux/features/events/eventSlice";
+import { Status } from "../../../const";
+import BetSlip from "./BetSlip";
 
 const MatchOddsBookmaker = ({ data }) => {
   const { eventId } = useParams();
@@ -81,6 +83,7 @@ const MatchOddsBookmaker = ({ data }) => {
         eventId: games?.eventId,
         totalSize: 0,
       };
+
       if (games?.btype == "FANCY") {
         dispatch(setRunnerId(games?.id));
       } else if (games?.btype && games?.btype !== "FANCY") {
@@ -229,7 +232,7 @@ const MatchOddsBookmaker = ({ data }) => {
                 <div className="minmax mm-fi">
                   <dl className="fancy-info">
                     <dt>Min/Max</dt>
-                    <dd>0-1</dd>
+                    <dd>100-{game?.maxLiabilityPerBet}</dd>
                   </dl>
                 </div>
               </div>
@@ -248,73 +251,115 @@ const MatchOddsBookmaker = ({ data }) => {
                 </div>
               </div>
             </div>
-            <div className="row mx-0 odds_body">
-              <div className="col-md-5 col-7 px-0">
-                <p className="team-name">England Masters</p>
-              </div>
-              <div className="col-md-7 col-5 px-0">
-                <div className="btn-group dOddsBox">
-                  <button className="back back2">
-                    7.6
-                    <span>161.78</span>
-                  </button>
-                  <button className="back back1">
-                    8 <span>20.26</span>
-                  </button>
-                  <button className="back">
-                    8.2
-                    <span>7.04</span>
-                  </button>
-                  <button className="lay">
-                    8.8
-                    <span>84.49</span>
-                  </button>
-                  <button className="lay lay1">
-                    9.4
-                    <span>135.96</span>
-                  </button>
-                  <button className="lay lay2">
-                    10.5
-                    <span>53.13</span>
-                  </button>
-                  <div className="suspended">suspended</div>
+            {game?.runners?.map((runner) => {
+              const pnl = pnlBySelection?.find(
+                (pnl) => pnl?.RunnerId === runner?.id
+              );
+              const predictOddValues = predictOdd?.find(
+                (val) => val?.id === runner?.id
+              );
+
+              return (
+                <div key={runner?.id} className="row mx-0 odds_body">
+                  <div className="col-md-5 col-7 px-0">
+                    <p className="team-name">{runner?.name}</p>
+                  </div>
+                  <div className="col-md-7 col-5 px-0">
+                    <div className="btn-group dOddsBox">
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "back",
+                            game,
+                            runner,
+                            runner?.back[2]?.price
+                          )
+                        }
+                        className="back back2"
+                      >
+                        {runner?.back?.[2]?.price}
+                        <span> {runner?.back?.[2]?.size}</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "back",
+                            game,
+                            runner,
+                            runner?.back[1]?.price
+                          )
+                        }
+                        className="back back1"
+                      >
+                        {runner?.back?.[1]?.price}
+                        <span> {runner?.back?.[1]?.size}</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "back",
+                            game,
+                            runner,
+                            runner?.back[0]?.price
+                          )
+                        }
+                        className="back"
+                      >
+                        {runner?.back?.[0]?.price}
+                        <span> {runner?.back?.[0]?.size}</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "lay",
+                            game,
+                            runner,
+                            runner?.lay[0]?.price
+                          )
+                        }
+                        className="lay"
+                      >
+                        {runner?.lay?.[0]?.price}
+                        <span> {runner?.lay?.[0]?.size}</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "lay",
+                            game,
+                            runner,
+                            runner?.lay?.[1]?.price
+                          )
+                        }
+                        className="lay lay1"
+                      >
+                        {runner?.lay?.[1]?.price}
+                        <span> {runner?.lay?.[1]?.size}</span>
+                      </button>
+                      <button
+                        onClick={() =>
+                          handleBetSlip(
+                            "lay",
+                            game,
+                            runner,
+                            runner?.lay?.[2]?.price
+                          )
+                        }
+                        className="lay lay2"
+                      >
+                        {runner?.lay?.[2]?.price}
+                        <span> {runner?.lay?.[2]?.size}</span>
+                      </button>
+
+                      {runner?.status === Status.SUSPENDED && (
+                        <div className="suspended">suspended</div>
+                      )}
+                    </div>
+                  </div>
+                  {runnerId === runner?.id && <BetSlip />}
                 </div>
-              </div>
-              {/* <BetSlip/> */}
-            </div>
-            <div className="row mx-0 odds_body">
-              <div className="col-md-5 col-7 px-0">
-                <p className="team-name">Australia Masters</p>
-              </div>
-              <div className="col-md-7 col-5 px-0">
-                <div className="btn-group dOddsBox">
-                  <button className="back back2">
-                    1.11
-                    <span>502.61</span>
-                  </button>
-                  <button className="back back1">
-                    1.12
-                    <span>1141.08</span>
-                  </button>
-                  <button className="back">
-                    1.13
-                    <span>658.01</span>
-                  </button>
-                  <button className="lay">
-                    1.14
-                    <span>135.17</span>
-                  </button>
-                  <button className="lay lay1">
-                    1.15
-                    <span>1075.59</span>
-                  </button>
-                  <button className="lay lay2">
-                    1.16
-                    <span>11613.09</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         );
       })}
