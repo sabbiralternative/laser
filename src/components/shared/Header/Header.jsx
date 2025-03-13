@@ -10,8 +10,10 @@ import toast from "react-hot-toast";
 import Dropdown from "./Dropdown";
 import { useState } from "react";
 import useBalance from "../../../hooks/balance";
+import ForceChangePassword from "../../modals/ForceChangePassword";
 
 const Header = () => {
+  const [forceChangePassword, setForceChangePassword] = useState(false);
   const { data } = useBalance();
   const [showDropdown, setShowDropdown] = useState(false);
   const { token, user } = useSelector((state) => state.auth);
@@ -49,7 +51,7 @@ const Header = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("bonusToken", bonusToken);
       if (data?.result?.changePassword) {
-        navigate("/change-password");
+        setForceChangePassword(true);
       } else {
         navigate("/");
         toast.success("Login successful");
@@ -88,6 +90,9 @@ const Header = () => {
 
   return (
     <div>
+      {forceChangePassword && (
+        <ForceChangePassword setForceChangePassword={setForceChangePassword} />
+      )}
       <div id="mainNav" className="navbar-custom">
         <div className="container-fluid">
           {token ? (
