@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { setPredictOdd } from "../../redux/features/events/eventSlice";
 import Fancy from "../../components/modules/SportDetails/Fancy";
 import MatchOddsBookmaker from "../../components/modules/SportDetails/MatchOddsBookmaker";
+import Score from "../../components/modules/SportDetails/Score";
 
 const SportDetails = () => {
   const { eventTypeId, eventId } = useParams();
@@ -122,6 +123,11 @@ const SportDetails = () => {
                   </div>
 
                   <div className="sr-widget-1" />
+                  {eventTypeId == 4 &&
+                    data?.result?.[0]?.score2?.length !== 0 &&
+                    !Array.isArray(data?.result?.[0]?.score2) && (
+                      <Score score2={data?.result?.[0]?.score2} />
+                    )}
                   {filterMatchOddsBookmaker?.length > 0 && (
                     <MatchOddsBookmaker data={filterMatchOddsBookmaker} />
                   )}
