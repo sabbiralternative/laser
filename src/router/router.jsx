@@ -6,6 +6,7 @@ import SportDetails from "../pages/SportDetails/SportDetails";
 import UnsettledBets from "../pages/UnsettledBets/UnsettledBets";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import Rules from "../pages/Rules/Rules";
+import Casino from "../pages/Casino/Casino";
 
 export const router = createBrowserRouter(
   [
@@ -37,10 +38,10 @@ export const router = createBrowserRouter(
           path: "/rules",
           element: <Rules />,
         },
-        // {
-        //   path: "/casino",
-        //   element: <Casino />,
-        // },
+        {
+          path: "/casino",
+          element: <Casino />,
+        },
         // {
         //   path: "/int-casino",
         //   element: <IntCasino />,

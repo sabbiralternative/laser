@@ -475,17 +475,25 @@ body {
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
   width: auto;
 }
 
 .tabcasino ul.nav-tabs li {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   /* new added */
   border: 1px solid darkgray;
 }
 
 .tabcasino ul.nav-tabs li a {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 13px;
   color: #fff;
   border-radius: 0;
