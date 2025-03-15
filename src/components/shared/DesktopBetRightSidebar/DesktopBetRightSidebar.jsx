@@ -27,7 +27,7 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
     <div className="col-xl-4">
       <div className="col-xl-4">
         <div className="openBets">
-          <div id="collapseSetting" className="collapse show">
+          {/* <div id="collapseSetting" className="collapse show">
             <div>
               <div style={{ position: "relative" }}>
                 <div className="stakeDiv">
@@ -95,7 +95,7 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           {IFrame?.result?.url && hasVideo && showIFrame && (
             <div
               id="collapseBasic"

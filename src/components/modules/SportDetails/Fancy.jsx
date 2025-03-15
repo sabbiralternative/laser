@@ -236,13 +236,7 @@ const Fancy = ({ data }) => {
                       <div>
                         <div className="row mx-0 odds_body">
                           <div className="col-md-5 col-7 px-0">
-                            <p
-                              onClick={() => handleGetLadder(pnl?.MarketId)}
-                              className="team-name"
-                              style={{
-                                cursor: pnl?.MarketId ? "pointer" : "auto",
-                              }}
-                            >
+                            <p className="team-name">
                               <b>{game?.name}</b>
                               {pnl && (
                                 <span
@@ -262,7 +256,19 @@ const Fancy = ({ data }) => {
                           <div className="col-md-7 col-5 px-0">
                             <div className="btn-group dOddsBox">
                               <button className="back back2" />
-                              <button className="back back1"></button>
+                              <button className="back back1">
+                                {pnl?.MarketId && (
+                                  <a
+                                    onClick={() =>
+                                      handleGetLadder(pnl?.MarketId)
+                                    }
+                                    className="book"
+                                  >
+                                    book
+                                  </a>
+                                )}
+                              </button>
+
                               <button
                                 onClick={() =>
                                   handleBetSlip(
