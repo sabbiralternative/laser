@@ -10,7 +10,7 @@ const PrivateRoute = ({ children }) => {
   if (Settings.forceLogin) {
     if (!token) {
       dispatch(logout());
-      return <Navigate to={"/"}></Navigate>;
+      return <Navigate to={"/login"}></Navigate>;
     }
   }
   return children;

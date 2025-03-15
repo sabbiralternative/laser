@@ -7,12 +7,21 @@ import UnsettledBets from "../pages/UnsettledBets/UnsettledBets";
 import ChangePassword from "../pages/ChangePassword/ChangePassword";
 import Rules from "../pages/Rules/Rules";
 import Casino from "../pages/Casino/Casino";
+import Login from "../pages/Login/Login";
+import PrivateRoute from "./PrivateRoute";
+import Register from "../pages/Register/Register";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import ForceChangePassword from "../components/modals/ForceChangePassword";
 
 export const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <App />,
+      element: (
+        <PrivateRoute>
+          <App />
+        </PrivateRoute>
+      ),
       children: [
         {
           index: true,
@@ -69,23 +78,23 @@ export const router = createBrowserRouter(
         // },
       ],
     },
-    // {
-    //   path: "/login",
-    //   element: <Login />,
-    // },
-    // {
-    //   path: "/register",
-    //   element: <Register />,
-    // },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+    },
 
-    // {
-    //   path: "/change-password-login",
-    //   element: <ChangePasswordLogin />,
-    // },
-    // {
-    //   path: "/forgot-password",
-    //   element: <ForgotPassword />,
-    // },
+    {
+      path: "/force-change-password",
+      element: <ForceChangePassword />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPassword />,
+    },
     // {
     //   path: "/casino/:name/:gameId",
     //   element: <CasinoIFrame />,
