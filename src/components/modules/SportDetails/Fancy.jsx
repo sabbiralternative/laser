@@ -10,6 +10,7 @@ import {
 import { Status } from "../../../const";
 import BetSlip from "./BetSlip";
 import Ladder from "../../modals/Ladder";
+import toast from "react-hot-toast";
 
 const Fancy = ({ data }) => {
   const [ladderData, setLadderData] = useState([]);
@@ -101,7 +102,7 @@ const Fancy = ({ data }) => {
 
       dispatch(setPlaceBetValues(betData));
     } else {
-      navigate("/login");
+      toast.error("Please login to continue");
     }
   };
 

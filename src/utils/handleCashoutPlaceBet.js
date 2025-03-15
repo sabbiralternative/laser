@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   setPlaceBetValues,
   setRunnerId,
@@ -67,6 +68,6 @@ export const handleCashOutPlaceBet = (
       dispatch(setRunnerId(team?.runner?.id));
     }
   } else {
-    navigate("/login");
+    toast.error("Please login to continue");
   }
 };

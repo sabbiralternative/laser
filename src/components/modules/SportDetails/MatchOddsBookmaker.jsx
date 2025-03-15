@@ -10,6 +10,7 @@ import { Status } from "../../../const";
 import BetSlip from "./BetSlip";
 import { Settings } from "../../../api";
 import { handleCashOutPlaceBet } from "../../../utils/handleCashoutPlaceBet";
+import toast from "react-hot-toast";
 
 const MatchOddsBookmaker = ({ data }) => {
   const { eventId } = useParams();
@@ -96,7 +97,7 @@ const MatchOddsBookmaker = ({ data }) => {
 
       dispatch(setPlaceBetValues(betData));
     } else {
-      navigate("/login");
+      toast.error("Please login to continue");
     }
   };
 

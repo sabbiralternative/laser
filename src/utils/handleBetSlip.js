@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import {
   setPlaceBetValues,
   setRunnerId,
@@ -9,8 +10,7 @@ export const handleBetSlip = (
   runner,
   exposer,
   dispatch,
-  token,
-  navigate
+  token
 ) => {
   if (token) {
     let selectionId;
@@ -106,6 +106,6 @@ export const handleBetSlip = (
 
     dispatch(setPlaceBetValues(betData));
   } else {
-    navigate("/login");
+    toast.error("Please login to continue");
   }
 };
