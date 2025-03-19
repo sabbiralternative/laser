@@ -17,8 +17,10 @@ import noPlay from "../img/icon-no_play.png";
 import bookmaker from "../img/icon-bookmaker.svg";
 import pinWhite from "../img/pin-white.svg";
 import tv from "../img/tv.svg";
+import logo from "../img/mylaser247/logo.gif";
 
 export default {
+  logo,
   tv,
   pinWhite,
   bookmaker,
