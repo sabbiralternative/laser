@@ -5,12 +5,15 @@ import { API } from "../api";
 import { logout } from "../redux/features/auth/authSlice";
 
 export const useBalance = () => {
-  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+
   return useQuery({
-    queryKey: ["balance"],
+    queryKey: ["balance", token],
+    enabled: token ? true : false,
     queryFn: async () => {
       const res = await AxiosSecure.post(API.balance);
+
       if (res?.data?.success === false && token) {
         dispatch(logout());
       } else if (res?.data?.success && token) {

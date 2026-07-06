@@ -233,6 +233,7 @@ const Header = () => {
                   <div className="app-search-box">
                     <div className="input-group">
                       <button
+                        style={{ width: "auto" }}
                         type="submit"
                         className="btn input-group-text px-1"
                       >
@@ -258,7 +259,11 @@ const Header = () => {
       <div className="topnav">
         <div className="container-fluid px-0">
           <nav className="navbar navbar-light navbar-expand-lg topnav-menu">
-            <div id="topnav-menu-content" className="collapse navbar-collapse">
+            <div
+              id="topnav-menu-content"
+              style={{ visibility: "visible" }}
+              className="collapse navbar-collapse"
+            >
               <ul className="navbar-nav">
                 {headerTab.map((tab) => (
                   <li key={tab.id} className="nav-item">

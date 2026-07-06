@@ -1,8 +1,8 @@
-import toast from "react-hot-toast";
 import {
   setPlaceBetValues,
   setRunnerId,
 } from "../redux/features/events/eventSlice";
+import { setShowLoginModal } from "../redux/features/global/globalSlice";
 
 export const handleBetSlip = (
   betType,
@@ -106,6 +106,6 @@ export const handleBetSlip = (
 
     dispatch(setPlaceBetValues(betData));
   } else {
-    toast.error("Please login to continue");
+    dispatch(setShowLoginModal(true));
   }
 };

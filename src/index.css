@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 a {
   cursor: pointer;
 }
@@ -179,7 +183,7 @@ html * {
   }
   .sc_cw-overs-info-mobile {
     display: flex !important;
-    border-top: 0.5px solid var(--color-bg-primary) !important;
+    border-top: 0.5px solid var(--theme-color) !important;
     padding-top: 2px !important;
     padding-bottom: 2px !important;
     color: #fff !important;
@@ -400,3 +404,474 @@ html * {
   }
 }
 /* Horse banner */
+
+/* Bet slip loading */
+.bg-bg_CasinoPopupBg {
+  background-color: #000000b3;
+}
+
+.bg-bg_Quaternary {
+  background-color: #fff;
+}
+
+/*!  Footer Games*/
+
+.popUpOpenAnimation1 {
+  animation: popUpOpenAnimation1 0.3s ease-in-out;
+}
+.popUpOpenAnimation2 {
+  animation: popUpOpenAnimation2 0.3s ease-in-out;
+}
+
+.max-w-screen-xsm {
+  max-width: 430px;
+}
+
+.shadow-passwordRulesBox {
+  --tw-shadow:
+    -4px -9px 63px 3px rgba(0, 0, 0, 0.1), 0px 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --tw-shadow-colored:
+    -4px -9px 63px 3px var(--tw-shadow-color),
+    0px 8px 10px -6px var(--tw-shadow-color);
+}
+.shadow-passwordRulesBox {
+  box-shadow:
+    var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000),
+    var(--tw-shadow);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes popUpOpenAnimation1 {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes popUpOpenAnimation2 {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+}
+/*!  Footer Games*/
+.text-primary {
+  color: #fff !important;
+}
+
+.bg-bg_ballRunning {
+  background-image: linear-gradient(90deg, #a7d8fd, #f9c9d4);
+}
+
+.animate-spin {
+  animation: spinner 1s linear infinite;
+}
+
+@keyframes spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.popUpOpenAnimation {
+  animation: popUpOpenAnimation 0.3s ease-in-out;
+}
+
+@keyframes popUpOpenAnimation {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bg-bg_color_bonusInfo {
+  background-image: linear-gradient(91deg, #535252 -1.96%, #312626 110.45%);
+}
+
+.bg-bg_color_lossback_card_bg {
+  background-image: linear-gradient(90deg, #15803d, #000, #000);
+}
+
+.text-text_color_lossback_amt {
+  color: #facc15;
+}
+
+.bg-bg_color_avlnowLossback {
+  background-color: #eab30833;
+}
+
+.bg-bg_color_lossbackSeeAll {
+  background-color: #16a34a;
+}
+
+.bg-bg_color_GiftCardBg {
+  background-image: linear-gradient(90deg, #743899, #9b1d39);
+}
+
+.bg-bg_color_giftCardInputBg {
+  background-color: #ffffff26;
+}
+
+.bg-bg_color_quaternary2 {
+  background-color: #545454;
+}
+
+.bg-bg_color_tertiary {
+  background-color: #48494b;
+}
+
+.bg-bg_color_quaternary {
+  background-color: #545454;
+}
+
+.bg-bg_Primary {
+  background: var(--theme-color);
+}
+.bg-primary {
+  background: var(--theme-color);
+}
+.border-primary {
+  border-color: var(--theme-color);
+}
+.text-primary {
+  color: #000;
+}
+
+.text-text_Danger {
+  color: #dc2626;
+}
+.bg-bg_Success {
+  background-color: #16a34a;
+}
+.popUpOpenAnimation {
+  animation: popUpOpenAnimation 0.3s ease-in-out;
+}
+
+@keyframes popUpOpenAnimation {
+  0% {
+    opacity: 0.5;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.bg-bg_transactionSuccessBg {
+  background-image: linear-gradient(89deg, #40af52, #2e924b 89.28%);
+}
+.bg-bg_transactionPendingBg {
+  background-image: linear-gradient(89deg, #fbc439, #fd9b07 89.28%);
+}
+
+.bg-bg_transactionFailedBg {
+  background-image: linear-gradient(89deg, #eb244f, #a90f31 89.28%);
+}
+@media screen and (max-width: 991px) {
+  .livematch {
+    display: flex;
+  }
+}
+
+.livematch {
+  display: flex;
+  align-items: center;
+  /* position: absolute;
+  left: 0;
+  top: 55px; */
+  width: 100%;
+  height: 38px;
+  background-color: #000;
+  overflow: hidden;
+  z-index: 10;
+  background-image: url(/icon/marquee-banner-CeR-zwuv.png);
+  background-repeat: no-repeat;
+}
+span.lm_icon {
+  background: #fff;
+  padding: 4px 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+@media screen and (max-width: 479px) {
+  span.lm_icon img {
+    width: 27.75px;
+    height: 27.75px;
+  }
+}
+
+.custom-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  position: relative;
+  display: block;
+}
+
+.custom-marquee {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+.lm_datas {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+.lm_datas div {
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-marquee__track {
+  display: inline-block;
+  min-width: 100%;
+  padding-left: 100%;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-name: custom-marquee-left;
+}
+.custom-marquee__track {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 8px;
+  height: 100%;
+  animation: marquee-scroll linear infinite;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translate(0);
+  }
+
+  to {
+    transform: translate(-100%);
+  }
+}
+
+@keyframes custom-marquee-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.lm_datas div {
+  display: inline-flex;
+  align-items: center;
+}
+
+.latest-event-item {
+  flex-shrink: 0;
+}
+.latest-event-item a {
+  display: inline-flex;
+  align-items: center;
+  background: var(--theme-color);
+  border-radius: 8px;
+  padding: 3px 10px;
+  text-decoration: none;
+}
+.lm_datas div {
+  display: inline-flex;
+  align-items: center;
+}
+.latest-event-item a b,
+.new-launch-text b {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-transform: capitalize;
+}
+/*! Download apk css start  */
+
+.promo-card {
+  max-width: 500px;
+  color: #000;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  padding: 5px 20px;
+  background: var(--theme-color);
+}
+
+.header-content img {
+  width: 70px;
+}
+
+.main-title {
+  font-size: 18px;
+  color: #000;
+  line-height: 1.2;
+}
+
+.promo-body {
+  padding: 5px 20px;
+}
+
+.intro-text,
+.closing-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 5px;
+  color: #000;
+}
+
+.benefits-title {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits-list li {
+  margin-bottom: 3px;
+  padding-left: 30px;
+  position: relative;
+  font-size: 14px;
+  color: #000;
+}
+
+/* Custom Checkmark */
+.benefits-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  background: var(--theme-color);
+  color: #000;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.benefits-list strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.download-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme-color);
+  text-decoration: none;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  transition: transform 0.2s;
+}
+
+.download-button:hover {
+  transform: scale(1.02);
+}
+
+.android-icon {
+  width: 16px;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .benefits-list li {
+    font-size: 12px;
+  }
+  .benefits-title {
+    font-size: 12px;
+  }
+  .main-title {
+    font-size: 16px;
+  }
+  .intro-text,
+  .closing-text {
+    font-size: 12px;
+  }
+  .download-button {
+    margin-bottom: 5px;
+  }
+}
+/*! Download apk css end  */
+.suspended__div {
+  width: 33.33333333%;
+  margin: 0 auto;
+}
+.suspended__div {
+  position: absolute;
+  /* left: 0; */
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  vertical-align: middle;
+  height: 38px;
+  background-color: #0a0a0abf;
+  border-radius: 0.4rem;
+}
+.suspended__div {
+  height: 100%;
+  z-index: 9;
+}
+.suspended__div b {
+  background: none;
+  border-radius: 30px;
+  color: red;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 13px;
+  text-transform: uppercase;
+}

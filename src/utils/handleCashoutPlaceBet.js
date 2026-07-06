@@ -11,8 +11,7 @@ export const handleCashOutPlaceBet = (
   dispatch,
   pnlBySelection,
   token,
-  navigate,
-  team
+  team,
 ) => {
   if (token) {
     if (games?.status === "OPEN" && team?.runner?.status === "OPEN") {
@@ -63,11 +62,12 @@ export const handleCashOutPlaceBet = (
           marketName: games?.name,
           eventId: games?.eventId,
           totalSize: team?.newStakeValue,
-        })
+          cashout: true,
+        }),
       );
       dispatch(setRunnerId(team?.runner?.id));
     }
   } else {
-    toast.error("Please login to continue");
+    toast.error("Please login to place bet");
   }
 };
