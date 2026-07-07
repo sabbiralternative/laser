@@ -30,14 +30,14 @@ export const headerTab = [
     class: "hightlight-menus",
     path: "/casino",
   },
+  // {
+  //   id: 6,
+  //   name: "Int Casino",
+  //   class: "hightlight-menus",
+  //   path: "/int-casino",
+  // },
   {
-    id: 6,
-    name: "Int Casino",
-    class: "hightlight-menus",
-    path: "/int-casino",
-  },
-  {
-    id: 7,
+    id: 550000,
     name: "Sports Book",
     class: "new-tag-menus sb-menus",
     path: "/sports-book",
@@ -53,64 +53,14 @@ export const headerTab = [
     group: 4339,
   },
   {
-    id: 10,
-    name: "Binary",
+    id: 7,
+    name: "Kabbadi",
     group: 5,
   },
   {
-    id: 11,
-    name: "Kabaddi",
-    group: 6,
-  },
-  {
-    id: 12,
+    id: 8,
     name: "Politics",
-    group: 17,
-  },
-  {
-    id: 13,
-    name: "Basketball",
-    group: 8,
-  },
-  {
-    id: 14,
-    name: "Baseball",
-    group: 9,
-  },
-  {
-    id: 15,
-    name: "Table Tennis",
-    group: 10,
-  },
-  {
-    id: 16,
-    name: "Volleyball",
-    group: 11,
-  },
-  {
-    id: 17,
-    name: "Ice Hockey",
-    group: 12,
-  },
-  {
-    id: 18,
-    name: "Rugby",
-    group: 13,
-  },
-  {
-    id: 19,
-    name: "Mixed Martial Arts",
-    group: 14,
-  },
-  {
-    id: 20,
-    name: "Darts",
-    group: 15,
-  },
-  {
-    id: 21,
-    name: "Futsal",
-    group: 16,
+    group: 6,
   },
 ];
 export const sidebarMenu = [
@@ -131,55 +81,23 @@ export const sidebarMenu = [
   },
 
   {
-    id: 8,
+    id: 5,
     name: "Horse Racing",
     group: 7,
   },
   {
-    id: 9,
+    id: 6,
     name: "Greyhound Racing",
     group: 4339,
   },
   {
-    id: 10,
-    name: "Binary",
+    id: 7,
+    name: "Kabbadi",
     group: 5,
   },
-
   {
-    id: 13,
-    name: "Basketball",
-    group: 8,
-  },
-  {
-    id: 14,
-    name: "Baseball",
-    group: 9,
-  },
-  {
-    id: 15,
-    name: "Table Tennis",
-    group: 10,
-  },
-  {
-    id: 16,
-    name: "Volleyball",
-    group: 11,
-  },
-  {
-    id: 17,
-    name: "Ice Hockey",
-    group: 12,
-  },
-
-  {
-    id: 20,
-    name: "Darts",
-    group: 15,
-  },
-  {
-    id: 21,
-    name: "Futsal",
-    group: 16,
+    id: 8,
+    name: "Politics",
+    group: 6,
   },
 ];

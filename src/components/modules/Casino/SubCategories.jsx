@@ -1,15 +1,29 @@
-const SubCategories = ({
-  categories,
-  setSelectedSubCategory,
-  selectedSubCategory,
-}) => {
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
+const SubCategories = ({ subCategories, product, selectedSubCategory }) => {
+  const activeRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (activeRef.current) {
+      activeRef.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center", // key part
+        block: "nearest",
+      });
+    }
+  }, [selectedSubCategory, subCategories, product]);
   return (
     <ul role="tablist" className="nav nav-tabs" aria-label="Tabs">
       <li
         style={{
           background: selectedSubCategory === "All" ? "var(--theme2-bg)" : "",
         }}
-        onClick={() => setSelectedSubCategory("All")}
+        ref={selectedSubCategory === "All" ? activeRef : null}
+        onClick={() => {
+          navigate(`/casino?product=${product}&category=All`);
+        }}
         className={`${
           selectedSubCategory === "All" ? "active " : ""
         } nav-item ng-star-inserted`}
@@ -38,14 +52,17 @@ const SubCategories = ({
           </span>
         </a>
       </li>
-      {categories?.map((category) => {
+      {subCategories?.map((category) => {
         return (
           <li
             style={{
               background:
                 selectedSubCategory === category ? "var(--theme2-bg)" : "",
             }}
-            onClick={() => setSelectedSubCategory(category)}
+            ref={category === selectedSubCategory ? activeRef : null}
+            onClick={() => {
+              navigate(`/casino?product=${product}&category=${category}`);
+            }}
             key={category}
             className={`nav-item ng-star-inserted  ${
               selectedSubCategory === category ? "active" : ""
@@ -71,10 +88,26 @@ const SubCategories = ({
                 <img
                   style={{ height: "40%" }}
                   className="img-fluid"
-                  src={`/src/assets/icon/${category
-                    ?.split(" ")
-                    .join("")
-                    .toLowerCase()}.svg`}
+                  src={`/icon/${category?.split(" ").join("").toLowerCase()}.svg`}
+                  onError={(e) => {
+                    if (e.target.src.endsWith(".svg")) {
+                      // Try webp only once after svg fails
+                      e.target.src = `/icon/${category
+                        ?.split(" ")
+                        .join("")
+                        .toLowerCase()}.webp`;
+                    } else if (e.target.src.endsWith(".webp")) {
+                      // Try webp only once after svg fails
+                      e.target.src = `/icon/${category
+                        ?.split(" ")
+                        .join("")
+                        .toLowerCase()}.png`;
+                    } else {
+                      // If webp fails, do nothing (leave broken img)
+                      // e.target.onerror = null;
+                      e.target.src = `/icon/all.svg`;
+                    }
+                  }}
                 />
                 {category}
               </span>

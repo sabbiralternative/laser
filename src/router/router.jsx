@@ -23,6 +23,10 @@ import Promotions from "../pages/Promotions/Promotions";
 import BonusStatement from "../pages/BonusStatement/BonusStatement";
 import LossbackBonus from "../pages/LossbackBonus/LossbackBonus";
 import AppOnlyBonus from "../pages/AppOnlyBonus/AppOnlyBonus";
+import Affiliate from "../pages/Affiliate/Affiliate";
+import IFrame from "../pages/IFrame/IFrame";
+import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateUserProfitLoss";
+import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement";
 
 export const router = createBrowserRouter(
   [
@@ -62,23 +66,7 @@ export const router = createBrowserRouter(
           path: "/casino",
           element: <Casino />,
         },
-        // {
-        //   path: "/int-casino",
-        //   element: <IntCasino />,
-        // },
-        // {
-        //   path: "/change-password",
-        //   element: <ChangePassword />,
-        // },
 
-        // {
-        //   path: "/change-btn-value",
-        //   element: <ChangeButtonValues />,
-        // },
-        // {
-        //   path: "/account-statement",
-        //   element: <AccountStatement />,
-        // },
         {
           path: "/deposit",
           element: <Deposit />,
@@ -122,6 +110,22 @@ export const router = createBrowserRouter(
         {
           path: "/app-only-bonus",
           element: <AppOnlyBonus />,
+        },
+        {
+          path: "/affiliate",
+          element: <Affiliate />,
+        },
+        {
+          path: "/:route/:name/:gameId",
+          element: <IFrame />,
+        },
+        {
+          path: "/affiliate/user-profit-loss",
+          element: <AffiliateUserProfitLoss />,
+        },
+        {
+          path: "/affiliate/user-statement",
+          element: <AffiliateUserStatement />,
         },
       ],
     },

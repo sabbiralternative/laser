@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useExposure } from "../../../hooks/exposure";
 import {
   setPlaceBetValues,
@@ -11,11 +11,13 @@ import BetSlip from "./BetSlip";
 import { Settings } from "../../../api";
 import { handleCashOutPlaceBet } from "../../../utils/handleCashoutPlaceBet";
 import toast from "react-hot-toast";
+import SpeedCashOut from "../../modals/SpeedCashOut/SpeedCashOut";
+import { isGameSuspended } from "../../../utils/isOddSuspended";
 
-const MatchOddsBookmaker = ({ data }) => {
+const MatchOdds = ({ data }) => {
+  const [speedCashOut, setSpeedCashOut] = useState(null);
   const { eventId } = useParams();
   const [teamProfit, setTeamProfit] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { runnerId, stake, predictOdd } = useSelector((state) => state.event);
   const { token } = useSelector((state) => state.auth);
@@ -86,7 +88,6 @@ const MatchOddsBookmaker = ({ data }) => {
         eventId: games?.eventId,
         totalSize: 0,
       };
-
       if (games?.btype == "FANCY") {
         dispatch(setRunnerId(games?.id));
       } else if (games?.btype && games?.btype !== "FANCY") {
@@ -97,7 +98,7 @@ const MatchOddsBookmaker = ({ data }) => {
 
       dispatch(setPlaceBetValues(betData));
     } else {
-      toast.error("Please login to continue");
+      toast.error("Please login to place a bet.");
     }
   };
 
@@ -106,9 +107,14 @@ const MatchOddsBookmaker = ({ data }) => {
     exposureB,
     runner1,
     runner2,
-    gameId
+    gameId,
   ) => {
-    let runner, largerExposure, layValue, oppositeLayValue, lowerExposure;
+    let runner,
+      largerExposure,
+      layValue,
+      oppositeLayValue,
+      lowerExposure,
+      speedCashOut;
 
     const pnlArr = [exposureA, exposureB];
     const isOnePositiveExposure = onlyOnePositive(pnlArr);
@@ -128,7 +134,12 @@ const MatchOddsBookmaker = ({ data }) => {
       oppositeLayValue = runner1?.lay?.[0]?.price;
       lowerExposure = exposureA;
     }
-
+    if (exposureA > 0 && exposureB > 0) {
+      const difference = Math.abs(exposureA - exposureB);
+      if (difference <= 10) {
+        speedCashOut = true;
+      }
+    }
     // Compute the absolute value of the lower exposure.
     let absLowerExposure = Math.abs(lowerExposure);
 
@@ -153,6 +164,11 @@ const MatchOddsBookmaker = ({ data }) => {
       oppositeLayValue,
       gameId,
       isOnePositiveExposure,
+      exposureA,
+      exposureB,
+      runner1,
+      runner2,
+      speedCashOut,
     };
   };
   function onlyOnePositive(arr) {
@@ -172,10 +188,10 @@ const MatchOddsBookmaker = ({ data }) => {
           const runner1 = runners[0];
           const runner2 = runners[1];
           const pnl1 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner1?.id
+            (pnl) => pnl?.RunnerId === runner1?.id,
           )?.pnl;
           const pnl2 = pnlBySelection?.find(
-            (pnl) => pnl?.RunnerId === runner2?.id
+            (pnl) => pnl?.RunnerId === runner2?.id,
           )?.pnl;
 
           if (pnl1 && pnl2 && runner1 && runner2) {
@@ -184,7 +200,7 @@ const MatchOddsBookmaker = ({ data }) => {
               pnl2,
               runner1,
               runner2,
-              game?.id
+              game?.id,
             );
             results.push(result);
           }
@@ -195,7 +211,7 @@ const MatchOddsBookmaker = ({ data }) => {
       setTeamProfit([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, eventId]);
+  }, [eventId, data]);
 
   let pnlBySelection;
   if (exposure?.pnlBySelection) {
@@ -204,10 +220,16 @@ const MatchOddsBookmaker = ({ data }) => {
   }
   return (
     <>
+      {speedCashOut && (
+        <SpeedCashOut
+          speedCashOut={speedCashOut}
+          setSpeedCashOut={setSpeedCashOut}
+        />
+      )}
       {data?.map((game) => {
         const teamProfitForGame = teamProfit?.find(
           (profit) =>
-            profit?.gameId === game?.id && profit?.isOnePositiveExposure
+            profit?.gameId === game?.id && profit?.isOnePositiveExposure,
         );
         return (
           <div
@@ -220,35 +242,47 @@ const MatchOddsBookmaker = ({ data }) => {
               <div className="col-md-12 col-8 px-0">
                 <p className="match-odds">
                   {game?.name?.toUpperCase()}
-                  {Settings.betFairCashOut &&
+                  {Settings.cashout &&
                     game?.runners?.length !== 3 &&
-                    game?.status === "OPEN" && (
-                      <>
-                        {teamProfitForGame?.profit ? (
-                          <button
-                            onClick={() =>
-                              handleCashOutPlaceBet(
-                                game,
-                                "lay",
-                                dispatch,
-                                pnlBySelection,
-                                token,
-                                navigate,
-                                teamProfitForGame
-                              )
-                            }
-                            className="btn-cashout ng-star-inserted"
-                          >
-                            cashout{" "}
-                            {teamProfitForGame?.profit &&
-                              `(${teamProfitForGame.profit.toFixed(2)})`}
-                          </button>
-                        ) : (
-                          <span className="btn-cashout ng-star-inserted">
-                            cashout
-                          </span>
-                        )}
-                      </>
+                    game?.status === "OPEN" &&
+                    !speedCashOut && (
+                      <button
+                        onClick={() =>
+                          handleCashOutPlaceBet(
+                            game,
+                            "lay",
+                            dispatch,
+                            pnlBySelection,
+                            token,
+                            teamProfitForGame,
+                          )
+                        }
+                        className="btn-cashout ng-star-inserted"
+                      >
+                        CASHOUT
+                        {teamProfitForGame?.profit &&
+                          `(${teamProfitForGame.profit.toFixed(0)})`}
+                      </button>
+                    )}
+                  {Settings.cashout &&
+                    game?.runners?.length !== 3 &&
+                    game?.status === "OPEN" &&
+                    game?.name !== "toss" &&
+                    speedCashOut && (
+                      <button
+                        onClick={() =>
+                          setSpeedCashOut({
+                            ...speedCashOut,
+                            market_name: game?.name,
+                            event_name: game?.eventName,
+                          })
+                        }
+                        style={{ background: "#82371b" }}
+                        disabled={isGameSuspended(game)}
+                        className="btn-cashout ng-star-inserted"
+                      >
+                        Speed Cashout
+                      </button>
                     )}
 
                   <a>
@@ -270,7 +304,11 @@ const MatchOddsBookmaker = ({ data }) => {
                 <div className="minmax mm-fi">
                   <dl className="fancy-info">
                     <dt>Min/Max</dt>
-                    <dd>100-{game?.maxLiabilityPerBet}</dd>
+                    <dd>
+                      {" "}
+                      {game?.minLiabilityPerBet}-{game?.maxLiabilityPerBet}-
+                      {game?.maxLiabilityPerBet}
+                    </dd>
                   </dl>
                 </div>
               </div>
@@ -283,7 +321,9 @@ const MatchOddsBookmaker = ({ data }) => {
                   <button className="min-max-bet">
                     <dl className="fancy-info">
                       <dt>Min/Max</dt>
-                      <dd>0-1</dd>
+                      <dd>
+                        {game?.minLiabilityPerBet}-{game?.maxLiabilityPerBet}
+                      </dd>
                     </dl>
                   </button>
                 </div>
@@ -291,10 +331,10 @@ const MatchOddsBookmaker = ({ data }) => {
             </div>
             {game?.runners?.map((runner) => {
               const pnl = pnlBySelection?.find(
-                (pnl) => pnl?.RunnerId === runner?.id
+                (pnl) => pnl?.RunnerId === runner?.id,
               );
               const predictOddValues = predictOdd?.find(
-                (val) => val?.id === runner?.id
+                (val) => val?.id === runner?.id,
               );
 
               return (
@@ -338,7 +378,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "back",
                             game,
                             runner,
-                            runner?.back[2]?.price
+                            runner?.back[2]?.price,
                           )
                         }
                         className="back back2"
@@ -352,7 +392,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "back",
                             game,
                             runner,
-                            runner?.back[1]?.price
+                            runner?.back[1]?.price,
                           )
                         }
                         className="back back1"
@@ -366,7 +406,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "back",
                             game,
                             runner,
-                            runner?.back[0]?.price
+                            runner?.back[0]?.price,
                           )
                         }
                         className="back"
@@ -380,7 +420,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "lay",
                             game,
                             runner,
-                            runner?.lay[0]?.price
+                            runner?.lay[0]?.price,
                           )
                         }
                         className="lay"
@@ -394,7 +434,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "lay",
                             game,
                             runner,
-                            runner?.lay?.[1]?.price
+                            runner?.lay?.[1]?.price,
                           )
                         }
                         className="lay lay1"
@@ -408,7 +448,7 @@ const MatchOddsBookmaker = ({ data }) => {
                             "lay",
                             game,
                             runner,
-                            runner?.lay?.[2]?.price
+                            runner?.lay?.[2]?.price,
                           )
                         }
                         className="lay lay2"
@@ -433,4 +473,4 @@ const MatchOddsBookmaker = ({ data }) => {
   );
 };
 
-export default MatchOddsBookmaker;
+export default MatchOdds;

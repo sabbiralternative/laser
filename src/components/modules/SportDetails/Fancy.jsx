@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useExposure } from "../../../hooks/exposure";
 import { useGetLadderMutation } from "../../../redux/features/events/events";
 import {
@@ -13,20 +13,28 @@ import Ladder from "../../modals/Ladder";
 import toast from "react-hot-toast";
 
 const Fancy = ({ data }) => {
-  const [ladderData, setLadderData] = useState([]);
-  const [getLadder] = useGetLadderMutation();
-  const { eventId } = useParams();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { runnerId } = useSelector((state) => state.event);
-  const { token } = useSelector((state) => state.auth);
-  const { data: exposure } = useExposure(eventId);
+  const fancyData = data?.filter(
+    (fancy) =>
+      fancy.btype === "FANCY" &&
+      fancy.tabGroupName === "Normal" &&
+      fancy?.visible == true,
+  );
 
-  const handleBetSlip = (betType, games, runner, price) => {
+  const [ladderData, setLadderData] = useState([]);
+  const { eventId } = useParams();
+
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.auth);
+  const { runnerId } = useSelector((state) => state.event);
+  const { data: exposure } = useExposure(eventId);
+  const [getLadder] = useGetLadderMutation();
+
+  const handleBetSlip = (betType, games, runner, price, bottomValue) => {
     if (token) {
       let selectionId;
       let runnerId;
       let eventTypeId;
+      if (games?.status !== "OPEN") return;
       if (!price) {
         return;
       }
@@ -43,10 +51,6 @@ const Fancy = ({ data }) => {
         selectionId = games?.id;
         runnerId = games?.id;
         eventTypeId = games?.eventTypeId;
-        const pnl = pnlBySelection?.find((p) => p?.RunnerId === games?.id);
-        if (pnl) {
-          updatedPnl.push(pnl?.pnl);
-        }
       } else if (games?.btype && games?.btype !== "FANCY") {
         selectionId = runner?.id;
         runnerId = games.runners.map((runner) => runner.id);
@@ -62,7 +66,7 @@ const Fancy = ({ data }) => {
         eventTypeId = games?.marketId;
         games?.runners?.forEach((runner) => {
           const pnl = pnlBySelection?.find(
-            (p) => p?.RunnerId === runner?.selectionId
+            (p) => p?.RunnerId === runner?.selectionId,
           );
           if (pnl) {
             updatedPnl.push(pnl?.pnl);
@@ -91,7 +95,9 @@ const Fancy = ({ data }) => {
         marketName: games?.name,
         eventId: games?.eventId,
         totalSize: 0,
+        bottomValue,
       };
+
       if (games?.btype == "FANCY") {
         dispatch(setRunnerId(games?.id));
       } else if (games?.btype && games?.btype !== "FANCY") {
@@ -102,7 +108,7 @@ const Fancy = ({ data }) => {
 
       dispatch(setPlaceBetValues(betData));
     } else {
-      toast.error("Please login to continue");
+      toast.error("Please login to place a bet.");
     }
   };
 
@@ -112,13 +118,15 @@ const Fancy = ({ data }) => {
     pnlBySelection = Object?.values(obj);
   }
 
-  const handleGetLadder = async (marketId) => {
-    if (marketId) {
-      const res = await getLadder({ marketId }).unwrap();
+  const handleGetLadder = async (pnl) => {
+    if (!pnl?.MarketId) {
+      return;
+    }
 
-      if (res.success) {
-        setLadderData(res.result);
-      }
+    const res = await getLadder({ marketId: pnl?.MarketId }).unwrap();
+
+    if (res.success) {
+      setLadderData(res.result);
     }
   };
   return (
@@ -136,77 +144,6 @@ const Fancy = ({ data }) => {
           </div>
         </div>
         <div type="nav de_fancyTab" className="tab-container">
-          <ul
-            role="tablist"
-            className="nav nav-nav de_fancyTab"
-            aria-label="Tabs"
-          >
-            <li className="active nav-item">
-              <a
-                href="javascript:void(0);"
-                role="tab"
-                className="nav-link active"
-                aria-controls="tab1"
-                aria-selected="true"
-                id="tab1-link"
-              >
-                <span />
-                <span style={{ textTransform: "uppercase" }}>all</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="javascript:void(0);"
-                role="tab"
-                className="nav-link"
-                aria-controls="tab1"
-                aria-selected="false"
-                id="tab1-link"
-              >
-                <span />
-                <span style={{ textTransform: "uppercase" }}>odd/even</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="javascript:void(0);"
-                role="tab"
-                className="nav-link"
-                aria-controls="tab1"
-                aria-selected="false"
-                id="tab1-link"
-              >
-                <span />
-                <span style={{ textTransform: "uppercase" }}>sessions</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="javascript:void(0);"
-                role="tab"
-                className="nav-link"
-                aria-controls="tab1"
-                aria-selected="false"
-                id="tab1-link"
-              >
-                <span />
-                <span style={{ textTransform: "uppercase" }}>w/p market</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                href="javascript:void(0);"
-                role="tab"
-                className="nav-link"
-                aria-controls="tab1"
-                aria-selected="false"
-                id="tab1-link"
-              >
-                <span />
-                <span style={{ textTransform: "uppercase" }}>xtra market</span>
-              </a>
-            </li>
-          </ul>
           <div className="tab-content">
             <tab
               id="tab1"
@@ -227,7 +164,7 @@ const Fancy = ({ data }) => {
                     </div>
                   </div>
                 </div>
-                {data?.map((game) => {
+                {fancyData?.map((game) => {
                   const pnl =
                     pnlBySelection?.find((pnl) => pnl?.MarketId === game?.id) ||
                     {};
@@ -251,7 +188,8 @@ const Fancy = ({ data }) => {
                               )}
                             </p>
                             <span className="mo_min-max">
-                              <b>min max</b>100- {game?.maxLiabilityPerBet}
+                              <b>min max</b>- {game?.minLiabilityPerBet}-{" "}
+                              {game?.maxLiabilityPerBet}
                             </span>
                           </div>
                           <div className="col-md-7 col-5 px-0">
@@ -260,9 +198,7 @@ const Fancy = ({ data }) => {
                               <button className="back back1">
                                 {pnl?.MarketId && (
                                   <a
-                                    onClick={() =>
-                                      handleGetLadder(pnl?.MarketId)
-                                    }
+                                    onClick={() => handleGetLadder(pnl)}
                                     className="book"
                                   >
                                     book
@@ -276,7 +212,7 @@ const Fancy = ({ data }) => {
                                     "lay",
                                     game,
                                     game?.runners?.[0],
-                                    game?.runners?.[0]?.lay?.[0]?.line
+                                    game?.runners?.[0]?.lay?.[0]?.line,
                                   )
                                 }
                                 className="lay"
@@ -293,7 +229,7 @@ const Fancy = ({ data }) => {
                                     "back",
                                     game,
                                     game?.runners?.[0],
-                                    game?.runners?.[0]?.back?.[0]?.line
+                                    game?.runners?.[0]?.back?.[0]?.line,
                                   )
                                 }
                                 className="back"
@@ -306,7 +242,10 @@ const Fancy = ({ data }) => {
                               </button>
                               <button className="min-max-bet">
                                 <dl className="fancy-info">
-                                  <dd>100- {game?.maxLiabilityPerBet}</dd>
+                                  <dd>
+                                    {game?.minLiabilityPerBet}-{" "}
+                                    {game?.maxLiabilityPerBet}
+                                  </dd>
                                 </dl>
                               </button>
                               {game?.status === Status.SUSPENDED && (

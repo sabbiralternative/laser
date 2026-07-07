@@ -16,7 +16,11 @@ export const eventsApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (data) => {
-        return handleDecryptData(JSON.stringify(data));
+        if (data?.ct) {
+          return handleDecryptData(JSON.stringify(data));
+        } else {
+          return data;
+        }
       },
     }),
     getEventDetails: builder.query({
@@ -31,7 +35,11 @@ export const eventsApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (data) => {
-        return handleDecryptData(JSON.stringify(data));
+        if (data?.ct) {
+          return handleDecryptData(JSON.stringify(data));
+        } else {
+          return data;
+        }
       },
     }),
     mac88: builder.query({
@@ -78,6 +86,15 @@ export const eventsApi = baseApi.injectEndpoints({
         };
       },
     }),
+    video: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `${API.accessToken}`,
+          method: "POST",
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
@@ -89,4 +106,5 @@ export const {
   useGetLadderMutation,
   useEditButtonValuesMutation,
   useAccountStatementMutation,
+  useVideoMutation,
 } = eventsApi;

@@ -2,16 +2,23 @@ import { useParams } from "react-router-dom";
 import DesktopBetRightSidebar from "../../components/shared/DesktopBetRightSidebar/DesktopBetRightSidebar";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { useGetEventDetailsQuery } from "../../redux/features/events/events";
-import { useEffect } from "react";
+import {
+  useGetEventDetailsQuery,
+  useVideoMutation,
+} from "../../redux/features/events/events";
+import { useEffect, useState } from "react";
 import { setPredictOdd } from "../../redux/features/events/eventSlice";
 import Fancy from "../../components/modules/SportDetails/Fancy";
-import MatchOddsBookmaker from "../../components/modules/SportDetails/MatchOddsBookmaker";
+import MatchOdds from "../../components/modules/SportDetails/MatchOdds";
 import Score from "../../components/modules/SportDetails/Score";
 import HorseGreyhoundSportsDetails from "../../components/modules/SportDetails/HorseGreyhoundSportsDetails";
+import { Settings } from "../../api";
+import Bookmaker from "../../components/modules/SportDetails/Bookmaker";
 
 const SportDetails = () => {
+  const [sportsVideo, { data: iframe }] = useVideoMutation();
   const { eventTypeId, eventId } = useParams();
+  const [profit, setProfit] = useState(0);
   const dispatch = useDispatch();
   const { placeBetValues, price, stake } = useSelector((state) => state.event);
 
@@ -19,20 +26,28 @@ const SportDetails = () => {
     { eventTypeId, eventId },
     {
       pollingInterval: 1000,
-    }
-  );
-  const filterMatchOddsBookmaker = data?.result?.filter(
-    (game) =>
-      (game.btype === "MATCH_ODDS" || game.btype === "BOOKMAKER") &&
-      game?.visible == true
+    },
   );
 
-  const fancyData = data?.result?.filter(
-    (fancy) =>
-      fancy.btype === "FANCY" &&
-      fancy.tabGroupName === "Normal" &&
-      fancy?.visible == true
-  );
+  useEffect(() => {
+    if (
+      price &&
+      stake &&
+      placeBetValues?.back &&
+      placeBetValues?.btype === "MATCH_ODDS"
+    ) {
+      const multiply = price * stake;
+      setProfit(formatNumber(multiply - stake));
+    } else if (
+      price &&
+      stake &&
+      placeBetValues?.back &&
+      (placeBetValues?.btype === "BOOKMAKER" ||
+        placeBetValues?.btype === "BOOKMAKER2")
+    ) {
+      setProfit(formatNumber(1 + price / stake));
+    }
+  }, [price, stake, profit, placeBetValues, setProfit]);
 
   useEffect(() => {
     let total;
@@ -95,6 +110,39 @@ const SportDetails = () => {
     return hasDecimal ? parseFloat(value?.toFixed(2)) : value;
   };
 
+  const matchOdds = data?.result?.filter(
+    (game) =>
+      game.btype === "MATCH_ODDS" &&
+      game?.visible == true &&
+      game?.name !== "tied match",
+  );
+  const bookmaker = data?.result?.filter(
+    (game) =>
+      game.btype === "BOOKMAKER" &&
+      game?.visible == true &&
+      game?.name !== "tied match",
+  );
+
+  const tiedMatch = data?.result?.filter(
+    (game) =>
+      (game.btype === "MATCH_ODDS" || game.btype === "BOOKMAKER") &&
+      game?.visible == true &&
+      game?.name === "tied match",
+  );
+
+  useEffect(() => {
+    const handleGetVideo = async () => {
+      const payload = {
+        eventTypeId: eventTypeId,
+        eventId: eventId,
+        type: "video",
+        casinoCurrency: Settings.casino_currency,
+      };
+      await sportsVideo(payload).unwrap();
+    };
+    handleGetVideo();
+  }, []);
+
   return (
     <div>
       <Sidebar />
@@ -126,18 +174,36 @@ const SportDetails = () => {
                   ) : null}
 
                   <div className="sr-widget-1" />
-                  {eventTypeId == 4 &&
-                    data?.result?.[0]?.score2?.length !== 0 &&
-                    !Array.isArray(data?.result?.[0]?.score2) && (
-                      <Score score2={data?.result?.[0]?.score2} />
-                    )}
-                  {filterMatchOddsBookmaker?.length > 0 && (
-                    <MatchOddsBookmaker data={filterMatchOddsBookmaker} />
+                  {eventTypeId == 4 && data?.iscore && (
+                    <Score iscore={data?.iscore} />
                   )}
-                  {fancyData?.length > 0 && <Fancy data={fancyData} />}
+                  {data?.score && data?.score?.tracker !== null && (
+                    <div className="w-full overflow-hidden h-[125px]">
+                      <iframe
+                        id="videoComponent"
+                        className="w-full h-auto relative overflow-hidden   bg-transparent"
+                        src={data?.score?.tracker}
+                        width="100%"
+                        allowfullscreen=""
+                      ></iframe>
+                    </div>
+                  )}
+                  {iframe?.result?.url && data?.score?.hasVideo && (
+                    <iframe
+                      id="videoComponent"
+                      className="w-full max-h-[309px] sm:max-h-[144px] lg:max-h-[309px] relative overflow-hidden h-[55vw] md:h-[58vw] bg-transparent"
+                      src={iframe?.result?.url}
+                      width="100%"
+                      allowfullscreen=""
+                    ></iframe>
+                  )}
+                  {matchOdds?.length > 0 && <MatchOdds data={matchOdds} />}
+                  {bookmaker?.length > 0 && <Bookmaker data={bookmaker} />}
+                  {data?.result?.length > 0 && <Fancy data={data?.result} />}
                   {eventTypeId == 7 || eventTypeId == 4339 ? (
                     <HorseGreyhoundSportsDetails data={data?.result} />
                   ) : null}
+                  {tiedMatch?.length > 0 && <MatchOdds data={tiedMatch} />}
                 </div>
 
                 <DesktopBetRightSidebar hasVideo={data?.score?.hasVideo} />

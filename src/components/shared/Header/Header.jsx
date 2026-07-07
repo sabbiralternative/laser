@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLogo } from "../../../context/ApiProvider";
 import { headerTab } from "../../../static/group";
 import { useLoginMutation } from "../../../redux/features/auth/authApi";
@@ -8,25 +8,60 @@ import { Settings } from "../../../api";
 import { setUser } from "../../../redux/features/auth/authSlice";
 import toast from "react-hot-toast";
 import Dropdown from "./Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useBalance from "../../../hooks/balance";
 import ForceChangePassword from "../../modals/ForceChangePassword";
+import WarningCondition from "../WarningCondition/WarningCondition";
+import {
+  setClosePopUpForForever,
+  setShowAPKModal,
+  setShowAppPopUp,
+} from "../../../redux/features/global/globalSlice";
+import { useLanguage } from "../../../context/LanguageProvider";
+import Error from "../../modals/Error/Error";
+import AppPopup from "./AppPopUp";
+import DownloadAPK from "../../modals/DownloadAPK/DownloadAPK";
 
 const Header = () => {
+  const { setLanguage } = useLanguage();
+  const { showAppPopUp, windowWidth, showAPKModal, closePopupForForever } =
+    useSelector((state) => state?.global);
   const [forceChangePassword, setForceChangePassword] = useState(false);
   const { data } = useBalance();
   const [showDropdown, setShowDropdown] = useState(false);
-  const { token, user } = useSelector((state) => state.auth);
+  const { token, user, bonusToken } = useSelector((state) => state.auth);
   const { logo } = useLogo();
   const navigate = useNavigate();
   const [handleLogin] = useLoginMutation();
   const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const [showWarning, setShowWarning] = useState(false);
+  const [gameInfo, setGameInfo] = useState({ gameName: "", gameId: "" });
+  const location = useLocation();
 
   const handleNavigate = (tab) => {
     if (tab?.group || tab?.group === 0) {
+      console.log(tab);
       navigate(`/sports/${tab?.group}`);
-    } else {
+    }
+
+    if (tab?.path === "/sports-book") {
+      if (token) {
+        if (bonusToken) {
+          return toast.error("Bonus wallet is available only on sports.");
+        }
+        if (Settings.casino_currency !== "AED") {
+          navigate(`/casino/${tab.name.replace(/ /g, "")}/${tab.id}`);
+        } else {
+          setGameInfo({ gameName: "", gameId: "" });
+          setGameInfo({ gameName: tab.name, gameId: tab.id });
+          setShowWarning(true);
+        }
+      } else {
+        toast.error("Please login to access the game");
+      }
+    }
+    if (tab?.path !== "/sports-book" && !tab?.group) {
       navigate(tab?.path);
     }
   };
@@ -88,11 +123,54 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    const apk_modal_shown = sessionStorage.getItem("apk_modal_shown");
+    const closePopupForForever = localStorage.getItem("closePopupForForever");
+    dispatch(setClosePopUpForForever(closePopupForForever ? true : false));
+    if (location?.state?.pathname === "/apk" || location.pathname === "/apk") {
+      sessionStorage.setItem("apk_modal_shown", true);
+      localStorage.setItem("closePopupForForever", true);
+      dispatch(setClosePopUpForForever(true));
+      localStorage.removeItem("installPromptExpiryTime");
+    } else {
+      if (!apk_modal_shown) {
+        dispatch(setShowAPKModal(true));
+      }
+      if (!closePopupForForever) {
+        const expiryTime = localStorage.getItem("installPromptExpiryTime");
+        const currentTime = new Date().getTime();
+
+        if ((!expiryTime || currentTime > expiryTime) && Settings.apk_link) {
+          localStorage.removeItem("installPromptExpiryTime");
+
+          dispatch(setShowAppPopUp(true));
+        }
+      }
+    }
+  }, [
+    dispatch,
+    windowWidth,
+    showAppPopUp,
+    location?.state?.pathname,
+    location.pathname,
+  ]);
+  useEffect(() => {
+    setLanguage(localStorage.getItem("language") || "english");
+  }, [setLanguage]);
+  if (Settings.app_only && !closePopupForForever) {
+    return <Error />;
+  }
+
   return (
     <div>
+      {showWarning && (
+        <WarningCondition gameInfo={gameInfo} setShowWarning={setShowWarning} />
+      )}
       {forceChangePassword && (
         <ForceChangePassword setForceChangePassword={setForceChangePassword} />
       )}
+      {!Settings.apk_link && showAppPopUp && windowWidth < 1040 && <AppPopup />}
+      {Settings.apk_link && showAPKModal && <DownloadAPK />}
       <div id="mainNav" className="navbar-custom">
         <div className="container-fluid">
           {token ? (

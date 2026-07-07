@@ -1,17 +1,18 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const CasinoThumbnail = ({ data }) => {
+  const { token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const handleNavigateToIFrame = (casino) => {
-    navigate(
-      `/casino/${casino?.name?.replace(/ /g, "")}/${casino?.event_type_id}`
-    );
+    if (!token) return navigate("/login");
+    navigate(`/casino/${casino?.name?.replace(/ /g, "")}/${casino?.id}`);
   };
   return (
     <>
-      {data?.map((casino) => (
+      {data?.map((casino, i) => (
         <div
-          key={casino?.id}
+          key={`${casino?.id}-${casino?.category}-${casino?.product}-${i}`}
           className="col-md-2 col-4 align-self-center text-center ng-star-inserted"
         >
           <div className="casino position-relative">
@@ -20,7 +21,7 @@ const CasinoThumbnail = ({ data }) => {
               onClick={() => handleNavigateToIFrame(casino)}
               className="btn casino-btn"
             >
-              Play Now
+              {casino?.name}
             </a>
           </div>
         </div>
