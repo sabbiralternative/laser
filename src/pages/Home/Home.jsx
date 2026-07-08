@@ -1,50 +1,98 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import images from "../../assets/images";
 import Footer from "../../components/shared/Footer/Footer";
+import Notification from "../../components/ui/Notification/Notification";
+import Banner from "../../components/modules/Home/Banner";
+import { useSelector } from "react-redux";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Settings } from "../../api";
+import WarningCondition from "../../components/shared/WarningCondition/WarningCondition";
+import { useIndexQuery } from "../../hooks";
+import { headerTab } from "../../static/group";
 
 const Home = () => {
+  const { data: casino } = useIndexQuery({
+    type: "99_casino_dashboard",
+  });
+  const navigate = useNavigate();
+  const { token, bonusToken } = useSelector((state) => state.auth);
+  const [showWarning, setShowWarning] = useState(false);
+  const [gameInfo, setGameInfo] = useState({ gameName: "", gameId: "" });
+  const handleNavigate = (tab) => {
+    if (token) {
+      if (bonusToken) {
+        return toast.error("Bonus wallet is available only on sports.");
+      }
+      if (Settings.casino_currency !== "AED") {
+        navigate(`/casino/${tab.name.replace(/ /g, "")}/${tab.id}`);
+      } else {
+        setGameInfo({ gameName: "", gameId: "" });
+        setGameInfo({ gameName: tab.name, gameId: tab.id });
+        setShowWarning(true);
+      }
+    } else {
+      toast.error("Please login to access the game");
+    }
+  };
+
+  const handleNavigateToIFrame = (casino) => {
+    if (!token) return navigate("/login");
+    navigate(`/casino?product=${casino?.product}&category=${casino?.category}`);
+  };
+
+  const handleNavigateEvent = (tab) => {
+    if (tab?.group || tab?.group === 0) {
+      console.log(tab);
+      navigate(`/sports/${tab?.group}`);
+    }
+
+    if (tab?.path === "/sports-book") {
+      if (token) {
+        if (bonusToken) {
+          return toast.error("Bonus wallet is available only on sports.");
+        }
+        if (Settings.casino_currency !== "AED") {
+          navigate(`/casino/${tab.name.replace(/ /g, "")}/${tab.id}`);
+        } else {
+          setGameInfo({ gameName: "", gameId: "" });
+          setGameInfo({ gameName: tab.name, gameId: tab.id });
+          setShowWarning(true);
+        }
+      } else {
+        toast.error("Please login to access the game");
+      }
+    }
+    if (tab?.path !== "/sports-book" && !tab?.group && tab?.group !== 0) {
+      navigate(tab?.path);
+    }
+  };
   return (
     <div>
+      {showWarning && (
+        <WarningCondition gameInfo={gameInfo} setShowWarning={setShowWarning} />
+      )}
       <section>
         <div className="container mobile-px HomemainSliders">
-          <div className="row">
-            <div className="col-md-12">
-              <div>
-                <div className="marquee-box">
-                  <h4>
-                    <i className="mdi mdi-microphone-outline" />
-                    News
-                  </h4>
-                  <marquee />
-                </div>
-              </div>
-            </div>
-          </div>
+          <Notification />
           <div className="row">
             <div className="col-md-12">
               <ul className="home-navigation-bar">
-                <li>
-                  <Link to="#/guest/sports/4">Cricket</Link>
-                </li>
-                <li>
-                  <Link to="#/guest/sports/1">Football</Link>
-                </li>
-                <li>
-                  <Link to="#/guest/sports/2">Tennis</Link>
-                </li>
-                <li>
-                  <Link to="#/guest/sports/99999">Casino</Link>
-                </li>
-                <li>
-                  <Link to="#/guest/sports/99998">Int Casino</Link>
-                </li>
+                {headerTab.map((item) => {
+                  return (
+                    <li key={item.id} className="ng-star-inserted">
+                      <a onClick={() => handleNavigateEvent(item)}>
+                        {" "}
+                        {item.name}{" "}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
-              <img className="img-fluid" src={images.sliderOne} />
-            </div>
+            <Banner />
           </div>
         </div>
       </section>
@@ -58,127 +106,67 @@ const Home = () => {
                   <h2>sports</h2>
                 </Link>
                 <div className="sportText">
-                  <p className="live_icon">
+                  {/* <p className="live_icon">
                     <span /> LIVE
-                  </p>
+                  </p> */}
                   <div>
-                    <Link to="#/guest/sports/4">
+                    <Link to="/sports/4">
                       <h3>Cricket</h3>
-                      <span id="count">4</span>
+                      {/* <span id="count">4</span> */}
                     </Link>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/1">
+                    <Link to="/sports/1">
                       <h3>Football</h3>
-                      <span id="count">56</span>
+                      {/* <span id="count">56</span> */}
                     </Link>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/2">
+                    <Link to="/sports/2">
                       <h3>Tennis</h3>
-                      <span id="count">19</span>
+                      {/* <span id="count">19</span> */}
                     </Link>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/99999">
+                    <Link to="/casino?product=All&category=All">
                       <h3>Casino</h3>
-                      <span id="count">0</span>
+                      {/* <span id="count">0</span> */}
                     </Link>
                   </div>
+
                   <div>
-                    <Link to="#/guest/sports/99998">
-                      <h3>Int Casino</h3>
-                      <span id="count">0</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="javascript:void(0);">
+                    <a
+                      onClick={() =>
+                        handleNavigate({ name: "sports-book", id: 550000 })
+                      }
+                    >
                       <h3>Sports book</h3>
-                      <span id="count">0</span>
-                    </Link>
+                      {/* <span id="count">0</span> */}
+                    </a>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/7">
+                    <Link to="/sports/7">
                       <h3>Horse Racing</h3>
-                      <span id="count">0</span>
+                      {/* <span id="count">0</span> */}
                     </Link>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/4339">
+                    <Link to="/sports/4339">
                       <h3>Greyhound Racing</h3>
-                      <span id="count">0</span>
+                      {/* <span id="count">0</span> */}
                     </Link>
                   </div>
+
                   <div>
-                    <Link to="#/guest/sports/99990">
-                      <h3>Binary</h3>
-                      <span id="count">1</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/99994">
+                    <Link to="/sports/5">
                       <h3>Kabaddi</h3>
-                      <span id="count">0</span>
+                      {/* <span id="count">0</span> */}
                     </Link>
                   </div>
                   <div>
-                    <Link to="#/guest/sports/2378961">
+                    <Link to="/sports/6">
                       <h3>Politics</h3>
-                      <span id="count">0</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/7522">
-                      <h3>Basketball</h3>
-                      <span id="count">21</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/7511">
-                      <h3>Baseball</h3>
-                      <span id="count">1</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/20">
-                      <h3>Table Tennis</h3>
-                      <span id="count">9</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/998917">
-                      <h3>Volleyball</h3>
-                      <span id="count">3</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/7524">
-                      <h3>Ice Hockey</h3>
-                      <span id="count">29</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/5">
-                      <h3>Rugby</h3>
-                      <span id="count">0</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/26420387">
-                      <h3>Mixed Martial Arts</h3>
-                      <span id="count">0</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/3503">
-                      <h3>Darts</h3>
-                      <span id="count">0</span>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link to="#/guest/sports/29">
-                      <h3>Futsal</h3>
-                      <span id="count">1</span>
+                      {/* <span id="count">0</span> */}
                     </Link>
                   </div>
                 </div>
@@ -186,50 +174,38 @@ const Home = () => {
             </div>
             <div className="col-md-6">
               <div className="sportDiv">
-                <Link to="/sports-book">
+                <a
+                  onClick={() =>
+                    handleNavigate({ name: "sports-book", id: 550000 })
+                  }
+                >
                   <img className="img-fluid" src={images.sportBook} />
                   <h2>sports book</h2>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
           <div className="row mt-0 mb2">
-            <div className="col-6 px2" tabIndex={0}>
-              <div className="sportDiv">
-                <img
-                  src="https://tezcdn.io/casino/casino-highlight/aviator-730-280.gif"
-                  className="img-fluid"
-                />
-                <h2>Aviator</h2>
-              </div>
-            </div>
-            <div className="col-6 px2" tabIndex={0}>
-              <div className="sportDiv">
-                <img
-                  src="https://tezcdn.io/casino/casino-highlight/evoplay-730-280.gif"
-                  className="img-fluid"
-                />
-                <h2>Mines</h2>
-              </div>
-            </div>
-            <div className="col-6 px2" tabIndex={0}>
-              <div className="sportDiv">
-                <img
-                  src="https://tezcdn.io/casino/casino-highlight/fungames-730_280.gif"
-                  className="img-fluid"
-                />
-                <h2>Fun Games</h2>
-              </div>
-            </div>
-            <div className="col-6 px2" tabIndex={0}>
-              <div className="sportDiv">
-                <img
-                  src="https://tezcdn.io/casino/casino-highlight/wingogames-730-280.gif"
-                  className="img-fluid"
-                />
-                <h2>Color Prediction</h2>
-              </div>
-            </div>
+            {casino?.highlight_casino?.map((item) => {
+              return (
+                <div
+                  onClick={() => handleNavigateToIFrame(item)}
+                  key={item?.id}
+                  className="col-6 col-md-3 px2"
+                  tabIndex={0}
+                >
+                  <div className="sportDiv">
+                    <img
+                      style={{ width: "100%" }}
+                      src={item?.url_thumb}
+                      alt={item?.name}
+                      className="img-fluid"
+                    />
+                    <h2> {item?.name}</h2>
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div className="row">
             <div className="col-md-3 col-6">

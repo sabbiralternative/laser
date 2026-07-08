@@ -701,7 +701,7 @@ div:where(.swal2-container) div:where(.swal2-actions) {
 /* App pop up */
 .android-popup {
   width: 100%;
-  background: var(--secondary-color);
+  background: var(--theme-color);
   padding: 5px;
   display: flex;
   align-items: center;
@@ -782,7 +782,7 @@ div:where(.swal2-container) div:where(.swal2-actions) {
   gap: 2px;
 }
 .app-text h2 {
-  color: #000;
+  color: #fff;
 
   font-size: 11px;
   font-style: normal;
@@ -818,7 +818,7 @@ div:where(.swal2-container) div:where(.swal2-actions) {
   gap: 12px;
   flex-shrink: 0;
   border-radius: 8px;
-  background: var(--color-bg-primary);
+  background: var(--log-button);
 }
 
 .install-btn button {
@@ -1515,3 +1515,162 @@ html * {
   }
 }
 /* Horse banner */
+.ipl-loksabha {
+  display: none;
+}
+.casinop-title {
+  text-align: left;
+  margin: 0 0 3px;
+  text-transform: uppercase;
+  background: var(--log-button);
+  color: #fff;
+  padding: 8px 5px;
+  font-size: 16px;
+}
+a.mail-link {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #000;
+  text-align: center;
+  display: block;
+  font-size: 11px;
+}
+.popularDiv {
+  position: relative;
+  margin-bottom: 0;
+}
+.popularDiv svg {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #02020282;
+}
+.popularDiv svg text {
+  text-transform: uppercase;
+  animation: stroke 3s infinite alternate;
+  stroke-width: 3;
+  stroke: red;
+  font-size: 90px;
+  font-family: fangsong;
+}
+.popularDiv i {
+  position: absolute;
+  right: 23%;
+  top: 20px;
+  font-size: 55px;
+  color: #fff;
+  animation: bounce 3s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  height: auto;
+  padding: 0;
+}
+@keyframes bounce {
+  50% {
+    transform: translate(-15px);
+    color: #ff0;
+  }
+}
+@keyframes stroke {
+  0% {
+    fill: #fff700;
+    stroke: #fff;
+    stroke-dashoffset: 25%;
+    stroke-dasharray: 0 50%;
+    stroke-width: 4;
+  }
+  70% {
+    fill: #fff200;
+    stroke: #fff;
+  }
+  80% {
+    fill: #00ff07;
+    stroke: #fff;
+    stroke-width: 4px;
+  }
+  to {
+    fill: #d4ff00;
+    stroke: #fff;
+    stroke-dashoffset: -25%;
+    stroke-dasharray: 50% 0;
+    stroke-width: 0;
+  }
+}
+.home-navigation-bar {
+  text-align: center;
+  margin: 0;
+  display: inline-block;
+  padding: 0;
+  background: #000;
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+.home-navigation-bar li {
+  list-style: none;
+  display: inline-block;
+}
+.home-navigation-bar li a {
+  padding: 7px 10px;
+  text-transform: capitalize;
+  font-size: 14px;
+  display: block;
+  color: #fff !important;
+  border-right: 1px solid #333;
+}
+.home-navigation-bar li:last-child {
+  border-right: none;
+}
+.blinker {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+@media (min-width: 991px) {
+  .home-navigation-bar {
+    display: none;
+  }
+}
+@media (max-width: 991px) {
+  .popularDiv i {
+    right: 50px;
+    top: -4px;
+    font-size: 25px;
+  }
+  .mobile-hide {
+    display: none !important;
+  }
+  .ipl-loksabha {
+    width: 100%;
+    background: linear-gradient(180deg, #3729fa 0%, #2f64f6 80%, #2f67f6 100%);
+    box-shadow: inset 0 -10px 20px #01929f;
+    display: inline-flex;
+  }
+  .ipl-loksabha a {
+    width: calc(100% - 1px);
+    text-align: center;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px;
+    color: #fff;
+    margin: 0 1px;
+  }
+  .ipl-loksabha .ipl {
+    box-shadow: 0 0 2px 1px #fff;
+  }
+  .ipl-loksabha .loksabha {
+    box-shadow: 0 0 2px 1px #fff;
+  }
+}
+
+.container {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}

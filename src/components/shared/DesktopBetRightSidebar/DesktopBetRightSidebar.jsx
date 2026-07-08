@@ -2,8 +2,11 @@ import { useParams } from "react-router-dom";
 import { useAccessTokenMutation } from "../../../redux/features/casino/casino.api";
 import { useState } from "react";
 import { useCurrentBets } from "../../../hooks/currentBets";
+import { useSelector } from "react-redux";
+import EditStake from "./EditStake";
 
 const DesktopBetRightSidebar = ({ hasVideo }) => {
+  const { showEditStake } = useSelector((state) => state.global);
   const { eventTypeId, eventId } = useParams();
   const { data: currentBet } = useCurrentBets(eventId);
   const [getIFrame, { data: IFrame }] = useAccessTokenMutation();
@@ -27,75 +30,8 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
     <div className="col-xl-4">
       <div className="col-xl-4">
         <div className="openBets">
-          {/* <div id="collapseSetting" className="collapse show">
-            <div>
-              <div style={{ position: "relative" }}>
-                <div className="stakeDiv">
-                  <h3>stake</h3>
-                  <dl id className="setting-block stake-setting">
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
-                    <dd className="ng-star-inserted">
-                      <input
-                        type="number"
-                        className="ng-untouched ng-pristine ng-valid"
-                      />
-                    </dd>
+          {showEditStake && <EditStake />}
 
-                    <dd className="col-stake_edit">
-                      <a
-                        href="javascript:;"
-                        id="save"
-                        className="btn-send ui-link"
-                      >
-                        Save
-                      </a>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-          </div> */}
           {IFrame?.result?.url && hasVideo && showIFrame && (
             <div
               id="collapseBasic"

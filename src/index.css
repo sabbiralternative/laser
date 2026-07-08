@@ -742,7 +742,7 @@ span.lm_icon {
 
 .main-title {
   font-size: 18px;
-  color: #000;
+  color: #fff;
   line-height: 1.2;
 }
 
@@ -783,7 +783,7 @@ span.lm_icon {
   position: absolute;
   left: 0;
   background: var(--theme-color);
-  color: #000;
+  color: #fff;
   width: 18px;
   height: 18px;
   border-radius: 3px;
@@ -874,4 +874,7 @@ span.lm_icon {
   letter-spacing: 1px;
   padding: 5px 13px;
   text-transform: uppercase;
+}
+.collapse {
+  visibility: visible !important;
 }

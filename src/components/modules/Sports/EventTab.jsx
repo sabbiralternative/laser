@@ -1,0 +1,232 @@
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Settings } from "../../../api";
+import WarningCondition from "../../shared/WarningCondition/WarningCondition";
+
+const EventTab = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { token, bonusToken } = useSelector((state) => state.auth);
+  const [showWarning, setShowWarning] = useState(false);
+  const [gameInfo, setGameInfo] = useState({ gameName: "", gameId: "" });
+
+  const handleNavigateEvent = (tab) => {
+    if (token) {
+      if (bonusToken) {
+        return toast.error("Bonus wallet is available only on sports.");
+      }
+      if (Settings.casino_currency !== "AED") {
+        navigate(`/casino/${tab.name.replace(/ /g, "")}/${tab.id}`);
+      } else {
+        setGameInfo({ gameName: "", gameId: "" });
+        setGameInfo({ gameName: tab.name, gameId: tab.id });
+        setShowWarning(true);
+      }
+    } else {
+      toast.error("Please login to access the game");
+    }
+  };
+  return (
+    <div className="eventlistdesign">
+      {showWarning && (
+        <WarningCondition gameInfo={gameInfo} setShowWarning={setShowWarning} />
+      )}
+      <div className="pills navtab-bg desktop-nav-pills">
+        <ul
+          role="tablist"
+          className="nav nav-pills navtab-bg desktop-nav-pills "
+          aria-label="Tabs"
+        >
+          <li className="active nav-item ng-star-inserted">
+            <Link
+              to="/sports/4"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/4" ? "active" : ""}`}
+              aria-controls="goto-0"
+              aria-selected="true"
+              id="goto-0-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/4.svg"
+                />{" "}
+                Cricket
+              </div>
+            </Link>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/1"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/1" ? "active" : ""}`}
+              aria-controls="goto-1"
+              aria-selected="false"
+              id="goto-1-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/1.svg"
+                />{" "}
+                Football
+              </div>
+            </Link>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/2"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/2" ? "active" : ""}`}
+              aria-controls="goto-2"
+              aria-selected="false"
+              id="goto-2-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/2.svg"
+                />{" "}
+                Tennis
+              </div>
+            </Link>
+          </li>
+
+          <li className="nav-item tab-hightlight ng-star-inserted">
+            <Link
+              to="/casino?product=All&category=All"
+              role="tab"
+              className={`nav-link  ${pathname === "/casino" ? "active" : ""}`}
+              aria-controls="goto-5"
+              aria-selected="false"
+              id="goto-5-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/99998.png"
+                />{" "}
+                Casino
+              </div>
+            </Link>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <a
+              onClick={() =>
+                handleNavigateEvent({ name: "sports-book", id: 550000 })
+              }
+              role="tab"
+              className="nav-link"
+              aria-controls="goto-6"
+              aria-selected="false"
+              id="goto-6-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/99991.svg"
+                />{" "}
+                Sports book
+              </div>
+            </a>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/7"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/7" ? "active" : ""}`}
+              aria-controls="goto-7"
+              aria-selected="false"
+              id="goto-7-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/7.svg"
+                />{" "}
+                Horse Racing
+              </div>
+            </Link>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/4339"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/4339" ? "active" : ""}`}
+              aria-controls="goto-8"
+              aria-selected="false"
+              id="goto-8-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/4339.png"
+                />{" "}
+                Greyhound Racing{" "}
+              </div>
+            </Link>
+          </li>
+
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/5"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/5" ? "active" : ""}`}
+              aria-controls="goto-10"
+              aria-selected="false"
+              id="goto-10-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/99994.svg"
+                />{" "}
+                Kabaddi
+              </div>
+            </Link>
+          </li>
+          <li className="nav-item ng-star-inserted">
+            <Link
+              to="/sports/6"
+              role="tab"
+              className={`nav-link  ${pathname === "/sports/6" ? "active" : ""}`}
+              aria-controls="goto-11"
+              aria-selected="false"
+              id="goto-11-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/2378961.png"
+                />{" "}
+                Politics
+              </div>
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+export default EventTab;

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 
 const Rules = () => {
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
 
   const handleToggleTab = (t) => {
     if (tab === t) {
@@ -33,6 +33,140 @@ const Rules = () => {
                             style={{ display: "block" }}
                             aria-multiselectable="true"
                           >
+                            <div
+                              _ngcontent-psk-c49
+                              heading="Speed Cash"
+                              className="panel panel-open"
+                              style={{ display: "block" }}
+                              _nghost-psk-c47
+                            >
+                              <div
+                                _ngcontent-psk-c47
+                                className="panel card panel-default"
+                              >
+                                <div
+                                  onClick={() => handleToggleTab(0)}
+                                  _ngcontent-psk-c47
+                                  role="tab"
+                                  className="panel-heading card-header panel-enabled"
+                                >
+                                  <div
+                                    _ngcontent-psk-c47
+                                    className="panel-title"
+                                  >
+                                    <div
+                                      _ngcontent-psk-c47
+                                      role="button"
+                                      className="accordion-toggle"
+                                      aria-expanded="true"
+                                    >
+                                      <button
+                                        _ngcontent-psk-c47
+                                        type="button"
+                                        className="btn btn-link ng-star-inserted"
+                                      >
+                                        {" "}
+                                        Speed Cash{" "}
+                                      </button>
+                                      {/**/}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  _ngcontent-psk-c47
+                                  role="tabpanel"
+                                  className="panel-collapse collapse in show"
+                                  aria-hidden="false"
+                                  style={{
+                                    display: tab === 0 ? "block" : "none",
+                                  }}
+                                >
+                                  <div
+                                    _ngcontent-psk-c47
+                                    className="panel-body card-block card-body"
+                                  >
+                                    <table
+                                      _ngcontent-psk-c49
+                                      className="table table-bordered"
+                                    >
+                                      <tbody _ngcontent-psk-c49>
+                                        <tr _ngcontent-psk-c49>
+                                          <td _ngcontent-psk-c49>
+                                            <span
+                                              _ngcontent-psk-c49
+                                              className="text-danger"
+                                            >
+                                              1. The customer is receiving plus
+                                              on both selections, making him
+                                              eligible for 'Speed Cash'.
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr _ngcontent-psk-c49>
+                                          <td _ngcontent-psk-c49>
+                                            <span
+                                              _ngcontent-psk-c49
+                                              className="text-danger"
+                                            >
+                                              2. Once a customer uses 'Speed
+                                              Cash', their existing book will be
+                                              settled, after which they will
+                                              need to place bets again by
+                                              playing.
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr _ngcontent-psk-c49>
+                                          <td _ngcontent-psk-c49>
+                                            <span
+                                              _ngcontent-psk-c49
+                                              className="text-danger"
+                                            >
+                                              3. A customer wins 110 points on
+                                              player A and 100 points on player
+                                              B. After deducting 3% from the
+                                              smaller winning amount, the
+                                              customer will use 'Speed Cash' and
+                                              can add 97 points to their main
+                                              balance.
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr _ngcontent-psk-c49>
+                                          <td _ngcontent-psk-c49>
+                                            <span
+                                              _ngcontent-psk-c49
+                                              className="text-danger"
+                                            >
+                                              4. The difference between Player A
+                                              winning points &amp; Player B
+                                              winning points must not be greater
+                                              than 50. Ex: Player A = 110,
+                                              Player B = 170 Diff = 60 which is
+                                              &gt; 50 so, this is not eligible
+                                              for speed cash
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr _ngcontent-psk-c49>
+                                          <td _ngcontent-psk-c49>
+                                            <span
+                                              _ngcontent-psk-c49
+                                              className="text-danger"
+                                            >
+                                              5. If you use 'Speed Cash' and the
+                                              match result is tied or Abandoned,
+                                              your main balance won't be
+                                              affected.
+                                            </span>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             {/* heading="Football Fancy" */}
                             <div
                               heading="Football Fancy"

@@ -154,16 +154,6 @@ const SportDetails = () => {
                 <div className="col-xl-8 px-lg-0">
                   {eventTypeId != 7 && eventTypeId != 4339 ? (
                     <div className="row">
-                      <div className="col-md-12">
-                        <div>
-                          <div className="marquee-box">
-                            <h4>
-                              <i className="mdi mdi-microphone-outline" />
-                              News
-                            </h4>
-                          </div>
-                        </div>
-                      </div>
                       <div className="col-12 bg-dark">
                         <h2 className="eventTitle">
                           {data?.result?.[0]?.eventName}

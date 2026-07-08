@@ -27,6 +27,8 @@ import Affiliate from "../pages/Affiliate/Affiliate";
 import IFrame from "../pages/IFrame/IFrame";
 import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateUserProfitLoss";
 import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement";
+import MultiMarket from "../pages/MultiMarket/MultiMarket";
+import Account from "../pages/Account/Account";
 
 export const router = createBrowserRouter(
   [
@@ -126,6 +128,14 @@ export const router = createBrowserRouter(
         {
           path: "/affiliate/user-statement",
           element: <AffiliateUserStatement />,
+        },
+        {
+          path: "/multi-market",
+          element: <MultiMarket />,
+        },
+        {
+          path: "/account",
+          element: <Account />,
         },
       ],
     },

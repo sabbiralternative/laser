@@ -16,6 +16,7 @@ const initialState = {
   showAPKModal: false,
   closePopupForForever: false,
   headerHeight: 0,
+  showEditStake: false,
 };
 
 const stateSlice = createSlice({
@@ -67,6 +68,9 @@ const stateSlice = createSlice({
     setHeaderHeight: (state, action) => {
       state.headerHeight = action.payload;
     },
+    setShowEditStake: (state, action) => {
+      state.showEditStake = action.payload;
+    },
   },
 });
 
@@ -86,6 +90,7 @@ export const {
   setShowAPKModal,
   setShowAppPopUp,
   setHeaderHeight,
+  setShowEditStake,
 } = stateSlice.actions;
 
 export default stateSlice.reducer;

@@ -16,16 +16,23 @@ import {
   setClosePopUpForForever,
   setShowAPKModal,
   setShowAppPopUp,
+  setShowEditStake,
 } from "../../../redux/features/global/globalSlice";
 import { useLanguage } from "../../../context/LanguageProvider";
 import Error from "../../modals/Error/Error";
 import AppPopup from "./AppPopUp";
 import DownloadAPK from "../../modals/DownloadAPK/DownloadAPK";
+import Search from "./Search";
 
 const Header = () => {
   const { setLanguage } = useLanguage();
-  const { showAppPopUp, windowWidth, showAPKModal, closePopupForForever } =
-    useSelector((state) => state?.global);
+  const {
+    showAppPopUp,
+    windowWidth,
+    showAPKModal,
+    closePopupForForever,
+    showEditStake,
+  } = useSelector((state) => state?.global);
   const [forceChangePassword, setForceChangePassword] = useState(false);
   const { data } = useBalance();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -61,7 +68,7 @@ const Header = () => {
         toast.error("Please login to access the game");
       }
     }
-    if (tab?.path !== "/sports-book" && !tab?.group) {
+    if (tab?.path !== "/sports-book" && !tab?.group && tab?.group !== 0) {
       navigate(tab?.path);
     }
   };
@@ -169,7 +176,7 @@ const Header = () => {
       {forceChangePassword && (
         <ForceChangePassword setForceChangePassword={setForceChangePassword} />
       )}
-      {!Settings.apk_link && showAppPopUp && windowWidth < 1040 && <AppPopup />}
+      {Settings.apk_link && showAppPopUp && windowWidth < 1040 && <AppPopup />}
       {Settings.apk_link && showAPKModal && <DownloadAPK />}
       <div id="mainNav" className="navbar-custom">
         <div className="container-fluid">
@@ -304,32 +311,7 @@ const Header = () => {
               </span>
             </Link>
           </div>
-          {token && (
-            <ul className="list-unstyled topnav-menu topnav-menu-left m-0">
-              <li className="d-none d-xl-block">
-                <form className="app-search ng-untouched ng-pristine ng-valid">
-                  <div className="app-search-box">
-                    <div className="input-group">
-                      <button
-                        style={{ width: "auto" }}
-                        type="submit"
-                        className="btn input-group-text px-1"
-                      >
-                        <i className="mdi mdi-search-web"></i>
-                      </button>
-                      <input
-                        type="text"
-                        placeholder="Search Events"
-                        className="form-control ng-untouched ng-pristine ng-valid"
-                        aria-expanded="false"
-                        aria-autocomplete="list"
-                      />
-                    </div>
-                  </div>
-                </form>
-              </li>
-            </ul>
-          )}
+          {token && <Search />}
 
           <div className="clearfix" />
         </div>
@@ -346,7 +328,7 @@ const Header = () => {
                 {headerTab.map((tab) => (
                   <li key={tab.id} className="nav-item">
                     <a
-                      className={tab.class ? tab.class : ""}
+                      className={tab.className ? tab.className : ""}
                       onClick={() => handleNavigate(tab)}
                     >
                       {tab.name}
@@ -354,6 +336,15 @@ const Header = () => {
                   </li>
                 ))}
               </ul>
+              <a
+                onClick={() => dispatch(setShowEditStake(!showEditStake))}
+                data-bs-toggle="collapse"
+                className="cogSetting ng-star-inserted collapsed"
+                aria-expanded="false"
+              >
+                {" "}
+                Setting <i className="mdi mdi-cog"></i>
+              </a>
             </div>
           </nav>
         </div>

@@ -462,7 +462,9 @@ const MatchOdds = ({ data }) => {
                       )}
                     </div>
                   </div>
-                  {runnerId === runner?.id && <BetSlip />}
+                  {runnerId === runner?.id && (
+                    <BetSlip currentPlaceBetEvent={game} />
+                  )}
                 </div>
               );
             })}

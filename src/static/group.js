@@ -28,7 +28,7 @@ export const headerTab = [
     id: 5,
     name: "Casino",
     class: "hightlight-menus",
-    path: "/casino",
+    path: "/casino?product=All&category=All",
   },
   // {
   //   id: 6,

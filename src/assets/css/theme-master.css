@@ -932,22 +932,22 @@ a.dropdown-item.logout-btn:hover {
   background: var(--theme-navbar);
 }
 
-.app-search-box typeahead-container {
+.app-search-box .typeahead-container {
   padding: 0;
   border-radius: 0;
   transform: translate3d(0px, 25px, 0px) !important;
 }
 
-.app-search-box typeahead-container button.dropdown-item {
+.app-search-box .typeahead-container button.dropdown-item {
   padding-left: 4px;
   color: #333;
 }
 
-.app-search-box typeahead-container button.dropdown-item .searchAnchor {
+.app-search-box .typeahead-container button.dropdown-item .searchAnchor {
   color: #333 !important;
 }
 
-.app-search-box typeahead-container button.dropdown-item:hover {
+.app-search-box .typeahead-container button.dropdown-item:hover {
   background: #f5faff;
 }
 
@@ -2804,7 +2804,7 @@ p.match-odds.premium_cricket {
 }
 
 /*search modal*/
-.searchingmodal typeahead-container {
+.searchingmodal .typeahead-container {
   width: 100%;
   height: calc(100vh - 300px) !important;
   top: 64px !important;

@@ -46,7 +46,6 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
       {Settings?.branchWhatsapplink && (
         <a
           onClick={() => handleOpenSocialLink(Settings?.branchWhatsapplink)}
-          to="/profile"
           className="dropdown-item notify-item"
         >
           Customer Support
@@ -145,34 +144,6 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         </Link>
       )}
 
-      <Link
-        onClick={closeDropdown}
-        to="/reports/account-statement"
-        className="dropdown-item notify-item"
-      >
-        account statement
-      </Link>
-      <Link
-        onClick={closeDropdown}
-        to="/unsettled-bets"
-        className="dropdown-item notify-item"
-      >
-        Unsettled Bets
-      </Link>
-      <Link
-        onClick={closeDropdown}
-        to="/reports/profit-loss"
-        className="dropdown-item notify-item"
-      >
-        profit/loss
-      </Link>
-      <Link
-        onClick={closeDropdown}
-        to="/market-analysis"
-        className="dropdown-item notify-item"
-      >
-        Market Analysis
-      </Link>
       <Link
         onClick={closeDropdown}
         to="/change-password"

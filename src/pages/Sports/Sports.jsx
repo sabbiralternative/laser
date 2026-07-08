@@ -1,9 +1,13 @@
-import Banner from "../../components/modules/Sports/Banner";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 import Events from "../../components/modules/Sports/Events";
 import DesktopBetRightSidebar from "../../components/shared/DesktopBetRightSidebar/DesktopBetRightSidebar";
+import Banner from "../../components/modules/Home/Banner";
+import Notification from "../../components/ui/Notification/Notification";
+import EventTab from "../../components/modules/Sports/EventTab";
+import { useLocation } from "react-router-dom";
 
 const Sports = () => {
+  const { pathname } = useLocation();
   return (
     <div>
       <Sidebar />
@@ -15,15 +19,10 @@ const Sports = () => {
                 <div className="col-xl-8 px-lg-1">
                   <div className="card">
                     <div className="card-body p-0">
-                      <div>
-                        <div className="marquee-box">
-                          <h4>
-                            <i className="mdi mdi-microphone-outline" />
-                            News
-                          </h4>
-                        </div>
-                      </div>
+                      <Notification />
                       <Banner />
+                      {pathname !== "/sports/0" && <EventTab />}
+
                       <Events />
                     </div>
                   </div>
