@@ -290,14 +290,6 @@ const MatchOdds = ({ data }) => {
                   </a>
                 </p>
               </div>
-              <div className="col-md-6 col-4 text-end px-0 d-inline-block d-lg-none">
-                <a
-                  href="javascript:void(0)"
-                  className="btn btn-tv-bets mob_open_bets"
-                >
-                  <span>Bets</span>
-                </a>
-              </div>
             </div>
             <div className="row mx-0 odds_header">
               <div className="col-md-5 col-7 px-0">

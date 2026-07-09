@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { sidebarMenu } from "../../../static/group";
+import { useLanguage } from "../../../context/LanguageProvider";
+import { languageValue } from "../../../utils/language";
+import { LanguageKey } from "../../../const";
 
 const Sidebar = () => {
+  const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
   const handleNavigate = (tab) => {
     if (tab?.group || tab?.group === 0) {
@@ -10,6 +13,45 @@ const Sidebar = () => {
       navigate(tab?.path);
     }
   };
+
+  const sidebarMenu = [
+    {
+      id: 2,
+      name: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      group: 4,
+    },
+    {
+      id: 3,
+      name: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      group: 1,
+    },
+    {
+      id: 4,
+      name: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      group: 2,
+    },
+
+    {
+      id: 5,
+      name: languageValue(valueByLanguage, LanguageKey.HORSE),
+      group: 7,
+    },
+    {
+      id: 6,
+      name: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      group: 4339,
+    },
+    {
+      id: 7,
+      name: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      group: 5,
+    },
+    {
+      id: 8,
+      name: "Politics",
+      group: 6,
+    },
+  ];
   return (
     <div className="left-side-menu">
       <div data-simplebar="init" className="h-100">

@@ -5,8 +5,12 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/auth/authSlice";
+import { useLanguage } from "../../context/LanguageProvider";
+import { languageValue } from "../../utils/language";
+import { LanguageKey } from "../../const";
 
 const ChangePassword = () => {
+  const { valueByLanguage } = useLanguage();
   const dispatch = useDispatch();
   const [handleChangePassword] = useChangePasswordMutation();
 
@@ -40,7 +44,13 @@ const ChangePassword = () => {
                 <div className="row my-1">
                   <div className="col-md-12">
                     <div className="userTables">
-                      <h2 className="ng-star-inserted">change password</h2>
+                      <h2 className="ng-star-inserted">
+                        {" "}
+                        {languageValue(
+                          valueByLanguage,
+                          LanguageKey.CHANGE_PASSWORD,
+                        )}
+                      </h2>
 
                       <form
                         onSubmit={handleSubmit(onSubmit)}
@@ -94,7 +104,10 @@ const ChangePassword = () => {
                             </div>
                             <div className="form-group mt-2">
                               <button type="submit" className="btn cp-btn">
-                                change password
+                                {languageValue(
+                                  valueByLanguage,
+                                  LanguageKey.CHANGE_PASSWORD,
+                                )}
                               </button>
                             </div>
                           </div>

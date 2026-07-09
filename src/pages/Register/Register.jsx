@@ -15,7 +15,11 @@ import {
 import useWhatsApp from "../../hooks/whatsapp";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/auth/authSlice";
+import { useLanguage } from "../../context/LanguageProvider";
+import { languageValue } from "../../utils/language";
+import { LanguageKey } from "../../const";
 const Register = () => {
+  const { valueByLanguage } = useLanguage();
   const dispatch = useDispatch();
   const referralCode = localStorage.getItem("referralCode");
   const { refetch } = useWhatsApp();
@@ -131,7 +135,7 @@ const Register = () => {
                 </div>
                 <div className="featured-box-login featured-box-secundary default">
                   <h4 className="text-center">
-                    Register
+                    {languageValue(valueByLanguage, LanguageKey.REGISTER)}
                     <FontAwesomeIcon icon={faHandPointDown} className="ml-2" />
                   </h4>
                   <form
@@ -265,7 +269,7 @@ const Register = () => {
                         type="submit"
                         className="btn btn-submit btn-login"
                       >
-                        Register
+                        {languageValue(valueByLanguage, LanguageKey.REGISTER)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>

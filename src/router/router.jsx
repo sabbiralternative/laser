@@ -29,6 +29,7 @@ import AffiliateUserProfitLoss from "../pages/AffiliateUserProfitLoss/AffiliateU
 import AffiliateUserStatement from "../pages/AffiliateUserStatement/AffiliateUserStatement";
 import MultiMarket from "../pages/MultiMarket/MultiMarket";
 import Account from "../pages/Account/Account";
+import PopularEvent from "../pages/PopularEvent/PopularEvent";
 
 export const router = createBrowserRouter(
   [
@@ -137,6 +138,10 @@ export const router = createBrowserRouter(
           path: "/account",
           element: <Account />,
         },
+        {
+          path: "/popular-event",
+          element: <PopularEvent />,
+        },
       ],
     },
     {
@@ -156,6 +161,7 @@ export const router = createBrowserRouter(
       path: "/forgot-password",
       element: <ForgotPassword />,
     },
+
     // {
     //   path: "/casino/:name/:gameId",
     //   element: <CasinoIFrame />,

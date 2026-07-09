@@ -179,19 +179,29 @@ const Fancy = ({ data }) => {
                                 <b>{game?.name}</b>
                                 {pnl && (
                                   <span
-                                    className={`${
+                                    className={`ml-4 ${
                                       pnl?.pnl > 0 ? "plus-book" : "minus-book"
                                     }`}
                                   >
-                                    <i className="mdi mdi-arrow-right"></i>
+                                    {/* <i className="mdi mdi-arrow-right"></i> */}
                                     {pnl?.pnl}{" "}
                                   </span>
                                 )}
+                                <button className="lg:hidden">
+                                  {pnl?.MarketId && (
+                                    <a
+                                      onClick={() => handleGetLadder(pnl)}
+                                      className="book"
+                                    >
+                                      book
+                                    </a>
+                                  )}
+                                </button>
                               </p>
-                              <span className="mo_min-max">
+                              {/* <span className="mo_min-max">
                                 <b>min max</b>- {game?.minLiabilityPerBet}-{" "}
                                 {game?.maxLiabilityPerBet}
-                              </span>
+                              </span> */}
                             </div>
                             <div className="col-md-7 col-5 px-0">
                               <div className="btn-group dOddsBox">

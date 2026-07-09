@@ -1,4 +1,3 @@
-import Banner from "../../components/modules/Sports/Banner";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 import { useEffect, useMemo, useState } from "react";
 import Categories from "../../components/modules/Casino/Categories";
@@ -83,21 +82,6 @@ const Casino = () => {
                 <div className="col-xl-8 px-lg-1">
                   <div className="card">
                     <div className="card-body p-0">
-                      <div>
-                        <div className="marquee-box">
-                          <h4>
-                            <i className="mdi mdi-microphone-outline" />
-                            News
-                          </h4>
-                          <marquee>
-                            🏆𝐖𝐎𝐌𝐄𝐍 𝐏𝐑𝐄𝐌𝐈𝐄𝐑 𝐋𝐄𝐀𝐆𝐔𝐄 𝐂𝐔𝐏 𝐖𝐈𝐍𝐍𝐄𝐑🏆 𝐌𝐀𝐑𝐊𝐄𝐓 𝐒𝐓𝐀𝐑𝐓𝐄𝐃
-                            𝐈𝐍 𝐎𝐔𝐑 𝐄𝐗𝐂𝐇𝐀𝐍𝐆𝐄🏆 𝐎𝐔𝐑 𝐄𝐗𝐂𝐋𝐔𝐒𝐈𝐕𝐄 𝐏𝐑𝐄𝐌𝐈𝐔𝐌 𝐌𝐀𝐑𝐊𝐄𝐓 𝐅𝐎𝐑
-                            (𝐒𝐑𝐋) 𝐈𝐒 𝐍𝐎𝐖 𝐒𝐓𝐀𝐑𝐓𝐄𝐃 𝐈𝐍 𝐎𝐔𝐑 𝐄𝐗𝐂𝐇𝐀𝐍𝐆𝐄 , 𝐃𝐑𝐄𝐀𝐌 𝐁𝐈𝐆 𝐖𝐈𝐍
-                            𝐁𝐈𝐆 💰
-                          </marquee>
-                        </div>
-                      </div>
-                      <Banner />
                       <div className="row">
                         <div className="col-12">
                           <div className="eventlistdesign">

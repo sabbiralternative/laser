@@ -56,14 +56,17 @@ const Notification = () => {
                   News
                 </h4>
                 <marquee>
-                  {filteredNotification?.map((item) => (
-                    <p
-                      key={item?.id}
-                      className="flex gap-1 font-bold text-xs mr-[100vw] "
-                    >
-                      {item?.text}
-                    </p>
-                  ))}
+                  <div className="flex items-center justify-center gap-x-96 h-[25px]">
+                    {" "}
+                    {filteredNotification?.map((item) => (
+                      <p
+                        key={item?.id}
+                        className="flex gap-1 font-bold text-xs "
+                      >
+                        {item?.text}
+                      </p>
+                    ))}
+                  </div>
                 </marquee>
               </div>
             </div>

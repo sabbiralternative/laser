@@ -4,8 +4,12 @@ import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Settings } from "../../../api";
 import WarningCondition from "../../shared/WarningCondition/WarningCondition";
+import { useLanguage } from "../../../context/LanguageProvider";
+import { languageValue } from "../../../utils/language";
+import { LanguageKey } from "../../../const";
 
 const EventTab = () => {
+  const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { token, bonusToken } = useSelector((state) => state.auth);
@@ -55,7 +59,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/4.svg"
                 />{" "}
-                Cricket
+                {languageValue(valueByLanguage, LanguageKey.CRICKET)}
               </div>
             </Link>
           </li>
@@ -75,7 +79,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/1.svg"
                 />{" "}
-                Football
+                {languageValue(valueByLanguage, LanguageKey.FOOTBALL)}
               </div>
             </Link>
           </li>
@@ -95,7 +99,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/2.svg"
                 />{" "}
-                Tennis
+                {languageValue(valueByLanguage, LanguageKey.TENNIS)}
               </div>
             </Link>
           </li>
@@ -158,7 +162,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/7.svg"
                 />{" "}
-                Horse Racing
+                {languageValue(valueByLanguage, LanguageKey.HORSE)}
               </div>
             </Link>
           </li>
@@ -178,7 +182,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/4339.png"
                 />{" "}
-                Greyhound Racing{" "}
+                {languageValue(valueByLanguage, LanguageKey.GREYHOUND)}
               </div>
             </Link>
           </li>
@@ -199,7 +203,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/99994.svg"
                 />{" "}
-                Kabaddi
+                {languageValue(valueByLanguage, LanguageKey.KABADDI)}
               </div>
             </Link>
           </li>

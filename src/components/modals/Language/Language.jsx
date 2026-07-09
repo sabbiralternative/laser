@@ -68,8 +68,8 @@ const Language = () => {
             </g>
           </svg>
         </button>
-        <div className="px-4 pt-5 pb-4 bg-bg_color_primary sm:p-6 sm:pb-4 font-lato">
-          <div className="sm:flex sm:items-start">
+        <div className=" bg-bg_color_primary  font-lato">
+          <div className="flex items-center justify-center">
             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
               <h3 className="text-lg font-medium leading-6 text-text_color_primary1">
                 Select Language
@@ -81,7 +81,7 @@ const Language = () => {
               </div>
             </div>
           </div>
-          <div className="mt-5">
+          <div className="mt-3">
             <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {languages &&
                 Object.keys(languages)?.map((language, idx) => {

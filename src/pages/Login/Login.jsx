@@ -14,8 +14,12 @@ import {
   faSignInAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useLanguage } from "../../context/LanguageProvider";
+import { LanguageKey } from "../../const";
+import { languageValue } from "../../utils/language";
 
 const Login = () => {
+  const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
   const { logo } = useContext(ApiContext);
   const dispatch = useDispatch();
@@ -85,12 +89,15 @@ const Login = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="loginInner1">
-                <div className="log-logo m-b-20 text-center">
+                <div
+                  onClick={() => navigate("/")}
+                  className="log-logo m-b-20 text-center"
+                >
                   <img className="logo-login" src={logo} />
                 </div>
                 <div className="featured-box-login featured-box-secundary default">
                   <h4 className="text-center">
-                    LOGIN
+                    {languageValue(valueByLanguage, LanguageKey.LOGIN)}
                     <FontAwesomeIcon
                       icon={faHandPointDown}
                       style={{ marginLeft: "4px" }}
@@ -144,7 +151,7 @@ const Login = () => {
                         type="submit"
                         className="btn btn-submit btn-login"
                       >
-                        Login
+                        {languageValue(valueByLanguage, LanguageKey.LOGIN)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>
@@ -167,7 +174,7 @@ const Login = () => {
                           type="button"
                           className="btn btn-submit btn-login"
                         >
-                          Register
+                          {languageValue(valueByLanguage, LanguageKey.REJECTED)}
                           <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="ml-2"

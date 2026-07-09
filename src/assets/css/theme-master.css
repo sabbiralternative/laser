@@ -1973,6 +1973,7 @@ button.btn-cashout {
   width: 16.6666667%;
   font-weight: 700;
   padding: 4px 0;
+  color: #23282c;
 }
 
 .dOddsBox button span {
@@ -1982,13 +1983,13 @@ button.btn-cashout {
 }
 
 .odds_header .back {
-  background: url("/assets/img/back-odds.png");
+  /* background: url("/assets/img/back-odds.png"); */
   background-repeat: no-repeat;
   background-position: left;
 }
 
 .odds_header .lay {
-  background: url("/assets/img/lay-odds.png");
+  /* background: url("/assets/img/lay-odds.png"); */
   background-repeat: no-repeat;
   background-position: right;
 }

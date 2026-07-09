@@ -303,7 +303,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                         placeholder={`Max bet: ${placeBetValues?.maxLiabilityPerBet}`}
                         value={stake || ""}
                       />
-                      <div className="input-group dbetting-table-none">
+                      {/* <div className="input-group dbetting-table-none">
                         <div
                           onClick={() =>
                             dispatch(setStake(stake >= 200 ? stake - 100 : 100))
@@ -330,7 +330,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                             <i className="mdi mdi-plus" />
                           </span>
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -409,7 +409,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
               onClick={handleCancelBet}
               className="col-6 dbetting-table-none pr-xs-1"
             >
-              <button className="btn btn-cancel">cacnel</button>
+              <button className="btn btn-cancel">cancel</button>
             </div>
             <div
               onClick={handleOrderBets}

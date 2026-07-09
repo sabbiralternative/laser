@@ -74,11 +74,7 @@ const OpenBets = () => {
                                           >
                                             <div
                                               className={`font-medium underline capitalize text-sm 
-                    ${
-                      bet?.betType === "Back"
-                        ? "text-text_ChangeAnimationBack "
-                        : "text-text_ChangeAnimationLay"
-                    }
+                    ${bet?.betType === "Back" ? "tex-[#72bbef]" : "text-[#faa9ba]"}
                     `}
                                             >
                                               {bet?.title}

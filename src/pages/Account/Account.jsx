@@ -4,15 +4,17 @@ import { logout } from "../../redux/features/auth/authSlice";
 import { Settings } from "../../api";
 import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../const";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Account = () => {
+  const navigate = useNavigate();
   const closePopupForForever = localStorage.getItem("closePopupForForever");
   const { valueByLanguage } = useLanguage();
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   const handleOpenSocialLink = (link) => {

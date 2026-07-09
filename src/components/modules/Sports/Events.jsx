@@ -1,16 +1,85 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGroupQuery } from "../../../redux/features/events/events";
 import images from "../../../assets/images";
-import { headerTab } from "../../../static/group";
 import HorseGreyhound from "../../shared/HorseGreyhound/HorseGreyhound";
+import { useLanguage } from "../../../context/LanguageProvider";
+import { languageValue } from "../../../utils/language";
+import { LanguageKey } from "../../../const";
 
 const Events = () => {
+  const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
   const { group } = useParams();
   const { data } = useGroupQuery(
     { sportsType: group },
-    { pollingInterval: 1000 }
+    { pollingInterval: 1000 },
   );
+
+  const headerTab = [
+    {
+      id: 0,
+      name: languageValue(valueByLanguage, LanguageKey.HOME),
+      group: 0,
+    },
+    {
+      id: 1,
+      name: "in-play",
+      group: 0,
+    },
+    {
+      id: 2,
+      name: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      group: 4,
+    },
+    {
+      id: 3,
+      name: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      group: 1,
+    },
+    {
+      id: 4,
+      name: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      group: 2,
+    },
+    {
+      id: 5,
+      name: "Casino",
+      class: "hightlight-menus",
+      path: "/casino?product=All&category=All",
+    },
+    // {
+    //   id: 6,
+    //   name: "Int Casino",
+    //   class: "hightlight-menus",
+    //   path: "/int-casino",
+    // },
+    {
+      id: 550000,
+      name: "Sports Book",
+      class: "new-tag-menus sb-menus",
+      path: "/sports-book",
+    },
+    {
+      id: 8,
+      name: languageValue(valueByLanguage, LanguageKey.HORSE),
+      group: 7,
+    },
+    {
+      id: 9,
+      name: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      group: 4339,
+    },
+    {
+      id: 7,
+      name: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      group: 5,
+    },
+    {
+      id: 8,
+      name: "Politics",
+      group: 6,
+    },
+  ];
   const eventName = headerTab.find((tab) => tab.group == group)?.name;
 
   const navigateGameList = (keys) => {

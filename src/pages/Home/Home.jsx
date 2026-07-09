@@ -93,9 +93,33 @@ const Home = () => {
           </div>
           <div className="row">
             <Banner />
+            <section
+              onClick={() => navigate("/popular-event")}
+              data-v-af62eb75
+              data-v-079e3f58
+              className="banner-wapper w-full row mr-0 ml-0 pr-0 pl-0 mt-2"
+            >
+              <div data-v-af62eb75 className="bannerWrap pr-0 pl-0">
+                <div
+                  data-v-af62eb75
+                  className="col-md-12"
+                  style={{ paddingLeft: "0px", paddingRight: "0px" }}
+                >
+                  <a data-v-af62eb75 className>
+                    <img
+                      data-v-af62eb75
+                      className="img-fluid bannerImages w-full"
+                      tabIndex={0}
+                      src="/icon/slider1-C9LInJVR.gif"
+                    />
+                  </a>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </section>
+
       <section className="text-center mb-2">
         <div className="container mobile-px">
           <div className="row mt-1">
