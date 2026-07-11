@@ -14,6 +14,7 @@ import Score from "../../components/modules/SportDetails/Score";
 import HorseGreyhoundSportsDetails from "../../components/modules/SportDetails/HorseGreyhoundSportsDetails";
 import { Settings } from "../../api";
 import Bookmaker from "../../components/modules/SportDetails/Bookmaker";
+import Premium from "../../components/modules/SportDetails/Premium";
 
 const SportDetails = () => {
   const [sportsVideo, { data: iframe }] = useVideoMutation();
@@ -167,17 +168,19 @@ const SportDetails = () => {
                   {eventTypeId == 4 && data?.iscore && (
                     <Score iscore={data?.iscore} />
                   )}
-                  {data?.score && data?.score?.tracker !== null && (
-                    <div className="w-full overflow-hidden h-[125px]">
-                      <iframe
-                        id="videoComponent"
-                        className="w-full h-auto relative overflow-hidden   bg-transparent"
-                        src={data?.score?.tracker}
-                        width="100%"
-                        allowfullscreen=""
-                      ></iframe>
-                    </div>
-                  )}
+                  {data?.score &&
+                    data?.score?.tracker &&
+                    data?.score?.tracker !== null && (
+                      <div className="w-full overflow-hidden h-[125px]">
+                        <iframe
+                          id="videoComponent"
+                          className="w-full h-auto relative overflow-hidden   bg-transparent"
+                          src={data?.score?.tracker}
+                          width="100%"
+                          allowfullscreen=""
+                        ></iframe>
+                      </div>
+                    )}
                   {iframe?.result?.url && data?.score?.hasVideo && (
                     <iframe
                       id="videoComponent"
@@ -188,6 +191,9 @@ const SportDetails = () => {
                     ></iframe>
                   )}
                   {matchOdds?.length > 0 && <MatchOdds data={matchOdds} />}
+                  {data?.premium && data?.premium?.eventId && (
+                    <Premium premium={data?.premium} />
+                  )}
                   {bookmaker?.length > 0 && <Bookmaker data={bookmaker} />}
                   {data?.result?.length > 0 && <Fancy data={data?.result} />}
                   {eventTypeId == 7 || eventTypeId == 4339 ? (
