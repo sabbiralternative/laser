@@ -7,6 +7,7 @@ import WarningCondition from "../../shared/WarningCondition/WarningCondition";
 import { useLanguage } from "../../../context/LanguageProvider";
 import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
+import { eventNameList } from "../../../static/event-name-list";
 
 const EventTab = () => {
   const { valueByLanguage } = useLanguage();
@@ -227,6 +228,30 @@ const EventTab = () => {
               </div>
             </Link>
           </li>
+          {eventNameList.map((item) => {
+            return (
+              <li key={item.id} className="nav-item ng-star-inserted">
+                <Link
+                  to={`/sports/${item.id}`}
+                  role="tab"
+                  className={`nav-link  ${pathname === `/sports/${item.id}` ? "active" : ""}`}
+                  aria-controls="goto-11"
+                  aria-selected="false"
+                  id="goto-11-link"
+                >
+                  <span />
+                  <div className="ng-star-inserted">
+                    <img
+                      style={{ height: "20px", filter: "none" }}
+                      className="img-fluid"
+                      src={item.image}
+                    />{" "}
+                    {item.name}
+                  </div>
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

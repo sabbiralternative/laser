@@ -174,6 +174,51 @@ const Header = () => {
       name: "Politics",
       group: 6,
     },
+    {
+      name: "Basketball",
+      group: 7522,
+      image: "/event/basketball.png",
+    },
+    {
+      name: "Baseball",
+      group: 7511,
+      image: "/event/baseball.png",
+    },
+    {
+      name: "Table Tennis",
+      group: 20,
+      image: "/event/tabletennis.png",
+    },
+    {
+      name: "Volleyball",
+      group: 998917,
+      image: "/event/volleyball.png",
+    },
+    {
+      name: "Ice Hockey",
+      group: 7524,
+      image: "/event/icehockey.png",
+    },
+    {
+      name: "Rugby",
+      group: 5,
+      image: "/event/rugby.png",
+    },
+    {
+      name: "Mixed Martial Arts",
+      group: 26420387,
+      image: "/event/mma.png",
+    },
+    {
+      name: "Darts",
+      group: 3503,
+      image: "/event/darts.png",
+    },
+    {
+      name: "Futsal",
+      group: 29,
+      image: "/event/futsal.png",
+    },
   ];
 
   return (

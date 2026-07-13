@@ -10,6 +10,7 @@ import { Settings } from "../../api";
 import WarningCondition from "../../components/shared/WarningCondition/WarningCondition";
 import { useIndexQuery } from "../../hooks";
 import { headerTab } from "../../static/group";
+import { eventNameList } from "../../static/event-name-list";
 
 const Home = () => {
   const { data: casino } = useIndexQuery({
@@ -193,6 +194,16 @@ const Home = () => {
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
+                  {eventNameList.map((item) => {
+                    return (
+                      <div key={item.id}>
+                        <Link to={`/sports/${item.id}`}>
+                          <h3>{item.name}</h3>
+                          {/* <span id="count">0</span> */}
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
