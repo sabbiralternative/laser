@@ -270,7 +270,7 @@ const Header = () => {
                   {Settings.language && (
                     <button
                       onClick={() => dispatch(setShowLanguageModal(true))}
-                      className="relative overflow-hidden flex items-center text-white justify-center text-xs  px-4 rounded-full bg-bg_color_secondary border border-border_color_primary capitalize h-[30px]"
+                      className="relative overflow-hidden flex items-center text-white justify-center text-xs  px-2 rounded-full bg-bg_color_secondary border border-border_color_primary capitalize h-[30px]"
                       type="button"
                     >
                       <svg
@@ -292,7 +292,7 @@ const Header = () => {
                         <path d="M11.5 3a17 17 0 0 0 0 18" />
                         <path d="M12.5 3a17 17 0 0 1 0 18" />
                       </svg>
-                      {language}
+                      {/* {language} */}
                       <svg
                         fill="currentColor"
                         width={16}
@@ -372,7 +372,7 @@ const Header = () => {
                         {Settings.language && (
                           <button
                             onClick={() => dispatch(setShowLanguageModal(true))}
-                            className="relative overflow-hidden flex items-center text-white justify-center text-xs  px-4 rounded-full bg-bg_color_secondary border border-border_color_primary capitalize h-[30px]"
+                            className="relative overflow-hidden flex items-center text-white justify-center text-xs  px-2 rounded-full bg-bg_color_secondary border border-border_color_primary capitalize h-[30px]"
                             type="button"
                           >
                             <svg
@@ -398,7 +398,7 @@ const Header = () => {
                               <path d="M11.5 3a17 17 0 0 0 0 18" />
                               <path d="M12.5 3a17 17 0 0 1 0 18" />
                             </svg>
-                            {language}
+                            {/* {language} */}
                             <svg
                               fill="currentColor"
                               width={16}

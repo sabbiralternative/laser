@@ -11,6 +11,7 @@ import WarningCondition from "../../components/shared/WarningCondition/WarningCo
 import { useIndexQuery } from "../../hooks";
 import { headerTab } from "../../static/group";
 import { eventNameList } from "../../static/event-name-list";
+import WhatsApp from "../../components/modules/Home/WhatsApp";
 
 const Home = () => {
   const { data: casino } = useIndexQuery({
@@ -73,6 +74,7 @@ const Home = () => {
       {showWarning && (
         <WarningCondition gameInfo={gameInfo} setShowWarning={setShowWarning} />
       )}
+      <WhatsApp />
       <section>
         <div className="container mobile-px HomemainSliders">
           <Notification />
