@@ -15,8 +15,10 @@ import HorseGreyhoundSportsDetails from "../../components/modules/SportDetails/H
 import { Settings } from "../../api";
 import Bookmaker from "../../components/modules/SportDetails/Bookmaker";
 import Premium from "../../components/modules/SportDetails/Premium";
+import ToggleButtons from "../../components/modules/SportDetails/ToggleButtons";
 
 const SportDetails = () => {
+  const [fancyPremiumTab, setFancyPremiumTab] = useState("");
   const [sportsVideo, { data: iframe }] = useVideoMutation();
   const { eventTypeId, eventId } = useParams();
   const [profit, setProfit] = useState(0);
@@ -130,7 +132,12 @@ const SportDetails = () => {
       game?.visible == true &&
       game?.name === "tied match",
   );
-
+  const fancy = data?.result?.filter(
+    (normal) =>
+      normal.btype === "FANCY" &&
+      normal.tabGroupName === "Normal" &&
+      normal?.visible == true,
+  );
   useEffect(() => {
     const handleGetVideo = async () => {
       const payload = {
@@ -193,14 +200,26 @@ const SportDetails = () => {
                   {matchOdds?.length > 0 && <MatchOdds data={matchOdds} />}
 
                   {bookmaker?.length > 0 && <Bookmaker data={bookmaker} />}
-                  {data?.result?.length > 0 && <Fancy data={data?.result} />}
+                  {data && (
+                    <ToggleButtons
+                      data={data}
+                      fancy={fancy}
+                      setFancyPremiumTab={setFancyPremiumTab}
+                      fancyPremiumTab={fancyPremiumTab}
+                    />
+                  )}
+                  {data?.result?.length > 0 && fancyPremiumTab === "fancy" && (
+                    <Fancy data={data?.result} />
+                  )}
+                  {data?.premium &&
+                    data?.premium?.eventId &&
+                    fancyPremiumTab === "premium" && (
+                      <Premium premium={data?.premium} />
+                    )}
                   {eventTypeId == 7 || eventTypeId == 4339 ? (
                     <HorseGreyhoundSportsDetails data={data?.result} />
                   ) : null}
                   {tiedMatch?.length > 0 && <MatchOdds data={tiedMatch} />}
-                  {data?.premium && data?.premium?.eventId && (
-                    <Premium premium={data?.premium} />
-                  )}
                 </div>
 
                 <DesktopBetRightSidebar hasVideo={data?.score?.hasVideo} />
