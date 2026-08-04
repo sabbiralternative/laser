@@ -5,8 +5,11 @@ import HorseGreyhound from "../../shared/HorseGreyhound/HorseGreyhound";
 import { useLanguage } from "../../../context/LanguageProvider";
 import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
+import { useState } from "react";
+import { filterLiveVirtual } from "../../../utils/filter-live-virtual";
 
 const Events = () => {
+  const [liveVirtual, setLiveVirtual] = useState([]);
   const { valueByLanguage } = useLanguage();
   const navigate = useNavigate();
   const { group } = useParams();
@@ -86,31 +89,52 @@ const Events = () => {
     navigate(`/sports-details/${data[keys]?.eventTypeId}/${keys}`);
   };
 
-  const filterAndSortSports = (data) => {
-    if (!data) return [];
+  // const filterAndSortSports = (data) => {
+  //   if (!data) return [];
 
-    // Filter visible sports
-    const visibleSports = Object.keys(data).filter((key) => data[key]?.visible);
+  //   // Filter visible sports
+  //   const visibleSports = Object.keys(data).filter((key) => data[key]?.visible);
 
-    return visibleSports
-      .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort) // Sort by 'sort' value
-      .sort((keyA, keyB) => {
-        // Prioritize 'Suspended' status
-        if (
-          data[keyA].timeStatus === "Suspended" &&
-          data[keyB].timeStatus !== "Suspended"
-        )
-          return 1;
-        if (
-          data[keyA].timeStatus !== "Suspended" &&
-          data[keyB].timeStatus === "Suspended"
-        )
-          return -1;
-        return 0;
-      });
+  //   return visibleSports
+  //     .sort((keyA, keyB) => data[keyA].sort - data[keyB].sort) // Sort by 'sort' value
+  //     .sort((keyA, keyB) => {
+  //       // Prioritize 'Suspended' status
+  //       if (
+  //         data[keyA].timeStatus === "Suspended" &&
+  //         data[keyB].timeStatus !== "Suspended"
+  //       )
+  //         return 1;
+  //       if (
+  //         data[keyA].timeStatus !== "Suspended" &&
+  //         data[keyB].timeStatus === "Suspended"
+  //       )
+  //         return -1;
+  //       return 0;
+  //     });
+  // };
+  // const sortedSports = filterAndSortSports(data);
+
+  const onChangeLiveVirtual = (type, eventTypeId, isChecked) => {
+    const obj = { type, eventTypeId, isChecked };
+
+    setLiveVirtual((prev) => {
+      const index = prev.findIndex(
+        (item) => item.eventTypeId === eventTypeId && item.type === type,
+      );
+
+      if (index !== -1) {
+        const updated = [...prev];
+        updated[index] = {
+          ...updated[index],
+          isChecked,
+        };
+        return updated;
+      }
+
+      return [...prev, obj];
+    });
   };
-  const sortedSports = filterAndSortSports(data);
-
+  const groupedData = filterLiveVirtual(liveVirtual, group, data);
   return (
     <div className="row">
       <div className="col-12">
@@ -120,6 +144,9 @@ const Events = () => {
             <ul className="live_virtual">
               <li>
                 <input
+                  onChange={(e) =>
+                    onChangeLiveVirtual("live", group, e.target?.checked)
+                  }
                   type="checkbox"
                   defaultValue="Order one"
                   id="checkboxOne1-inplay"
@@ -129,6 +156,9 @@ const Events = () => {
               </li>
               <li>
                 <input
+                  onChange={(e) =>
+                    onChangeLiveVirtual("virtual", group, e.target?.checked)
+                  }
                   type="checkbox"
                   defaultValue="Order Two"
                   id="checkboxTwo1-inplay"
@@ -219,7 +249,7 @@ const Events = () => {
                 <div className="col-md-1" />
               </div>
               <div>
-                {sortedSports.map((key, index) => {
+                {groupedData?.map(([key], index) => {
                   return (
                     <div onClick={() => navigateGameList(key)} key={index}>
                       <div>
