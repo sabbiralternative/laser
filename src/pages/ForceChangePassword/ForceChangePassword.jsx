@@ -10,8 +10,11 @@ import {
   faSignInAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const ForceChangePassword = () => {
+  const { getLanguage } = useLanguage();
   const { logo } = useContext(ApiContext);
   const navigate = useNavigate();
   const [handleChangePassword] = useChangePasswordMutation();
@@ -46,7 +49,7 @@ const ForceChangePassword = () => {
                 </div>
                 <div className="featured-box-login featured-box-secundary default">
                   <h4 className="text-center">
-                    Change Password
+                    {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                     <FontAwesomeIcon icon={faHandPointDown} className="ml-2" />
                   </h4>
                   <form
@@ -57,7 +60,7 @@ const ForceChangePassword = () => {
                   >
                     <div className="form-group m-b-20">
                       <label className="form-label text-start w-100">
-                        Current Password:
+                        {getLanguage(LanguageKey.OLD_PASSWORD)}:
                       </label>
                       <input
                         {...register("password", { required: true })}
@@ -78,7 +81,7 @@ const ForceChangePassword = () => {
                     </div>
                     <div className="form-group m-b-20">
                       <label className="form-label text-start w-100">
-                        New Password:
+                        {getLanguage(LanguageKey.NEW_PASSWORD)}:
                       </label>
                       <input
                         {...register("newPassword", {
@@ -101,7 +104,7 @@ const ForceChangePassword = () => {
                     </div>
                     <div className="form-group m-b-20">
                       <label className="form-label text-start w-100">
-                        Confirm Password:
+                        {getLanguage(LanguageKey.CONFIRM_PASSWORD)}:
                       </label>
                       <input
                         {...register("newPasswordConfirm", {
@@ -128,7 +131,7 @@ const ForceChangePassword = () => {
                         type="submit"
                         className="btn btn-submit btn-login"
                       >
-                        Change Password
+                        {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>
@@ -139,7 +142,7 @@ const ForceChangePassword = () => {
                         type="button"
                         className="btn btn-submit btn-login"
                       >
-                        Forgot Password
+                        {getLanguage(LanguageKey.FORGOT_PASSWORD)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>

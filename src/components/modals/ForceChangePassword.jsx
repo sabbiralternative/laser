@@ -5,8 +5,11 @@ import { useChangePasswordMutation } from "../../redux/features/auth/authApi";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/auth/authSlice";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const ForceChangePassword = ({ setForceChangePassword }) => {
+  const { getLanguage } = useLanguage();
   const dispatch = useDispatch();
   const modalRef = useRef();
   const [handleChangePassword] = useChangePasswordMutation();
@@ -53,7 +56,7 @@ const ForceChangePassword = ({ setForceChangePassword }) => {
         <div className="modal-content" ref={modalRef}>
           <div className="modal-header">
             <h5 id="change-password" className="modal-title pull-left">
-              Change Password
+              {getLanguage(LanguageKey.CHANGE_PASSWORD)}
             </h5>
             <button
               onClick={() => setForceChangePassword(false)}
@@ -82,7 +85,7 @@ const ForceChangePassword = ({ setForceChangePassword }) => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                old password
+                                {getLanguage(LanguageKey.OLD_PASSWORD)}
                               </label>
                               <input
                                 {...register("password", { required: true })}
@@ -104,7 +107,7 @@ const ForceChangePassword = ({ setForceChangePassword }) => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                new password
+                                {getLanguage(LanguageKey.NEW_PASSWORD)}
                               </label>
                               <input
                                 {...register("newPassword", {
@@ -137,7 +140,7 @@ const ForceChangePassword = ({ setForceChangePassword }) => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                confirm password
+                                {getLanguage(LanguageKey.CONFIRM_PASSWORD)}
                               </label>
                               <input
                                 {...register("newPasswordConfirm", {
@@ -169,7 +172,7 @@ const ForceChangePassword = ({ setForceChangePassword }) => {
                             </div>
                             <div className="form-group mt-2">
                               <button type="submit" className="btn cp-btn">
-                                change password
+                                {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                               </button>
                             </div>
                           </div>

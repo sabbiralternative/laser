@@ -2,8 +2,11 @@
 /* eslint-disable react/no-unknown-property */
 import { useState } from "react";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const Rules = () => {
+  const { getLanguage } = useLanguage();
   const [tab, setTab] = useState(0);
 
   const handleToggleTab = (t) => {
@@ -21,7 +24,7 @@ const Rules = () => {
           <div className="container-fluid">
             <div className="ng-star-inserted">
               <div className="card rules-container ng-star-inserted">
-                <h2 className="mb-0">Rules</h2>
+                <h2 className="mb-0">{getLanguage(LanguageKey.RULES)}</h2>
                 <div className="card-body container-fluid container-fluid-5">
                   <div className="row row5 mt-2">
                     <div className="col-12">

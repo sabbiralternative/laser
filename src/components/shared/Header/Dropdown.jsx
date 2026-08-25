@@ -4,13 +4,12 @@ import { logout } from "../../../redux/features/auth/authSlice";
 import useCloseModalClickOutside from "../../../hooks/closeModal";
 import { useRef } from "react";
 import { Settings } from "../../../api";
-import { useLanguage } from "../../../context/LanguageProvider";
-import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
+import useLanguage from "../../../hooks/use-language";
 
 const Dropdown = ({ showDropdown, setShowDropdown }) => {
   const closePopupForForever = localStorage.getItem("closePopupForForever");
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const { user } = useSelector((state) => state.auth);
   const dropdownRef = useRef();
   const dispatch = useDispatch();
@@ -48,7 +47,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
           onClick={() => handleOpenSocialLink(Settings?.branchWhatsapplink)}
           className="dropdown-item notify-item"
         >
-          Customer Support
+          {getLanguage(LanguageKey.CUSTOMER_SUPPORT)}
         </a>
       )}
       <Link
@@ -56,49 +55,49 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         to="/deposit"
         className="dropdown-item notify-item"
       >
-        {languageValue(valueByLanguage, LanguageKey.DEPOSIT)}
+        {getLanguage(LanguageKey.DEPOSIT)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/withdraw"
         className="dropdown-item notify-item"
       >
-        {languageValue(valueByLanguage, LanguageKey.WITHDRAW)}
+        {getLanguage(LanguageKey.WITHDRAW)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/deposit-report"
         className="dropdown-item notify-item"
       >
-        Deposit Report
+        {getLanguage(LanguageKey.DEPOSIT_STATEMENT)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/withdraw-report"
         className="dropdown-item notify-item"
       >
-        Withdraw Report
+        {getLanguage(LanguageKey.WITHDRAW_STATMENT)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/open-bets"
         className="dropdown-item notify-item"
       >
-        Open Bets
+        {getLanguage(LanguageKey.OPEN_BETS)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/betting-profit-loss"
         className="dropdown-item notify-item"
       >
-        Betting Profit & Loss
+        {getLanguage(LanguageKey.BETTING_PROFIT_AND_LOSS)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/my-bank-details"
         className="dropdown-item notify-item"
       >
-        {languageValue(valueByLanguage, LanguageKey.MY_BANK_DETAILS)}
+        {getLanguage(LanguageKey.MY_BANK_DETAILS)}
       </Link>
       {Settings?.referral && (
         <Link
@@ -106,7 +105,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
           to="/affiliate"
           className="dropdown-item notify-item"
         >
-          Affiliate
+          {getLanguage(LanguageKey.AFFILIATE)}
         </Link>
       )}
 
@@ -115,7 +114,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         to="/promotions"
         className="dropdown-item notify-item"
       >
-        Promotions
+        {getLanguage(LanguageKey.PROMOTIONS)}
       </Link>
 
       <Link
@@ -123,7 +122,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         to="/bonus-statement"
         className="dropdown-item notify-item"
       >
-        {languageValue(valueByLanguage, LanguageKey.BONUS_STATEMENT)}
+        {getLanguage(LanguageKey.BONUS_STATEMENT)}
       </Link>
 
       <Link
@@ -131,7 +130,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         to="/lossback-bonus"
         className="dropdown-item notify-item"
       >
-        Lossback Bonus
+        {getLanguage(LanguageKey.LOSSBACK_BONUS)}
       </Link>
 
       {closePopupForForever && (
@@ -140,7 +139,7 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
           to="/app-only-bonus"
           className="dropdown-item notify-item"
         >
-          App Only Bonus
+          {getLanguage(LanguageKey.APP_ONLY_BONUS)}
         </Link>
       )}
 
@@ -149,20 +148,20 @@ const Dropdown = ({ showDropdown, setShowDropdown }) => {
         to="/change-password"
         className="dropdown-item notify-item"
       >
-        Change Password
+        {getLanguage(LanguageKey.CHANGE_PASSWORD)}
       </Link>
       <Link
         onClick={closeDropdown}
         to="/rules"
         className="dropdown-item notify-item"
       >
-        Rules
+        {getLanguage(LanguageKey.RULES)}
       </Link>
       <a
         onClick={handleLogout}
         className="dropdown-item notify-item logout-btn"
       >
-        Logout <i className="fe-log-out" />
+        {getLanguage(LanguageKey.LOGOUT)} <i className="fe-log-out" />
       </a>
     </div>
   );

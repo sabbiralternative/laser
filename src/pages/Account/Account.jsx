@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useLanguage } from "../../context/LanguageProvider";
 import { logout } from "../../redux/features/auth/authSlice";
 import { Settings } from "../../api";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../const";
 import { Link, useNavigate } from "react-router-dom";
+import useLanguage from "../../hooks/use-language";
 
 const Account = () => {
   const navigate = useNavigate();
   const closePopupForForever = localStorage.getItem("closePopupForForever");
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleLogout = () => {
@@ -42,78 +41,88 @@ const Account = () => {
                       }
                     >
                       {" "}
-                      Customer Support
+                      {getLanguage(LanguageKey.CUSTOMER_SUPPORT)}
                     </a>
                   </li>
                 )}
 
                 <li>
-                  <Link to="/deposit">
-                    {" "}
-                    {languageValue(valueByLanguage, LanguageKey.DEPOSIT)}
-                  </Link>
+                  <Link to="/deposit"> {getLanguage(LanguageKey.DEPOSIT)}</Link>
                 </li>
                 <li>
                   <Link to="/withdraw">
                     {" "}
-                    {languageValue(valueByLanguage, LanguageKey.WITHDRAW)}
+                    {getLanguage(LanguageKey.WITHDRAW)}
                   </Link>
                 </li>
                 <li>
-                  <Link to="/deposit-report"> Deposit Report</Link>
+                  <Link to="/deposit-report">
+                    {" "}
+                    {getLanguage(LanguageKey.DEPOSIT_STATEMENT)}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/withdraw-report"> Withdraw Report</Link>
+                  <Link to="/withdraw-report">
+                    {" "}
+                    {getLanguage(LanguageKey.WITHDRAW_STATMENT)}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/open-bets"> Open Bets</Link>
+                  <Link to="/open-bets">
+                    {getLanguage(LanguageKey.OPEN_BETS)}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/betting-profit-loss">Betting Profit & Loss</Link>
+                  <Link to="/betting-profit-loss">
+                    {getLanguage(LanguageKey.BETTING_PROFIT_AND_LOSS)}
+                  </Link>
                 </li>
                 <li>
                   <Link to="/my-bank-details">
                     {" "}
-                    {languageValue(
-                      valueByLanguage,
-                      LanguageKey.MY_BANK_DETAILS,
-                    )}
+                    {getLanguage(LanguageKey.MY_BANK_DETAILS)}
                   </Link>
                 </li>
                 {Settings?.referral && (
                   <li>
-                    <Link to="/affiliate">Affiliate</Link>
+                    <Link to="/affiliate">
+                      {getLanguage(LanguageKey.AFFILIATE)}
+                    </Link>
                   </li>
                 )}
 
                 <li>
-                  <Link to="/promotions">Promotions</Link>
+                  <Link to="/promotions">
+                    {getLanguage(LanguageKey.PROMOTIONS)}
+                  </Link>
                 </li>
                 <li>
                   <Link to="/bonus-statement">
                     {" "}
-                    {languageValue(
-                      valueByLanguage,
-                      LanguageKey.BONUS_STATEMENT,
-                    )}
+                    {getLanguage(LanguageKey.BONUS_STATEMENT)}
                   </Link>
                 </li>
 
                 {closePopupForForever && (
                   <li>
-                    <Link to="/app-only-bonus">App Only Bonus</Link>
+                    <Link to="/app-only-bonus">
+                      {getLanguage(LanguageKey.APP_ONLY_BONUS)}
+                    </Link>
                   </li>
                 )}
 
                 <li>
-                  <Link to="/change-password">Change Password</Link>
+                  <Link to="/change-password">
+                    {getLanguage(LanguageKey.CHANGE_PASSWORD)}
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/rules">Rules</Link>
+                  <Link to="/rules">{getLanguage(LanguageKey.RULES)}</Link>
                 </li>
               </ul>
               <a onClick={handleLogout} className="mbl-logout-btn">
-                LOGOUT <i className="mdi mdi-login-variant" />
+                {getLanguage(LanguageKey.LOGOUT)}{" "}
+                <i className="mdi mdi-login-variant" />
               </a>
             </div>
           </div>

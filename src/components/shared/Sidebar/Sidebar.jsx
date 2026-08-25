@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useLanguage } from "../../../context/LanguageProvider";
-import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
+import useLanguage from "../../../hooks/use-language";
 
 const Sidebar = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const handleNavigate = (tab) => {
     if (tab?.group || tab?.group === 0) {
@@ -17,82 +16,82 @@ const Sidebar = () => {
   const sidebarMenu = [
     {
       id: 2,
-      name: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      name: getLanguage(LanguageKey.CRICKET),
       group: 4,
     },
     {
       id: 3,
-      name: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      name: getLanguage(LanguageKey.FOOTBALL),
       group: 1,
     },
     {
       id: 4,
-      name: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      name: getLanguage(LanguageKey.TENNIS),
       group: 2,
     },
 
     {
       id: 5,
-      name: languageValue(valueByLanguage, LanguageKey.HORSE),
+      name: getLanguage(LanguageKey.HORSE),
       group: 7,
     },
     {
       id: 6,
-      name: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      name: getLanguage(LanguageKey.GREYHOUND),
       group: 4339,
     },
     {
       id: 7,
-      name: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      name: getLanguage(LanguageKey.KABADDI),
       group: 5,
     },
     {
       id: 8,
-      name: "Politics",
+      name: getLanguage(LanguageKey.POLITICS),
       group: 6,
     },
     {
-      name: "Basketball",
+      name: getLanguage(LanguageKey.BASKETBALL),
       group: 7522,
       image: "/event/basketball.png",
     },
     {
-      name: "Baseball",
+      name: getLanguage(LanguageKey.BASEBALL),
       group: 7511,
       image: "/event/baseball.png",
     },
     {
-      name: "Table Tennis",
+      name: getLanguage(LanguageKey.TABLE_TENNIS),
       group: 20,
       image: "/event/tabletennis.png",
     },
     {
-      name: "Volleyball",
+      name: getLanguage(LanguageKey.VOLLYBALL),
       group: 998917,
       image: "/event/volleyball.png",
     },
     {
-      name: "Ice Hockey",
+      name: getLanguage(LanguageKey.ICE_HOCKY),
       group: 7524,
       image: "/event/icehockey.png",
     },
     {
-      name: "Rugby",
+      name: getLanguage(LanguageKey.RUGBY),
       group: 5,
       image: "/event/rugby.png",
     },
     {
-      name: "Mixed Martial Arts",
+      name: getLanguage(LanguageKey.MIXED_MARTIAL_ARTS),
       group: 26420387,
       image: "/event/mma.png",
     },
     {
-      name: "Darts",
+      name: getLanguage(LanguageKey.DARTS),
       group: 3503,
       image: "/event/darts.png",
     },
     {
-      name: "Futsal",
+      name: getLanguage(LanguageKey.FUTSAL),
       group: 29,
       image: "/event/futsal.png",
     },

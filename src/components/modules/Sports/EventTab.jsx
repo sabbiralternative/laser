@@ -4,13 +4,12 @@ import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Settings } from "../../../api";
 import WarningCondition from "../../shared/WarningCondition/WarningCondition";
-import { useLanguage } from "../../../context/LanguageProvider";
-import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
 import { eventNameList } from "../../../static/event-name-list";
+import useLanguage from "../../../hooks/use-language";
 
 const EventTab = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { token, bonusToken } = useSelector((state) => state.auth);
@@ -60,7 +59,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/4.svg"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.CRICKET)}
+                {getLanguage(LanguageKey.CRICKET)}
               </div>
             </Link>
           </li>
@@ -80,7 +79,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/1.svg"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.FOOTBALL)}
+                {getLanguage(LanguageKey.FOOTBALL)}
               </div>
             </Link>
           </li>
@@ -100,7 +99,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/2.svg"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.TENNIS)}
+                {getLanguage(LanguageKey.TENNIS)}
               </div>
             </Link>
           </li>
@@ -121,7 +120,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/99998.png"
                 />{" "}
-                Casino
+                {getLanguage(LanguageKey.CASINO)}
               </div>
             </Link>
           </li>
@@ -143,7 +142,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/99991.svg"
                 />{" "}
-                Sports book
+                {getLanguage(LanguageKey.SPORTSBOOK)}
               </div>
             </a>
           </li>
@@ -163,7 +162,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/7.svg"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.HORSE)}
+                {getLanguage(LanguageKey.HORSE)}
               </div>
             </Link>
           </li>
@@ -183,7 +182,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/4339.png"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.GREYHOUND)}
+                {getLanguage(LanguageKey.GREYHOUND)}
               </div>
             </Link>
           </li>
@@ -204,7 +203,7 @@ const EventTab = () => {
                   className="img-fluid"
                   src="/icon/99994.svg"
                 />{" "}
-                {languageValue(valueByLanguage, LanguageKey.KABADDI)}
+                {getLanguage(LanguageKey.KABADDI)}
               </div>
             </Link>
           </li>
@@ -246,7 +245,7 @@ const EventTab = () => {
                       className="img-fluid"
                       src={item.image}
                     />{" "}
-                    {item.name}
+                    {getLanguage(item.name)}
                   </div>
                 </Link>
               </li>

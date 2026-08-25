@@ -7,8 +7,11 @@ import {
 } from "react-icons/md";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 import DesktopBetRightSidebar from "../../components/shared/DesktopBetRightSidebar/DesktopBetRightSidebar";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const OpenBets = () => {
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const { data: myBets } = useCurrentBets();
   const [openBets, setOpenBets] = useState(true);
@@ -41,7 +44,7 @@ const OpenBets = () => {
                               className="px-3 py-2 cursor-pointer w-full flex items-center justify-between bg-primary rounded"
                             >
                               <span className="text-primary text-xs">
-                                Open Bets
+                                {getLanguage(LanguageKey.OPEN_BETS)}
                               </span>
                               <div className="flex items-center justify-center autoAnimate text-primary">
                                 {openBets ? (
@@ -106,7 +109,10 @@ const OpenBets = () => {
                               orderedBets?.length === 0 && (
                                 <div className="w-full origin-top scaleVerticalOpen">
                                   <div className="w-full font-medium text-sm bg-bg_Quaternary rounded px-4 py-3 shadow text-text_Ternary">
-                                    You have no Open Bets.
+                                    {getLanguage(
+                                      LanguageKey.YOU_HAVE_NO_OPEN_BETS,
+                                    )}
+                                    .
                                   </div>
                                 </div>
                               )}

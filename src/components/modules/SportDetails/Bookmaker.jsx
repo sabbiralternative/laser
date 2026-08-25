@@ -6,15 +6,17 @@ import {
   setPlaceBetValues,
   setRunnerId,
 } from "../../../redux/features/events/eventSlice";
-import { Status } from "../../../const";
+import { LanguageKey, Status } from "../../../const";
 import BetSlip from "./BetSlip";
 import { Settings } from "../../../api";
 import { handleCashOutPlaceBet } from "../../../utils/handleCashoutPlaceBet";
 import toast from "react-hot-toast";
 import SpeedCashOut from "../../modals/SpeedCashOut/SpeedCashOut";
 import { isGameSuspended } from "../../../utils/isOddSuspended";
+import useLanguage from "../../../hooks/use-language";
 
 const Bookmaker = ({ data }) => {
+  const { getLanguage } = useLanguage();
   const [speedCashOut, setSpeedCashOut] = useState(null);
   const { eventId } = useParams();
   const [teamProfit, setTeamProfit] = useState([]);
@@ -261,7 +263,7 @@ const Bookmaker = ({ data }) => {
                         }
                         className="btn-cashout ng-star-inserted"
                       >
-                        CASHOUT
+                        {getLanguage(LanguageKey.CASHOUT)}
                         {teamProfitForGame?.profit &&
                           `(${teamProfitForGame.profit.toFixed(0)})`}
                       </button>
@@ -283,7 +285,7 @@ const Bookmaker = ({ data }) => {
                         disabled={isGameSuspended(game)}
                         className="btn-cashout ng-star-inserted"
                       >
-                        Speed Cashout
+                        {getLanguage(LanguageKey.SPEED_CASHOUT)}
                       </button>
                     )}
 
@@ -297,7 +299,10 @@ const Bookmaker = ({ data }) => {
               <div className="col-md-5 col-7 px-0">
                 <div className="minmax mm-fi">
                   <dl className="fancy-info">
-                    <dt>Min/Max</dt>
+                    <dt>
+                      {getLanguage(LanguageKey.MIN)}/
+                      {getLanguage(LanguageKey.MAX)}
+                    </dt>
                     <dd>
                       {" "}
                       {game?.minLiabilityPerBet}-{game?.maxLiabilityPerBet}

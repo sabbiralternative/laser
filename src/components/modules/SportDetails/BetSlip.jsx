@@ -19,8 +19,11 @@ import {
 } from "../../../utils/editBetSlipPrice";
 import { isBetDelay, isDelay } from "../../../utils/isBetDelay";
 import { AxiosJSEncrypt } from "../../../lib/AxiosJSEncrypt";
+import useLanguage from "../../../hooks/use-language";
+import { LanguageKey } from "../../../const";
 
 const BetSlip = ({ currentPlaceBetEvent }) => {
+  const { getLanguage } = useLanguage();
   const { closePopupForForever } = useSelector((state) => state.global);
   const [isCashOut, setIsCashOut] = useState(false);
   const [profit, setProfit] = useState(0);
@@ -221,7 +224,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
               <li className="flex items-center justify-center">
                 <img src="/icon/loading.gif" />
               </li>
-              <li>Loading...</li>
+              <li>{getLanguage(LanguageKey.LOADING)}...</li>
             </ul>
           </div>
         </div>
@@ -234,7 +237,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
               <div className="row">
                 <div className="col-md-2 px-0 mbetting-table-none">
                   <button onClick={handleCancelBet} className="btn btn-cancel">
-                    cacnel
+                    {getLanguage(LanguageKey.CANCEL)}
                   </button>
                 </div>
                 <div className="col-md-7 px-0">
@@ -338,7 +341,9 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                   onClick={handleOrderBets}
                   className="col-md-3 mbetting-table-none"
                 >
-                  <button className="btn btn-betplace">betplace</button>
+                  <button className="btn btn-betplace">
+                    {getLanguage(LanguageKey.PLACE_BET)}
+                  </button>
                 </div>
               </div>
             </div>
@@ -376,7 +381,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                   }
                   className="btn min-btn"
                 >
-                  MIN
+                  {getLanguage(LanguageKey.MIN)}
                 </a>
                 <a
                   onClick={() =>
@@ -389,7 +394,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                   }
                   className="btn max-btn"
                 >
-                  MAX
+                  {getLanguage(LanguageKey.MAX)}
                 </a>
 
                 <a
@@ -398,7 +403,7 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
                   }}
                   className="btn clear-btn"
                 >
-                  CLEAR
+                  {getLanguage(LanguageKey.CLEAR)}
                 </a>
               </div>
             </div>
@@ -409,14 +414,16 @@ const BetSlip = ({ currentPlaceBetEvent }) => {
               onClick={handleCancelBet}
               className="col-6 dbetting-table-none pr-xs-1"
             >
-              <button className="btn btn-cancel">cancel</button>
+              <button className="btn btn-cancel">
+                {getLanguage(LanguageKey.CANCEL)}
+              </button>
             </div>
             <div
               onClick={handleOrderBets}
               className="col-6 dbetting-table-none pl-xs-1"
             >
               <button className="btn btn-betplace" disabled>
-                betplace
+                {getLanguage(LanguageKey.PLACE_BET)}
               </button>
             </div>
           </div>

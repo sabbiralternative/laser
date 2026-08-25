@@ -15,17 +15,16 @@ import {
   setShowEditStake,
   setShowLanguageModal,
 } from "../../../redux/features/global/globalSlice";
-import { useLanguage } from "../../../context/LanguageProvider";
 import Error from "../../modals/Error/Error";
 import AppPopup from "./AppPopUp";
 import DownloadAPK from "../../modals/DownloadAPK/DownloadAPK";
 import Search from "./Search";
 import Language from "../../modals/Language/Language";
-import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
+import useLanguage from "../../../hooks/use-language";
 
 const Header = () => {
-  const { setLanguage, language, valueByLanguage } = useLanguage();
+  const { setLanguage, language, getLanguage } = useLanguage();
   const {
     showAppPopUp,
     windowWidth,
@@ -113,7 +112,7 @@ const Header = () => {
   const headerTab = [
     {
       id: 0,
-      name: languageValue(valueByLanguage, LanguageKey.HOME),
+      name: getLanguage(LanguageKey.HOME),
       group: 0,
     },
     {
@@ -123,22 +122,22 @@ const Header = () => {
     },
     {
       id: 2,
-      name: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      name: getLanguage(LanguageKey.CRICKET),
       group: 4,
     },
     {
       id: 3,
-      name: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      name: getLanguage(LanguageKey.FOOTBALL),
       group: 1,
     },
     {
       id: 4,
-      name: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      name: getLanguage(LanguageKey.TENNIS),
       group: 2,
     },
     {
       id: 5,
-      name: "Casino",
+      name: getLanguage(LanguageKey.CASINO),
       className: "hightlight-menus",
       path: "/casino?product=All&category=All",
     },
@@ -150,72 +149,72 @@ const Header = () => {
     // },
     {
       id: 550000,
-      name: "Sports Book",
+      name: getLanguage(LanguageKey.SPORTSBOOK),
       className: "new-tag-menus sb-menus",
       path: "/sports-book",
     },
     {
       id: 8,
-      name: languageValue(valueByLanguage, LanguageKey.HORSE),
+      name: getLanguage(LanguageKey.HORSE),
       group: 7,
     },
     {
       id: 9,
-      name: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      name: getLanguage(LanguageKey.GREYHOUND),
       group: 4339,
     },
     {
       id: 7,
-      name: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      name: getLanguage(LanguageKey.KABADDI),
       group: 5,
     },
     {
       id: 8,
-      name: "Politics",
+      name: getLanguage(LanguageKey.POLITICS),
       group: 6,
     },
     {
-      name: "Basketball",
+      name: getLanguage(LanguageKey.BASKETBALL),
       group: 7522,
       image: "/event/basketball.png",
     },
     {
-      name: "Baseball",
+      name: getLanguage(LanguageKey.BASEBALL),
       group: 7511,
       image: "/event/baseball.png",
     },
     {
-      name: "Table Tennis",
+      name: getLanguage(LanguageKey.TABLE_TENNIS),
       group: 20,
       image: "/event/tabletennis.png",
     },
     {
-      name: "Volleyball",
+      name: getLanguage(LanguageKey.VOLLYBALL),
       group: 998917,
       image: "/event/volleyball.png",
     },
     {
-      name: "Ice Hockey",
+      name: getLanguage(LanguageKey.ICE_HOCKY),
       group: 7524,
       image: "/event/icehockey.png",
     },
     {
-      name: "Rugby",
+      name: getLanguage(LanguageKey.RUGBY),
       group: 5,
       image: "/event/rugby.png",
     },
     {
-      name: "Mixed Martial Arts",
+      name: getLanguage(LanguageKey.MIXED_MARTIAL_ARTS),
       group: 26420387,
       image: "/event/mma.png",
     },
     {
-      name: "Darts",
+      name: getLanguage(LanguageKey.DARTS),
       group: 3503,
       image: "/event/darts.png",
     },
     {
-      name: "Futsal",
+      name: getLanguage(LanguageKey.FUTSAL),
       group: 29,
       image: "/event/futsal.png",
     },
@@ -244,10 +243,12 @@ const Header = () => {
                 <div className="main-exposure">
                   <div className="be_div">
                     <a>
-                      Bal <b> {data?.availBalance} </b>
+                      {getLanguage(LanguageKey.BALANCE)}{" "}
+                      <b> {data?.availBalance} </b>
                     </a>
                     <a>
-                      Exp <b> {data?.deductedExposure} </b>
+                      {getLanguage(LanguageKey.EXPOSURE)}{" "}
+                      <b> {data?.deductedExposure} </b>
                     </a>
                   </div>
                   <b className="head-username">
@@ -260,7 +261,8 @@ const Header = () => {
                     className="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light"
                   >
                     <span className="pro-user-name ms-1">
-                      <i className="mdi mdi-account" /> My Account
+                      <i className="mdi mdi-account" />{" "}
+                      {getLanguage(LanguageKey.ACCOUNT)}
                     </span>
                   </a>
                   <Dropdown
@@ -329,11 +331,14 @@ const Header = () => {
                   </b>
                   <ul>
                     <li>
-                      <span> Bal {data?.availBalance}</span>
+                      <span>
+                        {" "}
+                        {getLanguage(LanguageKey.BALANCE)} {data?.availBalance}
+                      </span>
                     </li>
                     <li>
                       <a href="#/market-analysis" className="exp-topcount">
-                        Exp
+                        {getLanguage(LanguageKey.EXPOSURE)}
                       </a>
                       <a className="text-white">
                         (
@@ -358,7 +363,7 @@ const Header = () => {
                           onClick={() => navigate("/login")}
                           className="btn btnlogin"
                         >
-                          {languageValue(valueByLanguage, LanguageKey.LOGIN)}
+                          {getLanguage(LanguageKey.LOGIN)}
                           <i className="mdi mdi-arrow-right" />
                         </button>
                         <button
@@ -366,7 +371,7 @@ const Header = () => {
                           type="button"
                           className="btn btnlogin"
                         >
-                          {languageValue(valueByLanguage, LanguageKey.REGISTER)}
+                          {getLanguage(LanguageKey.REGISTER)}
                           <i className="mdi mdi-arrow-right" />
                         </button>
                         {Settings.language && (
@@ -440,7 +445,7 @@ const Header = () => {
                     style={{ marginTop: "16px" }}
                   >
                     <i className="mdi mdi-account" />{" "}
-                    {languageValue(valueByLanguage, LanguageKey.LOGIN)}
+                    {getLanguage(LanguageKey.LOGIN)}
                   </button>
                   <button
                     onClick={() => navigate("/register")}
@@ -449,7 +454,7 @@ const Header = () => {
                     style={{ marginTop: "16px" }}
                   >
                     <i className="mdi mdi-account" />{" "}
-                    {languageValue(valueByLanguage, LanguageKey.REGISTER)}
+                    {getLanguage(LanguageKey.REGISTER)}
                   </button>
                   {Settings.language && (
                     <button

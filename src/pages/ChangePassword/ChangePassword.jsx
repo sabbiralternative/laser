@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/features/auth/authSlice";
-import { useLanguage } from "../../context/LanguageProvider";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../const";
+import useLanguage from "../../hooks/use-language";
 
 const ChangePassword = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const dispatch = useDispatch();
   const [handleChangePassword] = useChangePasswordMutation();
 
@@ -46,10 +45,7 @@ const ChangePassword = () => {
                     <div className="userTables">
                       <h2 className="ng-star-inserted">
                         {" "}
-                        {languageValue(
-                          valueByLanguage,
-                          LanguageKey.CHANGE_PASSWORD,
-                        )}
+                        {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                       </h2>
 
                       <form
@@ -63,7 +59,7 @@ const ChangePassword = () => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                old password
+                                {getLanguage(LanguageKey.OLD_PASSWORD)}
                               </label>
                               <input
                                 {...register("password", { required: true })}
@@ -77,7 +73,7 @@ const ChangePassword = () => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                new password
+                                {getLanguage(LanguageKey.NEW_PASSWORD)}
                               </label>
                               <input
                                 {...register("newPassword", {
@@ -92,7 +88,7 @@ const ChangePassword = () => {
                                 htmlFor
                                 className="text-capitalize font-weight-bold mb-0"
                               >
-                                confirm password
+                                {getLanguage(LanguageKey.CONFIRM_PASSWORD)}
                               </label>
                               <input
                                 {...register("newPasswordConfirm", {
@@ -104,10 +100,7 @@ const ChangePassword = () => {
                             </div>
                             <div className="form-group mt-2">
                               <button type="submit" className="btn cp-btn">
-                                {languageValue(
-                                  valueByLanguage,
-                                  LanguageKey.CHANGE_PASSWORD,
-                                )}
+                                {getLanguage(LanguageKey.CHANGE_PASSWORD)}
                               </button>
                             </div>
                           </div>

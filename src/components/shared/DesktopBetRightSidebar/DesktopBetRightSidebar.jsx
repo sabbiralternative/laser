@@ -4,8 +4,11 @@ import { useState } from "react";
 import { useCurrentBets } from "../../../hooks/currentBets";
 import { useSelector } from "react-redux";
 import EditStake from "./EditStake";
+import useLanguage from "../../../hooks/use-language";
+import { LanguageKey } from "../../../const";
 
 const DesktopBetRightSidebar = ({ hasVideo }) => {
+  const { getLanguage } = useLanguage();
   const { showEditStake } = useSelector((state) => state.global);
   const { eventTypeId, eventId } = useParams();
   const { data: currentBet } = useCurrentBets(eventId);
@@ -53,7 +56,7 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
           )}
 
           <h2>
-            open bets
+            {getLanguage(LanguageKey.OPEN_BETS)}
             {hasVideo && (
               <a
                 onClick={handleSportsVideo}
@@ -79,10 +82,10 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
                         <table className="table">
                           <thead>
                             <tr>
-                              <td>Selname</td>
-                              <td>Odds</td>
-                              <td>Stake</td>
-                              <td>Date/Time</td>
+                              <td>{getLanguage(LanguageKey.NATION)}</td>
+                              <td>{getLanguage(LanguageKey.ODDS)}</td>
+                              <td>{getLanguage(LanguageKey.STAKE)}</td>
+                              <td>{getLanguage(LanguageKey.DATE)}</td>
                             </tr>
                           </thead>
                           <tbody>
@@ -106,7 +109,7 @@ const DesktopBetRightSidebar = ({ hasVideo }) => {
                             {!currentBet?.length && (
                               <tr>
                                 <td colSpan="10" className="text-center">
-                                  No records Found
+                                  {getLanguage(LanguageKey.NO_RECORD_FOUND)}
                                 </td>
                               </tr>
                             )}

@@ -14,12 +14,11 @@ import {
   faSignInAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useLanguage } from "../../context/LanguageProvider";
 import { LanguageKey } from "../../const";
-import { languageValue } from "../../utils/language";
+import useLanguage from "../../hooks/use-language";
 
 const Login = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const { logo } = useContext(ApiContext);
   const dispatch = useDispatch();
@@ -97,7 +96,7 @@ const Login = () => {
                 </div>
                 <div className="featured-box-login featured-box-secundary default">
                   <h4 className="text-center">
-                    {languageValue(valueByLanguage, LanguageKey.LOGIN)}
+                    {getLanguage(LanguageKey.LOGIN)}
                     <FontAwesomeIcon
                       icon={faHandPointDown}
                       style={{ marginLeft: "4px" }}
@@ -151,7 +150,7 @@ const Login = () => {
                         type="submit"
                         className="btn btn-submit btn-login"
                       >
-                        {languageValue(valueByLanguage, LanguageKey.LOGIN)}
+                        {getLanguage(LanguageKey.LOGIN)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>
@@ -162,7 +161,7 @@ const Login = () => {
                         type="button"
                         className="btn btn-submit btn-login"
                       >
-                        Login with Demo ID
+                        {getLanguage(LanguageKey.DEMO_LOGIN)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>
@@ -174,7 +173,7 @@ const Login = () => {
                           type="button"
                           className="btn btn-submit btn-login"
                         >
-                          {languageValue(valueByLanguage, LanguageKey.REJECTED)}
+                          {getLanguage(LanguageKey.REJECTED)}
                           <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="ml-2"
@@ -190,7 +189,7 @@ const Login = () => {
                         type="button"
                         className="btn btn-submit btn-login"
                       >
-                        Forgot Password
+                        {getLanguage(LanguageKey.FORGOT_PASSWORD)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>

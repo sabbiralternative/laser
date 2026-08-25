@@ -16,8 +16,11 @@ import { Settings } from "../../api";
 import Bookmaker from "../../components/modules/SportDetails/Bookmaker";
 import Premium from "../../components/modules/SportDetails/Premium";
 import ToggleButtons from "../../components/modules/SportDetails/ToggleButtons";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const SportDetails = () => {
+  const { getLanguage } = useLanguage();
   const [fancyPremiumTab, setFancyPremiumTab] = useState("");
   const [sportsVideo, { data: iframe }] = useVideoMutation();
   const { eventTypeId, eventId } = useParams();
@@ -165,7 +168,7 @@ const SportDetails = () => {
                       <div className="col-12 bg-dark">
                         <h2 className="eventTitle">
                           {data?.result?.[0]?.eventName}
-                          <span>In Play</span>
+                          <span>{getLanguage(LanguageKey.IN_PLAY)}</span>
                         </h2>
                       </div>
                     </div>

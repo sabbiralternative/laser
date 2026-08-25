@@ -15,11 +15,10 @@ import {
 import useWhatsApp from "../../hooks/whatsapp";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/auth/authSlice";
-import { useLanguage } from "../../context/LanguageProvider";
-import { languageValue } from "../../utils/language";
 import { LanguageKey } from "../../const";
+import useLanguage from "../../hooks/use-language";
 const Register = () => {
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const dispatch = useDispatch();
   const referralCode = localStorage.getItem("referralCode");
   const { refetch } = useWhatsApp();
@@ -135,7 +134,7 @@ const Register = () => {
                 </div>
                 <div className="featured-box-login featured-box-secundary default">
                   <h4 className="text-center">
-                    {languageValue(valueByLanguage, LanguageKey.REGISTER)}
+                    {getLanguage(LanguageKey.REGISTER)}
                     <FontAwesomeIcon icon={faHandPointDown} className="ml-2" />
                   </h4>
                   <form
@@ -169,7 +168,7 @@ const Register = () => {
                         className="btn btn-primary btn-block"
                         type="button"
                       >
-                        Get OTP
+                        {getLanguage(LanguageKey.GET_OTP)}
                       </button>
                     </div>
                     <div className="form-group m-b-20">
@@ -269,14 +268,14 @@ const Register = () => {
                         type="submit"
                         className="btn btn-submit btn-login"
                       >
-                        {languageValue(valueByLanguage, LanguageKey.REGISTER)}
+                        {getLanguage(LanguageKey.REGISTER)}
                         <FontAwesomeIcon icon={faSignInAlt} className="ml-2" />
                       </button>
                     </div>
                     <div style={{ color: "black" }} className="mt-2 mb-1">
                       <b>Already have User?</b>{" "}
                       <Link to="/login" className="ms-1">
-                        <b>Login here</b>
+                        <b>{getLanguage(LanguageKey.LOGIN)}</b>
                       </Link>
                     </div>
                     <small

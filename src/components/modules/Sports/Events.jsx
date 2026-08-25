@@ -2,15 +2,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGroupQuery } from "../../../redux/features/events/events";
 import images from "../../../assets/images";
 import HorseGreyhound from "../../shared/HorseGreyhound/HorseGreyhound";
-import { useLanguage } from "../../../context/LanguageProvider";
-import { languageValue } from "../../../utils/language";
 import { LanguageKey } from "../../../const";
 import { useState } from "react";
 import { filterLiveVirtual } from "../../../utils/filter-live-virtual";
+import useLanguage from "../../../hooks/use-language";
 
 const Events = () => {
   const [liveVirtual, setLiveVirtual] = useState([]);
-  const { valueByLanguage } = useLanguage();
+  const { getLanguage } = useLanguage();
   const navigate = useNavigate();
   const { group } = useParams();
   const { data } = useGroupQuery(
@@ -21,7 +20,7 @@ const Events = () => {
   const headerTab = [
     {
       id: 0,
-      name: languageValue(valueByLanguage, LanguageKey.HOME),
+      name: getLanguage(LanguageKey.HOME),
       group: 0,
     },
     {
@@ -31,22 +30,22 @@ const Events = () => {
     },
     {
       id: 2,
-      name: languageValue(valueByLanguage, LanguageKey.CRICKET),
+      name: getLanguage(LanguageKey.CRICKET),
       group: 4,
     },
     {
       id: 3,
-      name: languageValue(valueByLanguage, LanguageKey.FOOTBALL),
+      name: getLanguage(LanguageKey.FOOTBALL),
       group: 1,
     },
     {
       id: 4,
-      name: languageValue(valueByLanguage, LanguageKey.TENNIS),
+      name: getLanguage(LanguageKey.TENNIS),
       group: 2,
     },
     {
       id: 5,
-      name: "Casino",
+      name: getLanguage(LanguageKey.CASINO),
       class: "hightlight-menus",
       path: "/casino?product=All&category=All",
     },
@@ -58,28 +57,28 @@ const Events = () => {
     // },
     {
       id: 550000,
-      name: "Sports Book",
+      name: getLanguage(LanguageKey.SPORTSBOOK),
       class: "new-tag-menus sb-menus",
       path: "/sports-book",
     },
     {
       id: 8,
-      name: languageValue(valueByLanguage, LanguageKey.HORSE),
+      name: getLanguage(LanguageKey.HORSE),
       group: 7,
     },
     {
       id: 9,
-      name: languageValue(valueByLanguage, LanguageKey.GREYHOUND),
+      name: getLanguage(LanguageKey.GREYHOUND),
       group: 4339,
     },
     {
       id: 7,
-      name: languageValue(valueByLanguage, LanguageKey.KABADDI),
+      name: getLanguage(LanguageKey.KABADDI),
       group: 5,
     },
     {
       id: 8,
-      name: "Politics",
+      name: getLanguage(LanguageKey.POLITICS),
       group: 6,
     },
   ];
@@ -152,7 +151,9 @@ const Events = () => {
                   id="checkboxOne1-inplay"
                   className="ng-untouched ng-pristine ng-valid"
                 />
-                <label htmlFor="checkboxOne1-inplay">LIVE</label>
+                <label htmlFor="checkboxOne1-inplay">
+                  {getLanguage(LanguageKey.LIVE)}
+                </label>
               </li>
               <li>
                 <input
@@ -164,28 +165,11 @@ const Events = () => {
                   id="checkboxTwo1-inplay"
                   className="ng-untouched ng-pristine ng-valid"
                 />
-                <label htmlFor="checkboxTwo1-inplay">VIRTUAL</label>
+                <label htmlFor="checkboxTwo1-inplay">
+                  {getLanguage(LanguageKey.VIRTUAL)}
+                </label>
               </li>
             </ul>
-            <div className="dropdown viewby-filter">
-              <button
-                type="button"
-                id="ViewBy"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                className="dropdown-toggle"
-              >
-                <i className="mdi mdi-filter" />
-                View by
-              </button>
-              <div className="dropdown-menu">
-                <a href="javascript:void(0)">Competition</a>
-                <a href="javascript:void(0)" className="active">
-                  Time
-                </a>
-              </div>
-            </div>
           </h2>
           <h2 className="high-mobile">
             &nbsp;&nbsp; {eventName}
@@ -197,7 +181,9 @@ const Events = () => {
                   id="checkboxOne1-inplay"
                   className="ng-untouched ng-pristine ng-valid"
                 />
-                <label htmlFor="checkboxOne1-inplay">LIVE</label>
+                <label htmlFor="checkboxOne1-inplay">
+                  {getLanguage(LanguageKey.LIVE)}
+                </label>
               </li>
               <li>
                 <input
@@ -206,28 +192,11 @@ const Events = () => {
                   id="checkboxTwo1-inplay"
                   className="ng-untouched ng-pristine ng-valid"
                 />
-                <label htmlFor="checkboxTwo1-inplay">VIRTUAL</label>
+                <label htmlFor="checkboxTwo1-inplay">
+                  {getLanguage(LanguageKey.VIRTUAL)}
+                </label>
               </li>
             </ul>
-            <div className="dropdown viewby-filter">
-              <button
-                type="button"
-                id="ViewBy"
-                data-bs-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                className="dropdown-toggle"
-              >
-                <i className="mdi mdi-filter" />
-                View by
-              </button>
-              <div className="dropdown-menu">
-                <a href="javascript:void(0)">Competition</a>
-                <a href="javascript:void(0)" className="active">
-                  Time
-                </a>
-              </div>
-            </div>
           </h2>
           {group != 7 && group != 4339 ? (
             <div>
@@ -352,7 +321,7 @@ const Events = () => {
                         justifyContent: "center",
                       }}
                     >
-                      <span>No events available right now</span>
+                      <span>{getLanguage(LanguageKey.NO_BET_AVAILABLE)}</span>
                     </div>
                   ))}
               </div>

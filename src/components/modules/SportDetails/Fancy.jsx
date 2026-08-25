@@ -7,12 +7,14 @@ import {
   setPlaceBetValues,
   setRunnerId,
 } from "../../../redux/features/events/eventSlice";
-import { Status } from "../../../const";
+import { LanguageKey, Status } from "../../../const";
 import BetSlip from "./BetSlip";
 import Ladder from "../../modals/Ladder";
 import toast from "react-hot-toast";
+import useLanguage from "../../../hooks/use-language";
 
 const Fancy = ({ data }) => {
+  const { getLanguage } = useLanguage();
   const fancyData = data?.filter(
     (fancy) =>
       fancy.btype === "FANCY" &&
@@ -161,7 +163,10 @@ const Fancy = ({ data }) => {
                         <button className="lay1" />
                         <button className="lay">no</button>
                         <button className="back">yes</button>
-                        <button className="min-max-bet">Min-Max</button>
+                        <button className="min-max-bet">
+                          {getLanguage(LanguageKey.MIN)}-
+                          {getLanguage(LanguageKey.MAX)}
+                        </button>
                       </div>
                     </div>
                   </div>

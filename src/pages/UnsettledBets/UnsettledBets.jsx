@@ -1,7 +1,10 @@
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
+import { LanguageKey } from "../../const";
 import { useCurrentBets } from "../../hooks/currentBets";
+import useLanguage from "../../hooks/use-language";
 
 const UnsettledBets = () => {
+  const { getLanguage } = useLanguage();
   const { data: currentBet } = useCurrentBets();
   return (
     <div>
@@ -16,21 +19,25 @@ const UnsettledBets = () => {
                     <div className="userTables">
                       <div className="row">
                         <div className="col-12">
-                          <h2 className="ng-star-inserted">Unsettled Bets</h2>
+                          <h2 className="ng-star-inserted">
+                            {getLanguage(LanguageKey.UNSETTLED_BETS)}
+                          </h2>
 
                           <div className="table-responsive">
                             <table className="table mb-0 table-bordered">
                               <thead>
                                 <tr>
-                                  <th>bet id</th>
-                                  <th>event</th>
-                                  <th>market type</th>
-                                  <th>selection</th>
-                                  <th>type</th>
-                                  <th>odds req.</th>
-                                  <th>stake</th>
-                                  <th>place time</th>
-                                  <th>matched time</th>
+                                  <th>{getLanguage(LanguageKey.BET_ID)}</th>
+                                  <th>{getLanguage(LanguageKey.EVENT_NAME)}</th>
+                                  <th>{getLanguage(LanguageKey.MARKET)}</th>
+                                  <th>{getLanguage(LanguageKey.SELECTION)}</th>
+                                  <th>{getLanguage(LanguageKey.TYPE)}</th>
+                                  <th>{getLanguage(LanguageKey.USER_RATE)}</th>
+                                  <th>{getLanguage(LanguageKey.STAKE)}</th>
+                                  <th>
+                                    {getLanguage(LanguageKey.PLACED_DATE)}
+                                  </th>
+                                  <th>{getLanguage(LanguageKey.MATCH_DATE)}</th>
                                 </tr>
                               </thead>
                               <tbody className="ng-star-inserted">

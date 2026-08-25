@@ -3,8 +3,11 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setShowEditStake } from "../../../redux/features/global/globalSlice";
+import useLanguage from "../../../hooks/use-language";
+import { LanguageKey } from "../../../const";
 
 const EditStake = () => {
+  const { getLanguage } = useLanguage();
   const dispatch = useDispatch();
   const [editButtonValue] = useEditButtonValuesMutation();
   const stakes = JSON.parse(localStorage.getItem("buttonValue"));
@@ -38,7 +41,7 @@ const EditStake = () => {
       <div>
         <div style={{ position: "relative" }}>
           <form onSubmit={handleSubmit(onSubmit)} className="stakeDiv">
-            <h3>stake </h3>
+            <h3>{getLanguage(LanguageKey.STAKE)} </h3>
             <dl id className="setting-block stake-setting">
               {stakes?.map((stake, i) => {
                 return (
@@ -58,7 +61,7 @@ const EditStake = () => {
 
               <dd className="col-stake_edit">
                 <button type="submit" id="save" className="btn-send ui-link">
-                  Save
+                  {getLanguage(LanguageKey.SAVE)}
                 </button>
               </dd>
             </dl>

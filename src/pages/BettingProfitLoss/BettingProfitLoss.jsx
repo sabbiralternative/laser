@@ -6,8 +6,11 @@ import { userToken } from "../../redux/features/auth/authSlice";
 import moment from "moment";
 import Sidebar from "../../components/shared/Sidebar/Sidebar";
 import DesktopBetRightSidebar from "../../components/shared/DesktopBetRightSidebar/DesktopBetRightSidebar";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const BettingProfitLoss = () => {
+  const { getLanguage } = useLanguage();
   const { passbook } = useAccountStatement({
     from: from_date,
     to: to_date,
@@ -63,7 +66,7 @@ const BettingProfitLoss = () => {
                                 </button>
                               </div>
                               <span className="w-full h-full capitalize ml-[4px] flex items-center text-text_Ternary font-lato font-bold  leading-5">
-                                <span>Back</span>
+                                <span>{getLanguage(LanguageKey.BACK)}</span>
                               </span>
                             </div>
                           </div>
@@ -91,7 +94,9 @@ const BettingProfitLoss = () => {
                                       {moment(date).format("Do-MMM-YYYY")}
                                     </div>
                                     <div className="text-xs   font-[600] flex items-center justify-center leading-[140%]">
-                                      <span>Total PL</span>
+                                      <span>
+                                        {getLanguage(LanguageKey.TOTAL_PL)}
+                                      </span>
                                       <span className="-mt-0.5 ml-1">:</span>
                                       <span
                                         style={{
@@ -145,7 +150,12 @@ const BettingProfitLoss = () => {
                                               </span>
                                             </span>
                                             <span className="text-text_Ternary w-1/2 flex items-center justify-end gap-x-1">
-                                              <span>Balance:</span>
+                                              <span>
+                                                {getLanguage(
+                                                  LanguageKey.BALANCE,
+                                                )}
+                                                :
+                                              </span>
                                               <span
                                                 className={`font-semibold `}
                                               >
@@ -163,7 +173,10 @@ const BettingProfitLoss = () => {
                           ) : (
                             <div className="flex items-center justify-center w-full pt-20">
                               <h2 className="text-base ">
-                                No betting profit and loss yet!
+                                {getLanguage(
+                                  LanguageKey.NO_BETTING_PROFIT_LOSS_YET,
+                                )}
+                                !
                               </h2>
                             </div>
                           )}

@@ -12,8 +12,11 @@ import { useIndexQuery } from "../../hooks";
 import { headerTab } from "../../static/group";
 import { eventNameList } from "../../static/event-name-list";
 import WhatsApp from "../../components/modules/Home/WhatsApp";
+import useLanguage from "../../hooks/use-language";
+import { LanguageKey } from "../../const";
 
 const Home = () => {
+  const { getLanguage } = useLanguage();
   const { data: casino } = useIndexQuery({
     type: "99_casino_dashboard",
   });
@@ -130,7 +133,7 @@ const Home = () => {
               <div className="sportDiv">
                 <Link to="/sports/0">
                   <img className="img-fluid" src={images.bannerSport1} />
-                  <h2>sports</h2>
+                  <h2>{getLanguage(LanguageKey.SPORTS)}</h2>
                 </Link>
                 <div className="sportText">
                   {/* <p className="live_icon">
@@ -138,25 +141,25 @@ const Home = () => {
                   </p> */}
                   <div>
                     <Link to="/sports/4">
-                      <h3>Cricket</h3>
+                      <h3>{getLanguage(LanguageKey.CRICKET)}</h3>
                       {/* <span id="count">4</span> */}
                     </Link>
                   </div>
                   <div>
                     <Link to="/sports/1">
-                      <h3>Football</h3>
+                      <h3>{getLanguage(LanguageKey.FOOTBALL)}</h3>
                       {/* <span id="count">56</span> */}
                     </Link>
                   </div>
                   <div>
                     <Link to="/sports/2">
-                      <h3>Tennis</h3>
+                      <h3>{getLanguage(LanguageKey.TENNIS)}</h3>
                       {/* <span id="count">19</span> */}
                     </Link>
                   </div>
                   <div>
                     <Link to="/casino?product=All&category=All">
-                      <h3>Casino</h3>
+                      <h3>{getLanguage(LanguageKey.CASINO)}</h3>
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
@@ -167,32 +170,32 @@ const Home = () => {
                         handleNavigate({ name: "sports-book", id: 550000 })
                       }
                     >
-                      <h3>Sports book</h3>
+                      <h3>{getLanguage(LanguageKey.SPORTSBOOK)}</h3>
                       {/* <span id="count">0</span> */}
                     </a>
                   </div>
                   <div>
                     <Link to="/sports/7">
-                      <h3>Horse Racing</h3>
+                      <h3>{getLanguage(LanguageKey.HORSE)}</h3>
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
                   <div>
                     <Link to="/sports/4339">
-                      <h3>Greyhound Racing</h3>
+                      <h3>{getLanguage(LanguageKey.GREYHOUND)}</h3>
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
 
                   <div>
                     <Link to="/sports/5">
-                      <h3>Kabaddi</h3>
+                      <h3>{getLanguage(LanguageKey.KABADDI)}</h3>
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
                   <div>
                     <Link to="/sports/6">
-                      <h3>Politics</h3>
+                      <h3>{getLanguage(LanguageKey.POLITICS)}</h3>
                       {/* <span id="count">0</span> */}
                     </Link>
                   </div>
@@ -217,7 +220,7 @@ const Home = () => {
                   }
                 >
                   <img className="img-fluid" src={images.sportBook} />
-                  <h2>sports book</h2>
+                  <h2>{getLanguage(LanguageKey.SPORTSBOOK)}</h2>
                 </a>
               </div>
             </div>
