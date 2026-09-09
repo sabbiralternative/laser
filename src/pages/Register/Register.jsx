@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AxiosSecure } from "../../lib/AxiosSecure";
 import toast from "react-hot-toast";
 import { ApiContext } from "../../context/ApiProvider";
-import { API } from "../../api";
+import { API, Settings } from "../../api";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandPointDown,
@@ -17,7 +17,11 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/features/auth/authSlice";
 import { LanguageKey } from "../../const";
 import useLanguage from "../../hooks/use-language";
+import { FaMobileAlt, FaRegUser } from "react-icons/fa";
 const Register = () => {
+  const [tab, setTab] = useState(
+    Settings.registration_mobile ? "mobile" : "username",
+  );
   const { getLanguage } = useLanguage();
   const dispatch = useDispatch();
   const referralCode = localStorage.getItem("referralCode");
@@ -28,6 +32,7 @@ const Register = () => {
     mobileNo: "",
     otp: "",
     referralCode: "",
+    username: "",
   });
   const { logo } = useContext(ApiContext);
   const { handleSubmit } = useForm();
@@ -62,6 +67,7 @@ const Register = () => {
       return toast.error("Enter four digit OTP no");
     } else {
       const registerData = {
+        username: userData?.username,
         password: userData?.password,
         confirmPassword: userData?.confirmPassword,
         mobile: userData?.mobileNo,
@@ -69,6 +75,8 @@ const Register = () => {
         referralCode: referralCode || userData.referralCode,
         orderId: order.orderId,
         otpMethod: order.otpMethod,
+        registration_mobile: Settings.registration_mobile,
+        registration_username: Settings.registration_username,
       };
 
       const { data } = await AxiosSecure.post(API.register, registerData);
@@ -143,34 +151,168 @@ const Register = () => {
                     autoComplete="off"
                     className="ng-dirty ng-touched ng-valid"
                   >
-                    <div className="form-group m-b-20">
-                      <input
-                        onChange={(e) =>
-                          setUserData({ ...userData, mobileNo: e.target.value })
-                        }
-                        type="number"
-                        aria-required="true"
-                        aria-invalid="false"
-                        className="form-control ng-dirty ng-valid ng-touched"
-                        placeholder="Mobile No."
-                      />
-                      <FontAwesomeIcon
-                        style={{
-                          position: "absolute",
-                          right: "10px",
-                          top: "8px",
-                        }}
-                        icon={faMobile}
-                      />
-                      <button
-                        style={{ width: "100%" }}
-                        onClick={getOtp}
-                        className="btn btn-primary btn-block"
-                        type="button"
-                      >
-                        {getLanguage(LanguageKey.GET_OTP)}
-                      </button>
-                    </div>
+                    {Settings.registration_mobile &&
+                      Settings.registration_username && (
+                        <div
+                          style={{
+                            width: "100%",
+                            background:
+                              "color-mix(in srgb, var(--theme-color) 30%, transparent)",
+                            marginBottom: "12px",
+                            marginTop: "12px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "flex-start",
+                              position: "relative",
+                              width: "100%",
+                            }}
+                          >
+                            <div
+                              onClick={() => setTab("mobile")}
+                              style={{
+                                cursor: "pointer",
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                padding: "5px",
+                                width: "100%",
+                                gap: "6px",
+                                color: tab === "mobile" ? "white" : "black",
+                                background:
+                                  tab === "mobile"
+                                    ? "var(--theme-color)"
+                                    : undefined,
+                              }}
+                            >
+                              <FaMobileAlt
+                                style={{
+                                  color: tab === "mobile" ? "white" : "black",
+                                }}
+                              />
+
+                              <span>{getLanguage(LanguageKey.BY_PHONE)}</span>
+                            </div>
+
+                            <div
+                              onClick={() => setTab("username")}
+                              style={{
+                                cursor: "pointer",
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                padding: "5px",
+                                width: "100%",
+                                gap: "6px",
+                                color: tab === "username" ? "white" : "black",
+                                background:
+                                  tab === "username"
+                                    ? "var(--theme-color)"
+                                    : undefined,
+                              }}
+                            >
+                              <FaRegUser
+                                style={{
+                                  color: tab === "username" ? "white" : "black",
+                                }}
+                              />
+
+                              <span>
+                                {getLanguage(LanguageKey.BY_USERNAME)}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    {tab === "mobile" && Settings.registration_mobile && (
+                      <Fragment>
+                        <div className="form-group m-b-20">
+                          <input
+                            onChange={(e) =>
+                              setUserData({
+                                ...userData,
+                                mobileNo: e.target.value,
+                              })
+                            }
+                            type="number"
+                            aria-required="true"
+                            aria-invalid="false"
+                            className="form-control ng-dirty ng-valid ng-touched"
+                            placeholder="Mobile No."
+                          />
+                          <FontAwesomeIcon
+                            style={{
+                              position: "absolute",
+                              right: "10px",
+                              top: "8px",
+                            }}
+                            icon={faMobile}
+                          />
+                          <button
+                            style={{ width: "100%" }}
+                            onClick={getOtp}
+                            className="btn btn-primary btn-block"
+                            type="button"
+                          >
+                            {getLanguage(LanguageKey.GET_OTP)}
+                          </button>
+                        </div>
+                        <div className="form-group m-b-20">
+                          <input
+                            onChange={(e) => {
+                              setUserData({
+                                ...userData,
+                                otp: e.target.value,
+                              });
+                            }}
+                            placeholder="OTP"
+                            type="text"
+                            aria-required="true"
+                            aria-invalid="false"
+                            className="form-control ng-dirty ng-valid ng-touched"
+                          />
+                          <FontAwesomeIcon
+                            style={{
+                              position: "absolute",
+                              right: "10px",
+                              top: "8px",
+                            }}
+                            icon={faKey}
+                          />
+                        </div>
+                      </Fragment>
+                    )}
+                    {tab === "username" && Settings.registration_username && (
+                      <div className="form-group m-b-20">
+                        <input
+                          onChange={(e) => {
+                            setUserData({
+                              ...userData,
+                              username: e.target.value,
+                            });
+                          }}
+                          placeholder="Username"
+                          type="text"
+                          aria-required="true"
+                          aria-invalid="false"
+                          className="form-control ng-dirty ng-valid ng-touched"
+                        />
+                        <FontAwesomeIcon
+                          style={{
+                            position: "absolute",
+                            right: "10px",
+                            top: "8px",
+                          }}
+                          icon={faKey}
+                        />
+                      </div>
+                    )}
                     <div className="form-group m-b-20">
                       <input
                         onChange={(e) => {
@@ -217,29 +359,7 @@ const Register = () => {
                         icon={faKey}
                       />
                     </div>
-                    <div className="form-group m-b-20">
-                      <input
-                        onChange={(e) => {
-                          setUserData({
-                            ...userData,
-                            otp: e.target.value,
-                          });
-                        }}
-                        placeholder="OTP"
-                        type="text"
-                        aria-required="true"
-                        aria-invalid="false"
-                        className="form-control ng-dirty ng-valid ng-touched"
-                      />
-                      <FontAwesomeIcon
-                        style={{
-                          position: "absolute",
-                          right: "10px",
-                          top: "8px",
-                        }}
-                        icon={faKey}
-                      />
-                    </div>
+
                     <div className="form-group m-b-20">
                       <input
                         onChange={(e) => {

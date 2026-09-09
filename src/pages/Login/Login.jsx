@@ -173,7 +173,7 @@ const Login = () => {
                           type="button"
                           className="btn btn-submit btn-login"
                         >
-                          {getLanguage(LanguageKey.REJECTED)}
+                          {getLanguage(LanguageKey.REGISTER)}
                           <FontAwesomeIcon
                             icon={faSignInAlt}
                             className="ml-2"
