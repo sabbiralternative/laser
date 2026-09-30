@@ -147,6 +147,28 @@ const EventTab = () => {
             </a>
           </li>
           <li className="nav-item ng-star-inserted">
+            <a
+              onClick={() =>
+                handleNavigateEvent({ name: "fantasy-11", id: 595001 })
+              }
+              role="tab"
+              className="nav-link"
+              aria-controls="goto-6"
+              aria-selected="false"
+              id="goto-6-link"
+            >
+              <span />
+              <div className="ng-star-inserted">
+                <img
+                  style={{ height: "20px" }}
+                  className="img-fluid"
+                  src="/icon/99991.svg"
+                />{" "}
+                {getLanguage(LanguageKey.FANTASY_11)}
+              </div>
+            </a>
+          </li>
+          <li className="nav-item ng-star-inserted">
             <Link
               to="/sports/7"
               role="tab"

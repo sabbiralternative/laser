@@ -175,6 +175,16 @@ const Home = () => {
                     </a>
                   </div>
                   <div>
+                    <a
+                      onClick={() =>
+                        handleNavigate({ name: "fantasy-11", id: 595001 })
+                      }
+                    >
+                      <h3>{getLanguage(LanguageKey.FANTASY_11)}</h3>
+                      {/* <span id="count">0</span> */}
+                    </a>
+                  </div>
+                  <div>
                     <Link to="/sports/7">
                       <h3>{getLanguage(LanguageKey.HORSE)}</h3>
                       {/* <span id="count">0</span> */}

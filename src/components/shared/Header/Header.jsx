@@ -50,7 +50,7 @@ const Header = () => {
       navigate(`/sports/${tab?.group}`);
     }
 
-    if (tab?.path === "/sports-book") {
+    if (tab?.path === "/sports-book" || tab?.path === "/fantasy-11") {
       if (token) {
         if (bonusToken) {
           return toast.error("Bonus wallet is available only on sports.");
@@ -66,7 +66,12 @@ const Header = () => {
         toast.error("Please login to access the game");
       }
     }
-    if (tab?.path !== "/sports-book" && !tab?.group && tab?.group !== 0) {
+    if (
+      tab?.path !== "/sports-book" &&
+      tab?.path !== "/fantasy-11" &&
+      !tab?.group &&
+      tab?.group !== 0
+    ) {
       navigate(tab?.path);
     }
   };
@@ -152,6 +157,12 @@ const Header = () => {
       name: getLanguage(LanguageKey.SPORTSBOOK),
       className: "new-tag-menus sb-menus",
       path: "/sports-book",
+    },
+    {
+      id: 595001,
+      name: getLanguage(LanguageKey.FANTASY_11),
+      className: "new-tag-menus sb-menus",
+      path: "/fantasy-11",
     },
     {
       id: 8,

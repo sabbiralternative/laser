@@ -62,6 +62,12 @@ const Events = () => {
       path: "/sports-book",
     },
     {
+      id: 550000,
+      name: getLanguage(LanguageKey.FANTASY_11),
+      class: "new-tag-menus sb-menus",
+      path: "/sports-book",
+    },
+    {
       id: 8,
       name: getLanguage(LanguageKey.HORSE),
       group: 7,
